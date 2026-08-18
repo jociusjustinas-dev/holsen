@@ -27,6 +27,8 @@
   color-scheme: light;
   font-family: "Mona Sans", ui-sans-serif, system-ui, sans-serif;
   font-synthesis: none;
+  /* Backwards-compatible aliases used by the component CSS. */
+  --color-orange: #f1541c;
   --header-offset: 6.5rem;
   --page-gutter: clamp(1rem, 4vw, 5rem);
   --section-space: clamp(5rem, 9vw, 10rem);
@@ -86,9 +88,10 @@ body.is-loading {
 .site-preloader__mark-fill {
   position: absolute;
   inset: 0;
-  background: currentColor;
-  -webkit-mask: url("../SVG/favicon.svg") center / contain no-repeat;
-  mask: url("../SVG/favicon.svg") center / contain no-repeat;
+  display: block;
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
 }
 
 .site-preloader__mark-base {
@@ -2690,9 +2693,6 @@ body:has(.hero) .site-header:not(.is-scrolled) .menu-toggle {
     transform: none;
   }
 
-  .site-preloader {
-    display: none;
-  }
 }
 
 /* --------------------------------------------------------------------------
@@ -3209,12 +3209,11 @@ body:has(.hero) .site-header:not(.is-scrolled) .menu-toggle {
   min-height: clamp(10.5rem, 14vw, 13rem);
   flex-direction: column;
   justify-content: flex-end;
-  border: 1px solid color-mix(in srgb, var(--color-functional-white) 30%, transparent);
-  border-radius: 0.65rem;
-  background: color-mix(in srgb, var(--color-functional-white) 15%, transparent);
+  border: 1px solid color-mix(in srgb, #ffffff 30%, transparent);
+  border-radius: 0.5rem;
+  background: color-mix(in srgb, #ffffff 13%, transparent);
   padding: clamp(1.5rem, 2.5vw, 2.5rem);
-  backdrop-filter: blur(1.25rem) saturate(1.08);
-  -webkit-backdrop-filter: blur(1.25rem) saturate(1.08);
+  backdrop-filter: blur(1rem);
 }
 
 .why-item__panel .feature-title {
@@ -3226,6 +3225,13 @@ body:has(.hero) .site-header:not(.is-scrolled) .menu-toggle {
   max-width: 36rem;
   margin: 1rem 0 0;
   color: var(--color-light-grey);
+}
+
+@media (min-width: 48.01rem) {
+  .why-item__panel .feature-title {
+    max-width: none;
+    white-space: nowrap;
+  }
 }
 
 @media (max-width: 48rem) {
@@ -3634,6 +3640,29 @@ body:has(.hero) .site-header:not(.is-scrolled) .menu-toggle {
   border-bottom: 1px solid var(--line);
   border-radius: 0;
   background: transparent;
+}
+
+/* FAQ interaction: make the whole row respond, not only the icon. */
+.faq-question {
+  transition: background-color 220ms var(--ease-out), color 220ms var(--ease-out), padding-inline 220ms var(--ease-out);
+}
+
+.faq-question:hover,
+.faq-question:focus-visible {
+  background: var(--color-carbon);
+  color: var(--color-functional-white);
+  padding-inline: 1rem;
+}
+
+.faq-question:hover .faq-question__icon,
+.faq-question:focus-visible .faq-question__icon {
+  color: var(--color-orange);
+  transform: translateX(0.2rem);
+}
+
+.faq-question[aria-expanded="true"]:hover .faq-question__icon,
+.faq-question[aria-expanded="true"]:focus-visible .faq-question__icon {
+  transform: translateX(0.2rem) rotate(45deg);
 }
 
 .faq-question {
@@ -4245,8 +4274,8 @@ body:has(.hero) .site-header:not(.is-scrolled) .menu-toggle {
   place-items: center;
   margin-inline: auto;
   overflow: hidden;
-  border-radius: 0.75rem;
   isolation: isolate;
+  border-radius: 0.75rem;
 }
 
 .sustainability-card__image,
@@ -4357,7 +4386,8 @@ body:has(.hero) .site-header:not(.is-scrolled) .menu-toggle {
 }
 
 .esg-download .button {
-  min-height: 3.5rem;
+  /* Match the shared primary CTA height exactly. */
+  min-height: 3rem;
   border-radius: 0.5rem;
   white-space: nowrap;
 }
@@ -4719,6 +4749,29 @@ body:has(.hero) .site-header:not(.is-scrolled) .menu-toggle {
   justify-content: space-between;
   gap: 2rem;
   padding: clamp(1.5rem, 2.5vw, 2.75rem);
+}
+
+/* Keep the selected industry visible while the longer industry list scrolls. */
+@media (min-width: 68.01rem) {
+  .industries-explorer {
+    display: grid;
+    grid-template-columns: 34% minmax(0, 62%);
+    column-gap: 4%;
+    align-items: start;
+    min-height: 0;
+  }
+
+  .industries-selector {
+    width: 100%;
+  }
+
+  .industry-feature {
+    position: relative;
+    right: auto;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+  }
 }
 
 @media (min-width: 48.01rem) {
@@ -5105,6 +5158,27 @@ body:has(.hero) .site-header:not(.is-scrolled) .menu-toggle {
 
 /* Desktop navigation hover: colour only, without decorative underlines. */
 @media (min-width: 68.01rem) {
+  .site-header .desktop-nav a,
+  .site-header .nav-dropdown__toggle {
+    position: relative;
+    transition: color 180ms var(--ease-out);
+  }
+
+  .site-header .desktop-nav a::before,
+  .site-header .nav-dropdown__toggle::before {
+    position: absolute;
+    top: 50%;
+    left: -0.55rem;
+    width: 0;
+    height: 0.3rem;
+    border-radius: 0.125rem;
+    background: var(--color-orange);
+    content: "";
+    opacity: 0;
+    transform: translateY(-50%);
+    transition: width 180ms var(--ease-out), opacity 180ms var(--ease-out);
+  }
+
   .site-header .desktop-nav a:hover,
   .site-header .desktop-nav a:focus-visible,
   .site-header .nav-dropdown__toggle:hover,
@@ -5114,6 +5188,61 @@ body:has(.hero) .site-header:not(.is-scrolled) .menu-toggle {
   .nav-shell:has(.nav-dropdown__panel[data-open="true"]) .nav-dropdown__toggle:hover,
   .nav-shell:has(.nav-dropdown__panel[data-open="true"]) .nav-dropdown__toggle:focus-visible {
     color: #f1541c;
+    text-decoration: none;
+  }
+
+  .site-header .desktop-nav a:hover::before,
+  .site-header .desktop-nav a:focus-visible::before,
+  .site-header .nav-dropdown__toggle:hover::before,
+  .site-header .nav-dropdown__toggle:focus-visible::before {
+    width: 0.3rem;
+    opacity: 1;
+  }
+
+  body:has(.hero) .site-header:not(.is-scrolled) .desktop-nav a:hover,
+  body:has(.hero) .site-header:not(.is-scrolled) .desktop-nav a:focus-visible,
+  body:has(.hero) .site-header:not(.is-scrolled) .nav-dropdown__toggle:hover,
+  body:has(.hero) .site-header:not(.is-scrolled) .nav-dropdown__toggle:focus-visible {
+    color: var(--color-orange) !important;
+  }
+
+  body:has(.hero) .site-header:not(.is-scrolled) .desktop-nav a:hover::before,
+  body:has(.hero) .site-header:not(.is-scrolled) .desktop-nav a:focus-visible::before,
+  body:has(.hero) .site-header:not(.is-scrolled) .nav-dropdown__toggle:hover::before,
+  body:has(.hero) .site-header:not(.is-scrolled) .nav-dropdown__toggle:focus-visible::before {
+    width: 0.3rem;
+    opacity: 1;
+  }
+
+  /* Hero navigation needs a deliberately visible interaction state. Keep the
+     layout fixed: the orange rule is painted inside the item rather than
+     changing its padding or dimensions. */
+  body:has(.hero) .site-header:not(.is-scrolled) .desktop-nav a:hover,
+  body:has(.hero) .site-header:not(.is-scrolled) .desktop-nav a:focus-visible,
+  body:has(.hero) .site-header:not(.is-scrolled) .nav-dropdown__toggle:hover,
+  body:has(.hero) .site-header:not(.is-scrolled) .nav-dropdown__toggle:focus-visible {
+    color: var(--color-orange) !important;
+    box-shadow: inset 0 -2px 0 var(--color-orange);
+  }
+}
+
+/* Navigation hover is colour-only. No dots, rules or layout movement. */
+@media (min-width: 68.01rem) {
+  .site-header .desktop-nav a::before,
+  .site-header .nav-dropdown__toggle::before {
+    display: none !important;
+  }
+
+  .site-header .desktop-nav a:hover,
+  .site-header .desktop-nav a:focus-visible,
+  .site-header .nav-dropdown__toggle:hover,
+  .site-header .nav-dropdown__toggle:focus-visible,
+  body:has(.hero) .site-header:not(.is-scrolled) .desktop-nav a:hover,
+  body:has(.hero) .site-header:not(.is-scrolled) .desktop-nav a:focus-visible,
+  body:has(.hero) .site-header:not(.is-scrolled) .nav-dropdown__toggle:hover,
+  body:has(.hero) .site-header:not(.is-scrolled) .nav-dropdown__toggle:focus-visible {
+    color: #f1541c !important;
+    box-shadow: none !important;
     text-decoration: none;
   }
 }
@@ -5150,6 +5279,98 @@ body:has(.hero) .site-header:not(.is-scrolled) .menu-toggle {
   border-bottom: 1px solid var(--color-core-black);
   background: var(--color-functional-white);
   padding-top: calc(var(--section-space) / 2);
+}
+
+.transport-selector {
+  background: var(--color-functional-white);
+}
+
+.transport-selector__heading {
+  max-width: 38rem;
+}
+
+.transport-selector__heading .body-copy {
+  max-width: 30rem;
+  margin-top: 1rem;
+}
+
+.transport-selector__modes {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: clamp(2.5rem, 5vw, 4.5rem);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.transport-selector__modes a {
+  display: grid;
+  min-height: 8rem;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  border-right: 1px solid var(--line);
+  padding: 1.25rem;
+  color: var(--color-core-black);
+  text-decoration: none;
+  transition: background-color 220ms var(--ease-out), color 220ms var(--ease-out), padding 220ms var(--ease-out);
+}
+
+.transport-selector__modes a:first-child {
+  border-left: 1px solid var(--line);
+}
+
+.transport-selector__modes a:hover,
+.transport-selector__modes a:focus-visible {
+  background: var(--color-carbon);
+  color: var(--color-functional-white);
+  padding-inline: 1.5rem;
+}
+
+.transport-selector__modes span {
+  color: var(--color-orange);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.transport-selector__modes strong {
+  font-size: clamp(1.25rem, 2vw, 1.8rem);
+  font-weight: 500;
+}
+
+.transport-selector__modes i {
+  font-size: 1.2rem;
+}
+
+.transport-selector__link {
+  margin-top: 1.5rem;
+}
+
+@media (max-width: 52rem) {
+  .transport-selector__modes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .transport-selector__modes a:nth-child(2) {
+    border-right: 0;
+  }
+}
+
+@media (max-width: 34rem) {
+  .transport-selector__modes {
+    grid-template-columns: 1fr;
+  }
+
+  .transport-selector__modes a,
+  .transport-selector__modes a:nth-child(2) {
+    border-right: 0;
+    border-left: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .transport-selector__modes a:last-child {
+    border-bottom: 0;
+  }
 }
 
 .partnership-section {
@@ -5854,5 +6075,103 @@ body:has(.hero) .site-header:not(.is-scrolled) .menu-toggle {
 @media (prefers-reduced-motion: reduce) {
   .project-case__media img {
     transition: none;
+  }
+}
+
+/* Services route preview: the full comparison is the first content section. */
+.is-services-page main > #comparison-full {
+  display: block;
+  min-height: auto;
+  padding-top: var(--section-space);
+}
+
+.is-services-page .nav-shell {
+  background: var(--color-functional-white);
+  color: var(--color-core-black);
+}
+
+.is-services-page .desktop-nav a,
+.is-services-page .nav-dropdown__toggle {
+  color: var(--color-core-black);
+}
+
+.is-services-page .brand-link img {
+  filter: none;
+}
+
+.is-services-page .nav-actions .button--outline {
+  border-color: var(--color-core-black);
+  color: var(--color-core-black);
+}
+
+.is-services-page .menu-toggle {
+  border-color: var(--color-core-black);
+  color: var(--color-core-black);
+}
+
+/* The hidden homepage hero still exists in the DOM, so override its transparent-header rule. */
+.is-services-page .site-header:not(.is-scrolled) .nav-shell {
+  border-color: color-mix(in srgb, #000000 10%, transparent);
+  background: var(--color-functional-white);
+  color: var(--color-core-black);
+  box-shadow: 0 0.25rem 2rem color-mix(in srgb, #000000 7%, transparent);
+}
+
+.is-services-page .site-header:not(.is-scrolled) .desktop-nav a,
+.is-services-page .site-header:not(.is-scrolled) .nav-dropdown__toggle {
+  color: var(--color-core-black);
+}
+
+.is-services-page .site-header:not(.is-scrolled) .brand-link img {
+  filter: none;
+}
+
+.is-services-page .site-header:not(.is-scrolled) .nav-actions .button--outline,
+.is-services-page .site-header:not(.is-scrolled) .menu-toggle {
+  border-color: var(--color-core-black);
+  color: var(--color-core-black);
+}
+
+body.is-services-page:has(.hero) .site-header:not(.is-scrolled) .nav-shell {
+  border-color: color-mix(in srgb, #000000 10%, transparent);
+  background: var(--color-functional-white);
+  color: var(--color-core-black);
+  box-shadow: 0 0.25rem 2rem color-mix(in srgb, #000000 7%, transparent);
+}
+
+body.is-services-page:has(.hero) .site-header:not(.is-scrolled) .desktop-nav a,
+body.is-services-page:has(.hero) .site-header:not(.is-scrolled) .nav-dropdown__toggle {
+  color: var(--color-core-black);
+}
+
+body.is-services-page:has(.hero) .site-header:not(.is-scrolled) .brand-link img {
+  filter: none;
+}
+
+body.is-services-page:has(.hero) .site-header:not(.is-scrolled) .nav-actions .button--outline,
+body.is-services-page:has(.hero) .site-header:not(.is-scrolled) .menu-toggle {
+  border-color: var(--color-core-black);
+  color: var(--color-core-black);
+}
+
+@media (min-width: 68.01rem) {
+  .industries-explorer {
+    display: grid;
+    grid-template-columns: 34% minmax(0, 62%);
+    column-gap: 4%;
+    align-items: start;
+    min-height: 0;
+  }
+
+  .industries-selector {
+    width: 100%;
+  }
+
+  .industry-feature {
+    position: relative;
+    right: auto;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
   }
 }

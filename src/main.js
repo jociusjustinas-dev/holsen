@@ -6,6 +6,14 @@ import { initHolsenLoops } from "./holsen-loop.js";
 
 const root = document.documentElement;
 const body = document.body;
+const isServicesPage = window.location.pathname.replace(/\/+$/, "") === "/services";
+if (isServicesPage) {
+  body.classList.add("is-services-page");
+  document.querySelectorAll("main > section").forEach((section) => {
+    if (section.id === "comparison-full") section.removeAttribute("hidden");
+    else section.setAttribute("hidden", "");
+  });
+}
 const header = document.querySelector("[data-site-header]");
 const menuToggle = document.querySelector("[data-menu-toggle]");
 const mobileMenu = document.querySelector("[data-mobile-menu]");
@@ -44,8 +52,13 @@ const finishPreloader = () => {
   requestAnimationFrame(() => ScrollTrigger.refresh());
 };
 
-if (!preloader || reduceMotion) {
+if (!preloader) {
   finishPreloader();
+} else if (reduceMotion) {
+  body.classList.add("is-loading");
+  gsap.set(preloaderLogo, { autoAlpha: 1, scale: 1 });
+  gsap.set(preloaderFill, { clipPath: "inset(0% 0 0 0)" });
+  window.setTimeout(finishPreloader, 650);
 } else {
   body.classList.add("is-loading");
   gsap
