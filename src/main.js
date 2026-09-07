@@ -3,6 +3,7 @@ import Lenis from "lenis";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { initHolsenLoops } from "./holsen-loop.js";
+import { initMarketsMaps } from "./markets-map.js";
 
 const root = document.documentElement;
 const body = document.body;
@@ -22,6 +23,7 @@ const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").match
 
 gsap.registerPlugin(ScrollTrigger);
 initHolsenLoops();
+initMarketsMaps();
 root.classList.add("styles-ready");
 requestAnimationFrame(() => {
   requestAnimationFrame(() => root.classList.remove("is-booting"));
@@ -295,7 +297,7 @@ const servicesMarquees = document.querySelector("[data-services-marquees]");
 const servicesForward = servicesMarquees?.querySelector('[data-services-marquee="forward"]');
 const servicesReverse = servicesMarquees?.querySelector('[data-services-marquee="reverse"]');
 
-if (servicesMarquees && servicesForward && servicesReverse && !reduceMotion) {
+if (servicesMarquees && !servicesMarquees.hidden && servicesForward && servicesReverse && !reduceMotion) {
   const marqueeScroll = {
     trigger: servicesMarquees,
     start: "top bottom",
@@ -308,6 +310,62 @@ if (servicesMarquees && servicesForward && servicesReverse && !reduceMotion) {
 
   gsap.fromTo(servicesForward, { x: marqueeTravel }, { x: 0, ease: "none", scrollTrigger: { ...marqueeScroll } });
   gsap.fromTo(servicesReverse, { x: 0 }, { x: marqueeTravel, ease: "none", scrollTrigger: { ...marqueeScroll } });
+}
+
+const whyShowcase = document.querySelector("[data-why-showcase]");
+
+if (whyShowcase) {
+  const whyTabs = [...whyShowcase.querySelectorAll("[data-why-tab]")];
+  const whyPanels = [...whyShowcase.querySelectorAll("[data-why-panel]")];
+  const whyImages = [...whyShowcase.querySelectorAll("[data-why-image]")];
+  const canHover = window.matchMedia("(hover: hover)");
+  let activeWhyIndex = Math.max(0, whyTabs.findIndex((tab) => tab.getAttribute("aria-selected") === "true"));
+
+  const activateWhyItem = (nextIndex, { moveFocus = false } = {}) => {
+    if (!whyTabs[nextIndex] || nextIndex === activeWhyIndex) {
+      if (moveFocus) whyTabs[nextIndex]?.focus();
+      return;
+    }
+
+    whyTabs.forEach((tab, index) => {
+      const isActive = index === nextIndex;
+      tab.classList.toggle("is-active", isActive);
+      tab.setAttribute("aria-selected", String(isActive));
+      tab.tabIndex = isActive ? 0 : -1;
+    });
+
+    whyPanels.forEach((panel, index) => {
+      panel.hidden = index !== nextIndex;
+    });
+
+    whyImages.forEach((image, index) => {
+      const isActive = index === nextIndex;
+      image.classList.toggle("is-active", isActive);
+    });
+
+    activeWhyIndex = nextIndex;
+    if (moveFocus) whyTabs[nextIndex].focus();
+  };
+
+  whyTabs.forEach((tab, index) => {
+    tab.addEventListener("mouseenter", () => {
+      if (canHover.matches) activateWhyItem(index);
+    });
+    tab.addEventListener("focus", () => activateWhyItem(index));
+    tab.addEventListener("click", () => activateWhyItem(index));
+    tab.addEventListener("keydown", (event) => {
+      let nextIndex = null;
+
+      if (event.key === "ArrowDown" || event.key === "ArrowRight") nextIndex = (index + 1) % whyTabs.length;
+      if (event.key === "ArrowUp" || event.key === "ArrowLeft") nextIndex = (index - 1 + whyTabs.length) % whyTabs.length;
+      if (event.key === "Home") nextIndex = 0;
+      if (event.key === "End") nextIndex = whyTabs.length - 1;
+      if (nextIndex === null) return;
+
+      event.preventDefault();
+      activateWhyItem(nextIndex, { moveFocus: true });
+    });
+  });
 }
 
 document.querySelectorAll("[data-industry-tabs]").forEach((widget) => {
@@ -433,16 +491,13 @@ document.querySelectorAll("[data-case-carousel]").forEach((viewport) => {
 const marketsSection = document.querySelector("[data-markets-network]");
 const marketsIntro = marketsSection?.querySelector("[data-markets-intro]");
 const marketsRegions = marketsSection?.querySelector("[data-markets-regions]");
-const marketsLoop = marketsSection?.querySelector("[data-markets-loop]");
+const marketsMap = marketsSection?.querySelector("[data-markets-map]");
 
-if (marketsSection && marketsIntro && marketsRegions && marketsLoop && !reduceMotion) {
+if (marketsSection && marketsIntro && marketsRegions && marketsMap && !reduceMotion) {
   const marketsEyebrow = marketsIntro.querySelector(".eyebrow");
   const marketsTitle = marketsIntro.querySelector(".section-title");
   const marketsBody = marketsIntro.querySelector(".body-copy");
   const marketsCta = marketsIntro.querySelector(".button");
-  const marketsRegionLabel = marketsRegions.querySelector(":scope > p");
-  const marketsRegionItems = gsap.utils.toArray(".markets-list li", marketsRegions);
-  const marketsLoopDashes = gsap.utils.toArray("[data-loop-dash]", marketsLoop);
 
   const marketsTimeline = gsap.timeline({
     scrollTrigger: {
@@ -454,24 +509,11 @@ if (marketsSection && marketsIntro && marketsRegions && marketsLoop && !reduceMo
   });
 
   marketsTimeline
-    .fromTo(marketsLoop, { autoAlpha: 0, scale: 0.98 }, { autoAlpha: 1, scale: 1, duration: 0.9 }, 0)
-    .fromTo(
-      marketsLoopDashes,
-      { attr: { "stroke-dasharray": 1, "stroke-dashoffset": 1 } },
-      { attr: { "stroke-dashoffset": 0 }, duration: 0.64, stagger: 0.004, ease: "power2.out" },
-      0,
-    )
+    .fromTo(marketsMap, { autoAlpha: 0, y: 28 }, { autoAlpha: 1, y: 0, duration: 0.9 }, 0)
     .fromTo(marketsEyebrow, { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0 }, 0.06)
     .fromTo(marketsTitle, { autoAlpha: 0, y: 36 }, { autoAlpha: 1, y: 0 }, 0.14)
     .fromTo(marketsBody, { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0 }, 0.24)
-    .fromTo(marketsCta, { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0 }, 0.32)
-    .fromTo(marketsRegionLabel, { autoAlpha: 0, y: 18 }, { autoAlpha: 1, y: 0 }, 0.4)
-    .fromTo(
-      marketsRegionItems,
-      { autoAlpha: 0, y: 18 },
-      { autoAlpha: 1, y: 0, stagger: 0.055, duration: 0.48 },
-      0.46,
-    );
+    .fromTo(marketsCta, { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0 }, 0.32);
 }
 
 const parseCountUpValue = (rawValue) => {
@@ -517,29 +559,6 @@ if (!reduceMotion) {
         },
         0,
       );
-  });
-}
-
-const proofTitleMedia = document.querySelector("[data-proof-title-media]");
-
-if (proofTitleMedia && !reduceMotion) {
-  whenPageReady(() => {
-    gsap.fromTo(
-      proofTitleMedia,
-      { width: 0, autoAlpha: 0, scale: 0.88 },
-      {
-        width: "clamp(5.5rem, 11vw, 12rem)",
-        autoAlpha: 1,
-        scale: 1,
-        duration: 1,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: proofTitleMedia.closest(".proof-heading"),
-          start: "top 70%",
-          once: true,
-        },
-      },
-    );
   });
 }
 
