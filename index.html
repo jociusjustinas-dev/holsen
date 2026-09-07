@@ -179,16 +179,19 @@
       <!-- 01 Hero. Avenir reference: Home A full-bleed media hero and bottom brand dock. -->
       <section class="hero" id="hero" data-wp-section="home_hero" data-avenir-source="Home A / Hero">
         <div class="hero__media" aria-hidden="true">
-          <img
+          <video
             class="hero__background"
-            src="./src/assets/hero-road.jpg"
-            alt=""
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="auto"
+            poster="./src/assets/hero-road.jpg"
             width="2000"
             height="1382"
-            loading="eager"
-            decoding="async"
-            fetchpriority="high"
           >
+            <source src="/hero-road.mp4" type="video/mp4">
+          </video>
         </div>
         <div class="site-container section-grid">
           <div class="hero__intro reveal">
