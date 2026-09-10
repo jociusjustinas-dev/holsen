@@ -5135,18 +5135,25 @@ body:has(.hero) .site-header:not(.is-scrolled) .menu-toggle {
   }
 
   .proof-section .proof-chart__stats {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1rem;
-    margin-top: 1.25rem;
+    width: 50%;
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(1.5rem, 7vw, 2.25rem);
+    margin-top: 2rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .proof-section .proof-stat {
+    width: 100%;
+    max-width: 10rem;
   }
 
   .proof-section .proof-chart {
-    position: relative;
-    inset: auto;
-    grid-row: 3;
-    height: 28rem;
-    min-height: 26rem;
-    margin-top: 4rem;
+    position: absolute;
+    inset: auto 0 0 auto;
+    width: 55%;
+    height: clamp(20rem, 102vw, 25rem);
+    min-height: 0;
+    margin-top: 0;
     transform: none;
   }
 
