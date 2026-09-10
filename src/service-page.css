@@ -32,8 +32,8 @@
 .service-page main { outline: none; }
 .service-page main section { scroll-margin-top: calc(var(--header-offset) + 1rem); }
 .service-page .eyebrow { margin-bottom: 1.2rem; color: inherit; }
-.service-page h2 { margin: 0; font-size: clamp(2.25rem, 4vw, 4.5rem); line-height: 1.04; font-weight: 500; letter-spacing: var(--heading-letter-spacing); text-wrap: balance; }
-.service-page h3 { font-weight: 500; letter-spacing: -0.035em; line-height: 1.15; }
+.service-page main h2 { margin: 0; font-size: clamp(2.25rem, 4vw, 4.5rem); line-height: 1.04; font-weight: 500; letter-spacing: var(--heading-letter-spacing); text-wrap: balance; }
+.service-page main h3 { font-weight: 500; letter-spacing: -0.035em; line-height: 1.15; }
 .service-page p { line-height: 1.5; }
 .service-page main p:not(.eyebrow):not(.service-lead):not(.project-case__eyebrow):not(.body-copy):not(.lede) { font-size: clamp(1rem, 1.15vw, 1.2rem); }
 .service-hero { padding-top: clamp(7.5rem, 10vw, 10rem); }
