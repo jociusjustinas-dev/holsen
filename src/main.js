@@ -258,6 +258,32 @@ document.querySelectorAll("[data-accordion-group]").forEach((group) => {
   });
 });
 
+// Internal templates use the same progressive reveal language as the homepage.
+// Existing hand-authored reveal groups keep their own timing; otherwise each
+// section's primary content blocks are enhanced automatically.
+if (body.hasAttribute("data-page-type")) {
+  const addReveal = (item, delay = 0) => {
+    if (!item || item.classList.contains("reveal") || item.querySelector(".reveal")) return;
+    item.classList.add("reveal");
+    if (delay > 0) item.dataset.delay = String(Math.min(delay, 3));
+  };
+
+  document
+    .querySelectorAll("main > section:not(.service-hero):not(.final-cta) > .site-container")
+    .forEach((container) => {
+      const blocks = [...container.children].filter(
+        (item) => !item.matches(".sr-only, [aria-hidden='true'], .holsen-loop"),
+      );
+
+      if (!blocks.length) addReveal(container);
+      else blocks.forEach((item, index) => addReveal(item, index));
+    });
+
+  document
+    .querySelectorAll("main .final-cta__copy, main .carriers-application__intro, main .carriers-form-wrap")
+    .forEach((item, index) => addReveal(item, index % 2));
+}
+
 const revealItems = [...document.querySelectorAll(".reveal")];
 const heroRevealItems = revealItems.filter((item) => item.closest(".hero"));
 const scrollRevealItems = revealItems.filter((item) => !item.closest(".hero"));
