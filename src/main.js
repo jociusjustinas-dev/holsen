@@ -241,12 +241,13 @@ window.matchMedia("(min-width: 68.01rem)").addEventListener("change", (event) =>
 });
 
 const initPageContent = (scope = document.querySelector("#swup")) => {
-  if (!scope) return () => {};
+  if (!scope) return { cleanup: () => {}, startReveals: () => {} };
 
   const cleanups = [];
   delete root.dataset.pageInitError;
   initHolsenLoops(scope);
   ScrollTrigger.defaults({ scroller: scope });
+  let startReveals = () => {};
 
   const animationContext = gsap.context(() => {
 scope.querySelectorAll("[data-accordion-group]").forEach((group) => {
@@ -318,22 +319,22 @@ if (scope.querySelector(".service-hero")) {
   scope
     .querySelectorAll("main .final-cta__copy, main .carriers-application__intro, main .carriers-form-wrap")
     .forEach((item, index) => addReveal(item, index % 2));
+
+  scope
+    .querySelectorAll(
+      "main .article-sidebar, main [data-article-section], main .article-related__heading, main .article-related__card",
+    )
+    .forEach((item, index) => addReveal(item, index % 3));
 }
 
 const revealItems = [...scope.querySelectorAll(".reveal")];
 const heroRevealItems = revealItems.filter((item) => item.closest(".hero, .service-hero"));
 const scrollRevealItems = revealItems.filter((item) => !item.closest(".hero, .service-hero"));
+let revealObserver = null;
+let revealsStarted = false;
 
-if (reduceMotion || !("IntersectionObserver" in window)) {
-  revealItems.forEach((item) => item.classList.add("is-visible"));
-} else {
-  whenPageReady(() => {
-    requestAnimationFrame(() => {
-      heroRevealItems.forEach((item) => item.classList.add("is-visible"));
-    });
-  });
-
-  const revealObserver = new IntersectionObserver(
+if (!reduceMotion && "IntersectionObserver" in window) {
+  revealObserver = new IntersectionObserver(
     (entries, observer) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
@@ -341,12 +342,37 @@ if (reduceMotion || !("IntersectionObserver" in window)) {
         observer.unobserve(entry.target);
       });
     },
-    { root: scope, rootMargin: "0px 0px -26%", threshold: 0.12 },
+    { root: scope, rootMargin: "0px", threshold: 0.01 },
   );
-
-  scrollRevealItems.forEach((item) => revealObserver.observe(item));
   cleanups.push(() => revealObserver.disconnect());
 }
+
+startReveals = () => {
+  if (revealsStarted) return;
+  revealsStarted = true;
+
+  if (reduceMotion || !revealObserver) {
+    revealItems.forEach((item) => item.classList.add("is-visible"));
+    return;
+  }
+
+  requestAnimationFrame(() => {
+    if (!scope.isConnected) return;
+
+    const scrollBounds = scope.getBoundingClientRect();
+    const visibleTop = Math.max(0, scrollBounds.top);
+    const visibleBottom = Math.min(window.innerHeight, scrollBounds.bottom);
+
+    heroRevealItems.forEach((item) => item.classList.add("is-visible"));
+    scrollRevealItems.forEach((item) => {
+      const bounds = item.getBoundingClientRect();
+      const isInViewport = bounds.bottom > visibleTop && bounds.top < visibleBottom;
+
+      if (isInViewport) item.classList.add("is-visible");
+      else revealObserver.observe(item);
+    });
+  });
+};
 
 const servicesMarquees = scope.querySelector("[data-services-marquees]");
 const servicesForward = servicesMarquees?.querySelector('[data-services-marquee="forward"]');
@@ -908,12 +934,15 @@ if (year) year.textContent = String(new Date().getFullYear());
 
   requestAnimationFrame(() => ScrollTrigger.refresh());
 
-  return () => {
-    cleanups.splice(0).forEach((cleanup) => cleanup?.());
-    ScrollTrigger.getAll()
-      .filter((trigger) => trigger.trigger && scope.contains(trigger.trigger))
-      .forEach((trigger) => trigger.kill());
-    animationContext.revert();
+  return {
+    startReveals,
+    cleanup: () => {
+      cleanups.splice(0).forEach((cleanup) => cleanup?.());
+      ScrollTrigger.getAll()
+        .filter((trigger) => trigger.trigger && scope.contains(trigger.trigger))
+        .forEach((trigger) => trigger.kill());
+      animationContext.revert();
+    },
   };
 };
 
@@ -941,7 +970,9 @@ const syncBodyData = (incomingDocument) => {
     .forEach((attribute) => document.body.setAttribute(attribute.name, attribute.value));
 };
 
-let cleanupPageContent = initPageContent();
+let activePageContent = initPageContent();
+const initialPageContent = activePageContent;
+whenPageReady(() => initialPageContent.startReveals());
 bindHeaderScroll(document.querySelector("#swup"));
 syncPersistentNavigation();
 
@@ -961,7 +992,7 @@ swup.hooks.on("visit:start", () => {
   if (menuToggle?.getAttribute("aria-expanded") === "true") {
     closeMobileMenu({ restoreFocus: false });
   }
-  cleanupPageContent();
+  activePageContent.cleanup();
 });
 
 swup.hooks.on("content:insert", (_visit, { containers }) => {
@@ -993,13 +1024,14 @@ swup.hooks.replace("scroll:anchor", (_visit, { hash, options }) => {
 swup.hooks.on("content:replace", (visit) => {
   const nextContainer = document.querySelector("#swup");
   syncBodyData(visit.to.document);
-  cleanupPageContent = initPageContent(nextContainer);
+  activePageContent = initPageContent(nextContainer);
   bindHeaderScroll(nextContainer);
   syncPersistentNavigation();
 });
 
 swup.hooks.on("visit:end", () => {
   const main = document.querySelector("#swup #main-content");
+  activePageContent.startReveals();
   main?.focus({ preventScroll: true });
   requestAnimationFrame(() => ScrollTrigger.refresh());
 });
