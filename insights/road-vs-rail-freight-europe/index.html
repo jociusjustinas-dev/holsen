@@ -130,12 +130,12 @@
       </article>
 
       <section data-section-spacing="attached" class="article-related" aria-labelledby="related-insights-title" data-wp-section="related_insights">
-        <div class="site-container">
+        <div class="site-container" data-mobile-carousel-group>
           <header class="article-related__heading">
             <div><p class="eyebrow">Continue exploring</p><h2 id="related-insights-title">Related insights.</h2></div>
             <a class="inline-cta" href="/insights/">View all insights <i class="ri-arrow-right-line" aria-hidden="true"></i></a>
           </header>
-          <div class="article-related__grid">
+          <div class="article-related__grid" data-mobile-carousel data-carousel-item-label="Related insight" tabindex="-1" aria-label="Related insights">
             <article class="article-related__card">
               <a href="/insights/?topic=transport#insights-library">
                 <div class="article-related__image"><img src="/src/assets/markets-winter.jpg" alt="" width="2000" height="1333" loading="lazy" decoding="async"></div>
@@ -161,6 +161,11 @@
               </a>
             </article>
           </div>
+          <div class="mobile-carousel__controls" data-mobile-carousel-controls aria-label="Related insights carousel controls">
+            <button type="button" data-mobile-carousel-prev aria-label="Previous related insight" disabled><i class="ri-arrow-left-line" aria-hidden="true"></i></button>
+            <button type="button" data-mobile-carousel-next aria-label="Next related insight"><i class="ri-arrow-right-line" aria-hidden="true"></i></button>
+          </div>
+          <p class="sr-only" data-mobile-carousel-status aria-live="polite">Related insight 1 of 3</p>
         </div>
       </section>
 

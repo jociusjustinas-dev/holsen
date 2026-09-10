@@ -3419,6 +3419,10 @@ body:has(.hero) .site-header:not(.is-scrolled) .menu-toggle {
   display: none;
 }
 
+.mobile-carousel__controls {
+  display: none;
+}
+
 .home-audience-fit {
   margin-top: clamp(2.5rem, 4vw, 4rem);
   border-block: 1px solid var(--line);
@@ -7592,14 +7596,16 @@ body {
     text-wrap: pretty;
   }
 
-  .services-carousel__controls {
+  .services-carousel__controls,
+  .mobile-carousel__controls {
     display: flex;
     justify-content: flex-end;
     gap: 0.5rem;
     margin: 1rem 0 0;
   }
 
-  .services-carousel__controls button {
+  .services-carousel__controls button,
+  .mobile-carousel__controls button {
     display: inline-grid;
     width: 3rem;
     height: 3rem;
@@ -7614,14 +7620,32 @@ body {
   }
 
   .services-carousel__controls button:not(:disabled):hover,
-  .services-carousel__controls button:not(:disabled):focus-visible {
+  .services-carousel__controls button:not(:disabled):focus-visible,
+  .mobile-carousel__controls button:not(:disabled):hover,
+  .mobile-carousel__controls button:not(:disabled):focus-visible {
     background: var(--color-core-black);
     color: var(--color-functional-white);
   }
 
-  .services-carousel__controls button:disabled {
+  .services-carousel__controls button:disabled,
+  .mobile-carousel__controls button:disabled {
     opacity: 0.3;
     cursor: default;
+  }
+
+  [data-mobile-carousel] {
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  [data-mobile-carousel]::-webkit-scrollbar {
+    display: none;
+  }
+
+  [data-mobile-carousel]:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 0.25rem;
   }
 
   .services-section .service-list {

@@ -42,7 +42,7 @@
       <section data-section-spacing="attached" class="services-section overview-catalogue" id="service-catalogue" aria-labelledby="catalogue-title" data-wp-section="services_catalogue">
         <div class="site-container">
           <h2 class="sr-only" id="catalogue-title">Freight and logistics services</h2>
-          <div class="service-list">
+          <div class="service-list" data-services-carousel tabindex="-1" aria-label="Freight and logistics services">
             <a class="service-row" href="/services/road-freight/" data-event="service_link_click">
               <img class="service-row__media" src="/src/assets/industry-chemicals-automotive.jpg" alt="" width="1600" height="904" loading="lazy" decoding="async">
               <span class="service-row__number">01</span><h3 class="service-row__name">Road Freight</h3><p class="service-row__description">Flexible international transport for direct, groupage and complex route requirements.</p><i class="service-row__arrow ri-arrow-right-line" aria-hidden="true"></i>
@@ -73,6 +73,11 @@
             </a>
             <a class="service-cta" href="#services-comparison" data-event="comparison_engagement"><span class="service-cta__copy"><strong class="service-cta__label">Not sure which<br>service fits?</strong><span class="service-cta__description">Start with the cargo, route and timing. Compare the transport options below.</span></span><i class="service-cta__arrow ri-arrow-right-down-line" aria-hidden="true"></i></a>
           </div>
+          <div class="services-carousel__controls" aria-label="Service carousel controls">
+            <button type="button" data-service-prev aria-label="Previous service" disabled><i class="ri-arrow-left-line" aria-hidden="true"></i></button>
+            <button type="button" data-service-next aria-label="Next service"><i class="ri-arrow-right-line" aria-hidden="true"></i></button>
+          </div>
+          <p class="sr-only" data-service-carousel-status aria-live="polite">Service 1 of 8</p>
         </div>
       </section>
 

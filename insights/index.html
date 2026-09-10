@@ -43,7 +43,7 @@
       </section>
 
       <section data-section-spacing="content" class="service-section insights-library" id="insights-library" aria-labelledby="library-title" data-wp-section="insights_library" data-validation="required">
-        <div class="site-container">
+        <div class="site-container" data-mobile-carousel-group>
           <header class="insights-library__heading"><div><p class="eyebrow">The knowledge library</p><h2 id="library-title">Explore by topic.</h2></div></header>
           <div class="insights-filterbar" data-insights-filters hidden>
             <div class="insights-filters" role="group" aria-label="Filter planned guides by topic">
@@ -55,7 +55,7 @@
             </div>
             <p class="insights-count" role="status" aria-live="polite" aria-atomic="true" data-insights-count>6 planned guides</p>
           </div>
-          <div class="insights-grid" id="insights-grid">
+          <div class="insights-grid" id="insights-grid" data-mobile-carousel data-carousel-item-label="Insight" tabindex="-1" aria-label="Insights library">
             <article class="insights-topic" data-insights-topic="compliance" aria-labelledby="topic-adr">
               <a class="insights-topic__link" href="/insights/road-vs-rail-freight-europe/" aria-label="Read the Road vs rail freight in Europe guide">
               <div class="insights-topic__image"><img src="/src/assets/industry-chemicals-automotive.jpg" alt="" width="1600" height="904" loading="lazy" decoding="async"></div>
@@ -105,6 +105,11 @@
                           </a>
             </article>
           </div>
+          <div class="mobile-carousel__controls" data-mobile-carousel-controls aria-label="Insights carousel controls">
+            <button type="button" data-mobile-carousel-prev aria-label="Previous insight" disabled><i class="ri-arrow-left-line" aria-hidden="true"></i></button>
+            <button type="button" data-mobile-carousel-next aria-label="Next insight"><i class="ri-arrow-right-line" aria-hidden="true"></i></button>
+          </div>
+          <p class="sr-only" data-mobile-carousel-status aria-live="polite">Insight 1 of 6</p>
         </div>
       </section>
 

@@ -716,6 +716,10 @@ if (servicesCarousel) {
   let activeServiceIndex = -1;
   let serviceScrollFrame = 0;
 
+  if (!servicesCarousel.id) servicesCarousel.id = "services-carousel";
+  previousServiceButton?.setAttribute("aria-controls", servicesCarousel.id);
+  nextServiceButton?.setAttribute("aria-controls", servicesCarousel.id);
+
   const getServiceLeft = (slide) => slide.offsetLeft - servicesCarousel.firstElementChild.offsetLeft;
 
   const setActiveServiceIndex = (index) => {
@@ -775,6 +779,103 @@ if (servicesCarousel) {
   syncServiceCarouselMode();
   setActiveServiceIndex(0);
 }
+
+scope.querySelectorAll("[data-mobile-carousel]").forEach((carousel) => {
+  const group = carousel.closest("[data-mobile-carousel-group]");
+  const controls = group?.querySelector("[data-mobile-carousel-controls]");
+  const previousButton = controls?.querySelector("[data-mobile-carousel-prev]");
+  const nextButton = controls?.querySelector("[data-mobile-carousel-next]");
+  const status = group?.querySelector("[data-mobile-carousel-status]");
+
+  if (!group || !controls || !previousButton || !nextButton) return;
+
+  const mobileCarousel = window.matchMedia("(max-width: 48rem)");
+  const itemLabel = carousel.dataset.carouselItemLabel || "Item";
+  let slides = [];
+  let activeIndex = 0;
+  let scrollFrame = 0;
+
+  if (!carousel.id) carousel.id = `mobile-carousel-${[...scope.querySelectorAll("[data-mobile-carousel]")].indexOf(carousel) + 1}`;
+  previousButton.setAttribute("aria-controls", carousel.id);
+  nextButton.setAttribute("aria-controls", carousel.id);
+
+  const getSlides = () => [...carousel.children].filter((slide) => !slide.hidden);
+  const getSlideLeft = (slide) => {
+    const firstSlide = slides[0];
+    return firstSlide ? slide.offsetLeft - firstSlide.offsetLeft : 0;
+  };
+
+  const setActiveIndex = (index) => {
+    const lastIndex = Math.max(0, slides.length - 1);
+    activeIndex = Math.max(0, Math.min(index, lastIndex));
+    previousButton.disabled = !slides.length || activeIndex === 0;
+    nextButton.disabled = !slides.length || activeIndex === lastIndex;
+    if (status) status.textContent = slides.length ? `${itemLabel} ${activeIndex + 1} of ${slides.length}` : `No ${itemLabel.toLowerCase()}s`;
+  };
+
+  const refreshSlides = ({ reset = false } = {}) => {
+    slides = getSlides();
+    if (reset && mobileCarousel.matches) carousel.scrollTo({ left: 0, behavior: "auto" });
+    setActiveIndex(reset ? 0 : activeIndex);
+  };
+
+  const goToSlide = (index) => {
+    const nextIndex = Math.max(0, Math.min(index, slides.length - 1));
+    const slide = slides[nextIndex];
+    if (!slide) return;
+
+    carousel.scrollTo({
+      left: getSlideLeft(slide),
+      behavior: reduceMotion ? "auto" : "smooth",
+    });
+    setActiveIndex(nextIndex);
+  };
+
+  const onPrevious = () => goToSlide(activeIndex - 1);
+  const onNext = () => goToSlide(activeIndex + 1);
+  const onKeydown = (event) => {
+    if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+    event.preventDefault();
+    goToSlide(activeIndex + (event.key === "ArrowRight" ? 1 : -1));
+  };
+  const onScroll = () => {
+    cancelAnimationFrame(scrollFrame);
+    scrollFrame = requestAnimationFrame(() => {
+      if (!slides.length) return;
+      const nearestIndex = slides.reduce((closestIndex, slide, index) => {
+        const closestDistance = Math.abs(getSlideLeft(slides[closestIndex]) - carousel.scrollLeft);
+        const slideDistance = Math.abs(getSlideLeft(slide) - carousel.scrollLeft);
+        return slideDistance < closestDistance ? index : closestIndex;
+      }, 0);
+      setActiveIndex(nearestIndex);
+    });
+  };
+  const syncMode = () => {
+    carousel.tabIndex = mobileCarousel.matches ? 0 : -1;
+    if (!mobileCarousel.matches) carousel.scrollTo({ left: 0, behavior: "auto" });
+    refreshSlides({ reset: true });
+  };
+
+  previousButton.addEventListener("click", onPrevious);
+  nextButton.addEventListener("click", onNext);
+  carousel.addEventListener("keydown", onKeydown);
+  carousel.addEventListener("scroll", onScroll, { passive: true });
+  mobileCarousel.addEventListener("change", syncMode);
+
+  const observer = new MutationObserver(() => refreshSlides({ reset: true }));
+  observer.observe(carousel, { attributes: true, attributeFilter: ["hidden"], subtree: true });
+  syncMode();
+
+  cleanups.push(() => {
+    cancelAnimationFrame(scrollFrame);
+    observer.disconnect();
+    previousButton.removeEventListener("click", onPrevious);
+    nextButton.removeEventListener("click", onNext);
+    carousel.removeEventListener("keydown", onKeydown);
+    carousel.removeEventListener("scroll", onScroll);
+    mobileCarousel.removeEventListener("change", syncMode);
+  });
+});
 
 const marketsSection = scope.querySelector("[data-markets-network]");
 const marketsIntro = marketsSection?.querySelector("[data-markets-intro]");

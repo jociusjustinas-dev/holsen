@@ -70,12 +70,12 @@
 
       <!-- Design-only fictional profiles and AI portraits. Replace with approved real team data before publication. -->
       <section data-section-spacing="content" class="service-section why-team" id="why-team" aria-labelledby="team-title" data-wp-section="why_team" data-validation="required">
-        <div class="site-container">
+        <div class="site-container" data-mobile-carousel-group>
           <header class="service-section-heading">
             <div><p class="eyebrow">Our team</p><h2 id="team-title">People behind<br>the decisions.</h2></div>
             <div class="why-team__intro"><p class="body-copy">Clear responsibility starts with knowing who is involved and what they are accountable for.</p><a class="button button--outline" href="/contact/" data-event="contact_cta_click">Contact Our Team</a></div>
           </header>
-          <ul class="why-team__grid" aria-label="Team profiles">
+          <ul class="why-team__grid" aria-label="Team profiles" data-mobile-carousel data-carousel-item-label="Team member" tabindex="-1">
             <li class="why-team__member">
               <div class="why-team__portrait"><img src="/src/assets/team-demo-martynas.jpg" alt="" width="800" height="1200" loading="lazy" decoding="async"></div>
               <div class="why-team__name-row"><h3>Martynas Vaitkus</h3><span class="why-team__linkedin" aria-hidden="true"><i class="ri-linkedin-box-fill"></i></span></div>
@@ -95,6 +95,11 @@
               <p class="why-team__responsibility body-copy">Coordinates capacity, shipment updates and delivery arrangements.</p>
             </li>
           </ul>
+          <div class="mobile-carousel__controls" data-mobile-carousel-controls aria-label="Team carousel controls">
+            <button type="button" data-mobile-carousel-prev aria-label="Previous team member" disabled><i class="ri-arrow-left-line" aria-hidden="true"></i></button>
+            <button type="button" data-mobile-carousel-next aria-label="Next team member"><i class="ri-arrow-right-line" aria-hidden="true"></i></button>
+          </div>
+          <p class="sr-only" data-mobile-carousel-status aria-live="polite">Team member 1 of 3</p>
         </div>
       </section>
 

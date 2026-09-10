@@ -58,7 +58,18 @@
 .why-page .why-team__role { font-size: 0.85rem; color: var(--color-carbon); margin: 0; }
 .why-page .why-team__responsibility { font-size: 1rem; color: var(--color-carbon); border-top: 1px solid var(--line); padding-top: 1rem; margin: 1rem 0 0; line-height: 1.5; }
 @media (max-width: 47.99rem) {
-  .why-team__grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .why-team__grid[data-mobile-carousel] {
+    display: flex;
+    width: calc(100% + 1rem);
+    gap: 1rem;
+    overflow-x: auto;
+    padding-right: 1rem;
+  }
+  .why-team__grid[data-mobile-carousel] > li {
+    flex: 0 0 min(82vw, 20rem);
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
   .why-team__intro { justify-self: start; }
 }
 .why-principles li { grid-template-columns: 0.6fr 5fr 5fr; gap: clamp(1.25rem, 3vw, 3rem); padding-block: clamp(2rem, 4vw, 3.5rem); }

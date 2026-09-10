@@ -259,16 +259,42 @@
   .service-hero__media > img { object-position: 35% center; }
   .service-hero__media figcaption { padding: 2rem 1rem 1rem; font-size: 0.75rem; }
   .service-hero__media figcaption span:first-child { max-width: 12rem; }
-  .service-jump { --jump-gap: 1.5rem; top: 4.75rem; width: min(calc(100% - 1.5rem), 112.5rem); justify-content: start; gap: 0 var(--jump-gap); padding-inline: 1rem; }
-  .service-jump a { flex-basis: calc(33.333% - 1.5rem); justify-content: flex-start; font-size: 0.8rem; text-align: left; }
-  .service-jump a:nth-child(3)::after { display: none; }
+  .service-jump {
+    --jump-gap: 1.25rem;
+    top: 4.75rem;
+    width: 100%;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 0 var(--jump-gap);
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    padding-inline: 1rem;
+    scroll-padding-inline: 1rem;
+    scrollbar-width: none;
+  }
+  .service-jump::-webkit-scrollbar { display: none; }
+  .service-jump a { flex: 0 0 auto; justify-content: flex-start; min-height: 2.75rem; font-size: 0.8rem; text-align: left; white-space: nowrap; }
+  .service-jump a::after { opacity: 1; }
   .service-disclosures summary { min-height: 5rem; gap: 1rem; }
   .service-disclosures__body { padding-left: 2.9rem; padding-right: 1rem; }
   .service-industries { margin-top: 2.5rem; padding-top: 2.5rem; }
   .service-markets-map .markets-map { min-height: 22rem; }
   .service-industries__heading { grid-template-columns: 1fr; gap: 1.25rem; }
-  .service-industries__grid { grid-template-columns: 1fr; }
-  .service-industries__grid > a { min-height: 11rem; }
+  .service-industries__grid[data-mobile-carousel] {
+    display: flex;
+    width: calc(100% + 1rem);
+    gap: 0.75rem;
+    overflow-x: auto;
+    border: 0;
+    padding-right: 1rem;
+  }
+  .service-industries__grid[data-mobile-carousel] > a {
+    flex: 0 0 min(82vw, 20rem);
+    min-height: 14rem;
+    border: 1px solid var(--line-dark);
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
   .service-process li { grid-template-columns: 2rem 1fr; gap: 0.75rem 1rem; padding-block: 1.5rem 2rem; }
   .service-process p { grid-column: 2; }
   .service-section-heading { margin-bottom: 2rem; gap: 1.5rem; }

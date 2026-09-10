@@ -34,8 +34,8 @@ body.carriers-page #main-content > .carriers-hero:has(+ [data-section-spacing="a
 .carriers-page .carriers-image-note { margin: 1rem 0 0; color: var(--color-carbon); font-size: 0.75rem; line-height: 1.5; }
 .carriers-application__layout { position: relative; z-index: 2; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--service-gap); align-items: start; }
 .carriers-application__loop-track { position: absolute; z-index: 1; inset: 0; pointer-events: none; }
-.carriers-application__loop-pin { position: sticky; top: 0; width: 100%; height: 100svh; }
-.carriers-application__loop-track .final-cta__loop { top: 42%; }
+.carriers-application__loop-pin { position: absolute; inset: 0; width: 100%; height: 100%; }
+.carriers-application__loop-track .final-cta__loop { top: auto; bottom: -8%; transform: translateX(50%); }
 .carriers-application__intro { position: sticky; top: calc(var(--header-offset) + 1.5rem); }
 .carriers-page .carriers-application__intro .eyebrow { color: var(--color-holsen-orange); }
 .carriers-page main .carriers-application__intro > p:not(.eyebrow) { max-width: 34rem; margin: 1.5rem 0 2.25rem; color: var(--color-light-grey); }
