@@ -1,0 +1,90 @@
+.quote-section { padding-bottom: var(--service-space); }
+.quote-layout { display: grid; grid-template-columns: minmax(0, 8fr) minmax(0, 4fr); gap: var(--service-gap); align-items: start; }
+.quote-form-wrap { min-width: 0; }
+.quote-fit { margin: 0 0 2rem; border-block: 1px solid var(--line); padding-block: 1.5rem; }
+.quote-page .quote-fit .eyebrow { margin: 0 0 0.75rem; color: var(--color-holsen-orange); }
+.quote-fit h2 { max-width: 24ch; margin: 0; font-size: clamp(1.65rem, 2.4vw, 2.5rem); font-weight: 500; letter-spacing: var(--heading-letter-spacing); line-height: 1.08; }
+.quote-fit > p:last-child { max-width: 52rem; margin: 1rem 0 0; color: var(--color-carbon); }
+.quote-progress { margin-bottom: 2rem; }
+.quote-progress ol { display: flex; list-style: none; margin: 0; padding: 0; border-bottom: 1px solid var(--line); }
+.quote-progress li { flex: 1; min-width: 0; }
+.quote-progress button { width: 100%; min-height: 4rem; display: flex; align-items: center; gap: 0.65rem; padding: 0.75rem 0.5rem; color: var(--color-carbon); background: transparent; border: 0; text-align: left; font: inherit; font-size: 0.95rem; }
+.quote-progress button span { font-size: 0.75rem; }
+.quote-progress button[aria-current="step"] { background: var(--color-core-black); color: var(--color-functional-white); }
+.quote-progress button[aria-current="step"] span { color: var(--color-holsen-orange); }
+.quote-progress button:disabled { cursor: default; }
+.quote-progress button:not(:disabled):hover { text-decoration: underline; text-underline-offset: 0.3em; }
+.quote-pricing-mobile { display: none; margin: 0 0 2rem; border: 1px solid var(--color-core-black); background: var(--color-functional-white); }
+.quote-pricing-mobile summary { display: flex; min-height: 3.5rem; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.85rem 1rem; font-weight: 600; list-style: none; cursor: pointer; }
+.quote-pricing-mobile summary::-webkit-details-marker { display: none; }
+.quote-pricing-mobile summary::after { color: var(--color-holsen-orange); content: "+"; font-size: 1.4rem; font-weight: 400; line-height: 1; }
+.quote-pricing-mobile[open] summary::after { content: "−"; }
+.quote-pricing-mobile > div { border-top: 1px solid var(--line); padding: 0 1rem 1rem; }
+.quote-pricing-mobile .quote-price-factors { margin-top: 0; }
+.quote-pricing-mobile .quote-price-factors li { border-color: var(--line); color: var(--color-core-black); }
+.quote-pricing-mobile .quote-price-factors li:last-child { border-color: var(--line); }
+.quote-pricing-mobile p { margin: 1rem 0 0; color: var(--color-carbon); font-size: 0.9rem; line-height: 1.45; }
+.quote-step { border: 0; padding: 0; margin: 0; min-width: 0; }
+.quote-step > legend { padding: 0; width: 100%; font-size: clamp(1.8rem, 3vw, 3rem); font-weight: 500; line-height: 1.1; letter-spacing: var(--heading-letter-spacing); }
+[data-step-heading] { display: block; scroll-margin-top: calc(var(--header-offset) + 1rem); }
+[data-step-heading]:focus { outline: none; }
+.quote-page .quote-step__intro { font-size: 1rem; margin: 1rem 0 2rem; color: var(--color-carbon); }
+.quote-services { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; }
+.quote-services label { display: flex; align-items: center; gap: 1rem; padding: 1.25rem; min-height: 5rem; cursor: pointer; border: 1px solid var(--color-holsen-grey); background: var(--color-functional-white); }
+.quote-services label:has(:checked) { color: var(--color-functional-white); background: var(--color-core-black); border-color: var(--color-core-black); }
+.quote-services label:hover { border-color: var(--color-core-black); }
+.quote-services input, .quote-extras input { width: 1.25rem; height: 1.25rem; flex: 0 0 1.25rem; accent-color: var(--color-core-black); }
+.quote-services label:has(:checked) input { accent-color: var(--color-holsen-orange); }
+.quote-services label:has(:focus-visible) { outline: 2px solid var(--color-core-black); outline-offset: 3px; }
+.quote-extras { min-width: 0; border: 0; margin: 0; padding: 0; }
+.quote-extras legend { font-size: 0.95rem; font-weight: 500; margin-bottom: 0.75rem; }
+.quote-extras legend span { font-weight: 400; }
+.quote-extras > div { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem 1rem; }
+.quote-extras label { display: flex; gap: 0.75rem; align-items: center; min-height: 2.75rem; cursor: pointer; }
+.quote-extras input:focus-visible { outline: 2px solid var(--color-core-black); outline-offset: 3px; }
+.quote-actions { display: flex; justify-content: space-between; gap: 1rem; margin-top: 2rem; }
+.quote-actions [data-quote-next] { margin-left: auto; }
+.quote-page .response-commitment { max-width: 42rem; margin: 1rem 0 0; color: var(--color-carbon); font-size: 0.85rem; line-height: 1.5; }
+.quote-page .response-commitment strong { color: var(--color-core-black); font-weight: 650; }
+.quote-upload input[type="file"] { min-height: 4rem; padding: 0.5rem; cursor: pointer; }
+.quote-upload input[type="file"]::file-selector-button { min-height: 3rem; margin-right: 1rem; border: 0; border-radius: 0.35rem; background: var(--color-core-black); color: var(--color-functional-white); padding: 0.75rem 1rem; font: inherit; font-weight: 600; cursor: pointer; transition: background-color 200ms var(--ease-out), color 200ms var(--ease-out); }
+.quote-upload input[type="file"]:hover::file-selector-button { background: var(--color-holsen-orange); color: var(--color-core-black); }
+.quote-upload__selection { margin-top: 0.85rem; border: 1px solid var(--line); background: var(--color-functional-white); padding: 1rem; }
+.quote-upload__selection > div { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.quote-upload__selection strong { font-size: 0.9rem; font-weight: 600; }
+.quote-upload__selection button { min-height: 2.75rem; border: 0; background: transparent; color: var(--color-core-black); padding: 0.4rem 0; font: inherit; font-size: 0.85rem; text-decoration: underline; text-underline-offset: 0.2em; cursor: pointer; }
+.quote-upload__selection ul { display: grid; gap: 0.45rem; margin: 0.75rem 0 0; padding: 0; list-style: none; }
+.quote-upload__selection li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 1rem; border-top: 1px solid var(--line); padding-top: 0.45rem; font-size: 0.85rem; }
+.quote-upload__selection li span:first-child { min-width: 0; overflow-wrap: anywhere; }
+.quote-upload__selection li span:last-child { color: var(--color-carbon); }
+.quote-page .quote-status { font-size: 1rem; margin-top: 1rem; }
+.quote-page .quote-status:not(:empty) { border-left: 0.3rem solid var(--color-holsen-orange); border-radius: 0.5rem; background: var(--color-functional-white); padding: 0.85rem 1rem; }
+.quote-status:empty { display: none; }
+.quote-review { padding: 1.5rem; margin-top: 2rem; border-radius: 0.5rem; background: var(--color-functional-white); }
+.quote-review__heading { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
+.quote-review h3 { font-size: 1.5rem; margin: 0; }
+.quote-edit { font: inherit; font-size: 0.85rem; background: none; border: 0; min-height: 2.75rem; text-decoration: underline; text-underline-offset: 0.2em; }
+.quote-review dl { margin: 1rem 0 0; }
+.quote-review dl > div { display: grid; grid-template-columns: 6rem minmax(0, 1fr); gap: 1rem; padding-block: 0.6rem; border-top: 1px solid var(--line); font-size: 0.95rem; }
+.quote-review dt { font-weight: 500; }
+.quote-review dd { margin: 0; color: var(--color-carbon); overflow-wrap: anywhere; white-space: pre-wrap; }
+.quote-context { padding: clamp(1.5rem, 3vw, 3rem); color: var(--color-functional-white); background: var(--color-core-black); }
+.quote-page .quote-context .eyebrow { color: var(--color-holsen-orange); }
+.quote-page .quote-context > .body-copy { color: var(--color-light-grey); font-size: 1rem; margin-block: 1.5rem 2rem; }
+.quote-context__note { border-top: 1px solid var(--line-dark); padding-top: 1.5rem; }
+.quote-shortlist { margin-top: 1.75rem; border-top: 1px solid var(--line-dark); padding-top: 1.5rem; }
+.quote-shortlist dl { display: grid; margin: 1rem 0 0; }
+.quote-shortlist dl > div { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 1rem; border-top: 1px solid var(--line-dark); padding-block: 0.65rem; }
+.quote-shortlist dt { color: var(--color-light-grey); font-size: 0.8rem; }
+.quote-shortlist dd { margin: 0; color: var(--color-functional-white); font-size: 0.85rem; font-weight: 650; text-align: right; }
+.quote-context h3 { margin: 0; font-size: 1.3rem; }
+.quote-context__note p { color: var(--color-light-grey); }
+.quote-price-factors { counter-reset: quote-factor; margin: 1.25rem 0; padding: 0; list-style: none; }
+.quote-price-factors li { counter-increment: quote-factor; display: grid; grid-template-columns: 1.75rem minmax(0, 1fr); gap: 0.65rem; border-top: 1px solid var(--line-dark); padding-block: 0.7rem; color: var(--color-functional-white); font-size: 0.9rem; line-height: 1.35; }
+.quote-price-factors li:last-child { border-bottom: 1px solid var(--line-dark); }
+.quote-price-factors li::before { content: counter(quote-factor, decimal-leading-zero); color: var(--color-holsen-orange); font-size: 0.65rem; font-weight: 600; letter-spacing: 0.04em; line-height: 1.85; }
+
+.quote-form > .contact-error-summary { margin-bottom: 1.5rem; }
+.quote-form [hidden] { display: none !important; }
+@media (max-width: 68rem) { .quote-layout { grid-template-columns: 1fr; } .quote-pricing-mobile { display: block; } .quote-context { max-width: none; } .quote-context__note { display: none; } }
+@media (max-width: 47.99rem) { .quote-services { grid-template-columns: 1fr; } .quote-services label { min-height: 3.5rem; padding: 1rem; } .quote-progress button { font-size: 0.8rem; flex-direction: column; align-items: flex-start; gap: 0.25rem; } .quote-extras > div { grid-template-columns: 1fr; } .quote-actions { flex-wrap: wrap; } .quote-actions [data-quote-next] { flex: 1; padding-inline: 1rem; } .quote-review__heading { flex-wrap: wrap; } }

@@ -1,8 +1,34 @@
 import { defineConfig } from "vite";
 import tailwindcss from "@tailwindcss/vite";
+import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+
+// Render shared navigation/footer into each static page, ready for WordPress parts.
+const sharedShell = () => ({
+  name: "holsen-shared-shell",
+  transformIndexHtml: {
+    order: "pre",
+    handler(html, context) {
+      if (!html.includes("<!-- holsen:header -->")) return html;
+      const home = readFileSync(new URL("./index.html", import.meta.url), "utf8");
+      const part = (tag) => {
+        const match = home.match(new RegExp(`<${tag}\\b[\\s\\S]*?<\\/${tag}>`));
+        if (!match) throw new Error(`Missing shared Holsen ${tag}`);
+        return match[0].replaceAll('src="./src/', 'src="/src/');
+      };
+      const path = context.path.replace(/index\.html$/, "");
+      const header = path.startsWith("/insights/") && path !== "/insights/"
+        ? part("header").replaceAll('href="/insights/"', 'href="/insights/" aria-current="true"')
+        : part("header");
+      return html.replace("<!-- holsen:header -->", header)
+        .replace("<!-- holsen:footer -->", part("footer"))
+        .replaceAll(`href="${path}"`, `href="${path}" aria-current="page"`);
+    },
+  },
+});
 
 export default defineConfig({
-  plugins: [tailwindcss()],
+  plugins: [sharedShell(), tailwindcss()],
   css: {
     lightningcss: {
       targets: {
@@ -13,6 +39,22 @@ export default defineConfig({
     },
   },
   build: {
+    rollupOptions: {
+      input: {
+        home: fileURLToPath(new URL("./index.html", import.meta.url)),
+        services: fileURLToPath(new URL("./services/index.html", import.meta.url)),
+        roadFreight: fileURLToPath(new URL("./services/road-freight/index.html", import.meta.url)),
+        chemicals: fileURLToPath(new URL("./industries/chemicals/index.html", import.meta.url)),
+        industries: fileURLToPath(new URL("./industries/index.html", import.meta.url)),
+        whyHolsen: fileURLToPath(new URL("./why-holsen/index.html", import.meta.url)),
+        insights: fileURLToPath(new URL("./insights/index.html", import.meta.url)),
+        forCarriers: fileURLToPath(new URL("./for-carriers/index.html", import.meta.url)),
+        contact: fileURLToPath(new URL("./contact/index.html", import.meta.url)),
+        privacyPolicy: fileURLToPath(new URL("./privacy-policy/index.html", import.meta.url)),
+        requestQuote: fileURLToPath(new URL("./request-a-quote/index.html", import.meta.url)),
+        roadRailInsight: fileURLToPath(new URL("./insights/road-vs-rail-freight-europe/index.html", import.meta.url)),
+      },
+    },
     target: "es2020",
     cssTarget: ["chrome111", "firefox111", "safari16"],
     sourcemap: true,

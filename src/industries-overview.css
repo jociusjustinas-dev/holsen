@@ -1,0 +1,33 @@
+/* Industry overview: existing service-card, table, globe and FAQ primitives. */
+.industries-overview-page .service-hero__heading { padding-bottom: clamp(3rem, 6vw, 6rem); }
+.industries-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.industries-directory { padding-bottom: var(--service-space); }
+.industry-directory { align-items: start; }
+.industry-directory > details { min-width: 0; scroll-margin-top: calc(var(--header-offset) + 2rem); }
+.industry-directory summary { cursor: pointer; list-style: none; min-height: 17rem; }
+.industry-directory summary::-webkit-details-marker { display: none; }
+.industry-directory .service-row__name { margin: 0; font-size: clamp(1.5rem, 2.1vw, 2.6rem); }
+.industry-directory .service-row__description { font-size: 1rem; line-height: 1.5; }
+.industry-directory summary:focus-visible { outline-offset: -5px; }
+.industry-directory details[open] summary { background: var(--color-core-black); color: var(--color-functional-white); }
+.industry-directory details[open] .service-row__media,
+.industry-directory details[open] summary::before { opacity: 1; }
+.industry-directory details[open] .service-row__arrow { transform: rotate(45deg); color: var(--color-holsen-orange); }
+.industry-directory__body { padding: 1.5rem; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--color-functional-white); }
+.industry-directory__body p { margin: 0; color: var(--color-carbon); }
+.industry-directory__body a { margin-top: 1rem; }
+
+.industry-directory > .service-cta { grid-column: auto; align-self: stretch; min-height: 17rem; }
+.industry-directory .service-cta__label { font-size: clamp(1.75rem, 2.5vw, 3rem); }
+.industry-directory .service-cta__description { font-size: 1rem; }
+.industries-overview-page .alternative-comparison__table th[scope="row"] > span { color: var(--color-carbon); }
+.industries-overview-page .alternative-comparison__table th[scope="row"] > strong { font-size: clamp(1.3rem, 2vw, 2rem); }
+
+
+
+
+.industries-region-list { display: flex; flex-wrap: wrap; gap: 0.6rem 1.25rem; margin: 0 0 1.5rem; padding: 0; list-style: none; color: var(--color-light-grey); font-size: 0.9rem; line-height: 1.5; }
+.industries-overview-page .industries-faq { padding-block: var(--service-space); }
+.industries-overview-page .service-disclosures summary:focus-visible { outline-color: var(--color-core-black); }
+@media (max-width: 68rem) { .industry-directory.service-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } .industry-directory > .service-cta { grid-column: 1 / -1; min-height: 13rem; } }
+@media (max-width: 47.99rem) { .industry-directory.service-list { grid-template-columns: 1fr; } .industry-directory summary { min-height: 15rem; } .industries-actions { flex-direction: column; align-items: flex-start; } .industries-overview-page .industry-proof { grid-template-columns: 1fr; } }

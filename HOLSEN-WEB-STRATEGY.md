@@ -373,6 +373,22 @@ Flexible multimodal capability across multiple markets without limiting the solu
 
 This order prevents the homepage from becoming a generic service catalogue.
 
+### 5.5 Commitment-first commercial copy — APPROVED DIRECTION (2026-09-09)
+
+Customer-facing copy must lead with the action Holsen takes and the decision or operating output the buyer receives. Necessary conditions belong after that commitment, not in the opening sentence.
+
+Use this sequence:
+
+1. **Commitment** — what Holsen does.
+2. **Process** — what Holsen reviews, records or assigns.
+3. **Boundary** — only the cargo-, route- or implementation-specific condition needed for factual accuracy.
+
+Avoid opening answers with “can be assessed”, “depends on”, “where it can be confirmed” or similar non-committal language. This rule does not authorise invented routes, frequencies, ADR classes, certifications, SLAs, integrations or performance figures. When evidence is missing, commit to a clear review and acceptance decision rather than implying unsupported capability.
+
+### 5.6 Commercial-fit reassurance — APPROVED DIRECTION (2026-09-09)
+
+The site must not imply that Holsen only accepts enterprise-scale tenders. Preserve the long-term partnership priority while stating that recurring transport and operationally complex freight are evaluated by the route, cargo, frequency and coordination required — not company size alone. Use this reassurance on the homepage, at the start of the RFQ flow and in the homepage FAQ. Do not publish a numeric minimum until the client defines and approves one.
+
 ### 5.5 Content truth rule
 
 Every claim must be one of three types:
@@ -505,10 +521,7 @@ Industries
 ├── Automotive
 └── Life Sciences & Healthcare
 
-Why Holsen
-
-About
-├── About Holsen
+Why Holsen — includes About Holsen / company overview
 ├── Ethics & Compliance
 ├── Sustainability
 └── Careers → external Lithuanian careers site
@@ -533,6 +546,8 @@ Privacy Policy
 
 **Services Overview** and **Industries Overview** are required for both UX and search architecture even if not explicitly itemised in an earlier scope list.
 
+**User-approved structure update — 2026-09-08:** About Holsen is consolidated into `/why-holsen/`, not a separate page or menu item. This page covers company identity and operating model as well as differentiation, people’s operational responsibilities and proof. Ethics & Compliance and Sustainability remain supporting content destinations; this consolidation does not authorise their implementation or publication of unvalidated company history, named team members or legal facts.
+
 ### 7.2 Navigation
 
 Desktop primary navigation:
@@ -540,7 +555,6 @@ Desktop primary navigation:
 - Services
 - Industries
 - Why Holsen
-- About
 - Insights
 - For Carriers
 - Contact
@@ -558,8 +572,7 @@ Do **not** create a standalone Markets page in the current scope. Use Markets as
 - Homepage;
 - Service pages;
 - Industry pages;
-- Why Holsen;
-- About.
+- Why Holsen (including the company overview).
 
 Regions identified in the brief and strategy:
 
@@ -686,7 +699,6 @@ Not an abstract brand slogan.
 - Services
 - Industries
 - Why Holsen
-- About
 - Insights
 - For Carriers
 - Contact
@@ -751,7 +763,8 @@ Not an abstract brand slogan.
 - `[30+ markets served]`
 - `[10+ years with key accounts]`
 - `[98%+ on-time delivery]`
-- `[ADR-capable operations]`
+
+**User-approved prototype update — 2026-09-09:** do not use `ADR-capable operations` as a primary proof statement until the legal entity, service scope and supporting evidence are confirmed. The prototype may show a final-looking, release-blocking trust strip for ISO, AEO, SQAS, GDP, CMR insurance and ADR categories without visible prototype labels. Until client evidence is supplied, show category and purpose only: no certificate numbers, validity, status or claim that Holsen holds the record. Keep the source-level validation marker and release blocker, omit any unverified category before publication, and never include unverified records in structured data.
 
 **Supporting line:**
 
@@ -894,13 +907,13 @@ Do not revert to *Customer First / Tailored Solutions / Operational Excellence /
 **Industry content:**
 
 - **Agriculture** — Seasonal volumes, market timing and dependable capacity.
-- **Chemicals** — Safety, compliance and ADR expertise.
+- **Chemicals** — Cargo-specific planning, documentation and handling.
 - **Industrial** — Flexible planning for complex freight and operating conditions.
 - **Consumer Goods** — Reliable flow, cargo integrity and predictable delivery.
 - **Paper & Packaging** — Capacity and dependable scheduling for high-volume movements.
 - **Technology** — Coordinated handling for sensitive, valuable and time-critical goods.
 - **Automotive** — Time-sensitive supply chains and production continuity.
-- **Life Sciences & Healthcare** — Controlled, compliant coordination for sensitive products.
+- **Life Sciences & Healthcare** — Requirements-led planning for sensitive products.
 
 **CTA:**
 
@@ -924,7 +937,7 @@ Do not revert to *Customer First / Tailored Solutions / Operational Excellence /
 
 **Body:**
 
-> **Holsen supports supply chains that need continuity, accountable teams and service performance that can be reviewed over time.**
+> **Holsen assigns one accountable team, agrees how the operation will run and reviews service performance against defined measures.**
 
 **Working capability list — CLIENT TO VALIDATE / NOT FOR PUBLICATION:**
 
@@ -957,7 +970,7 @@ Do not revert to *Customer First / Tailored Solutions / Operational Excellence /
 
 **Intro:**
 
-> **The right mode depends on distance, urgency, capacity, route access, cargo requirements and total supply-chain cost. This comparison is a starting point; the final solution may combine modes.**
+> **We compare distance, urgency, capacity, route access, cargo requirements and total supply-chain cost before recommending a mode. When one mode is not enough, the proposed plan connects the stages and assigns responsibility across them.**
 
 | Mode | Best for | Flexibility | Typical speed | Capacity | Relative CO₂ profile |
 |---|---|---:|---:|---:|---:|
@@ -1079,43 +1092,43 @@ Use 5–7 questions, not an indiscriminate 20-item accordion.
 
 #### Which countries and regions does Holsen Logistics serve?
 
-> **Holsen coordinates international freight across Europe and routes extending into the Baltics, CIS, the Caucasus, Central Asia and selected Asian markets. Exact country and corridor coverage depends on the service and shipment requirements. Discuss your route with our logistics team for a confirmed solution.**
+> **Holsen coordinates international freight across Europe and routes extending into the Baltics, CIS, the Caucasus, Central Asia and selected Asian markets. Share the origin, destination and cargo requirements; the team returns a clear route-feasibility decision and proposed operating setup before booking.**
 
 **Validation:** client must approve the exact coverage before publication. Link to relevant Services or future corridor content.
 
 #### Which transport services does Holsen provide?
 
-> **Holsen provides road, rail, sea and air freight, supported by contract logistics, customs and value-added services. Solutions may combine modes where route, capacity, timing or cargo requirements make a multimodal approach more effective.**
+> **Holsen provides road, rail, sea and air freight, supported by contract logistics, customs and value-added services. The team compares the complete journey and proposes a multimodal plan when a single mode does not meet the route, capacity, timing or cargo requirements.**
 
 Link to Services Overview.
 
 #### Can Holsen manage ADR and dangerous goods?
 
-> **Holsen supports ADR and dangerous-goods logistics where the required route, equipment, partners and documentation can be confirmed. The exact scope depends on the goods classification and operating markets, so shipment details must be reviewed before acceptance.**
+> **Holsen reviews the goods classification, route, equipment, capacity and documentation before accepting a dangerous-goods shipment. You receive a clear acceptance decision and service scope before booking; accepted classes and exclusions remain specific to the cargo and operating markets.**
 
 **Validation:** confirm actual classes, exclusions, warehousing, certifications and responsible entities before publication. Link to Chemicals and relevant service pages.
 
 #### Can Holsen integrate with our systems through EDI?
 
-> **Holsen can assess EDI and data-exchange requirements as part of a contractual logistics setup. Available messages, systems, implementation process and timelines must be confirmed for each client.**
+> **For a contractual logistics setup, Holsen documents the required data exchange, responsible parties and implementation scope during onboarding. Message types, systems and timing are agreed before implementation begins.**
 
 **Validation:** capability is a placeholder until the technical scope is verified.
 
 #### How does Holsen provide shipment visibility?
 
-> **Shipment visibility is defined around the service and client setup, including agreed status updates, exception communication and available tracking tools. Holsen assigns clear operational ownership so clients know who is responsible when conditions change.**
+> **Holsen assigns clear operational ownership for shipment updates and exception communication. Before transport begins, the operating setup records what the client team receives, who receives it and who acts when conditions change.**
 
 **Validation:** insert named platform, access model, frequency and support hours only after confirmation.
 
-#### Does Holsen provide CO₂ emissions reporting?
+#### Do we need an enterprise-scale tender to work with Holsen?
 
-> **CO₂ reporting can be assessed for contractual logistics programmes where the required transport data and methodology are available. Reporting scope, calculation standard and frequency must be agreed before implementation.**
+> **No. Holsen works with recurring transport and operationally complex freight requirements. Fit is based on the route, cargo, frequency and coordination needed — not company size alone.**
 
-**Validation:** do not state availability as a fact until methodology and delivery capability are confirmed.
+**Validation:** confirm the commercial-fit criteria and any real minimum threshold before publication. Do not invent or imply a numeric threshold.
 
 #### Can Holsen support international logistics tenders?
 
-> **Yes. Holsen's long-term partnership model is designed for companies evaluating ongoing international logistics support. The team can discuss routes, service requirements, onboarding, performance measures and integration needs during the qualification process.**
+> **Yes. Holsen structures the qualification discussion around routes, service requirements, onboarding, performance measures and integration needs. The result is a defined operating and commercial scope for the tender decision.**
 
 **Validation:** confirm the exact tender-support process and responsible team.
 
@@ -1148,7 +1161,6 @@ Include:
 - Services links;
 - Industries links;
 - Why Holsen;
-- About;
 - Insights;
 - For Carriers & Partners;
 - Contact;
@@ -1196,6 +1208,10 @@ Avoid one intimidating form. Use a clear, accessible, resumable or simple three-
 - Message / supporting context
 - File upload only if secure, necessary and operationally supported
 - privacy notice and consent where legally required
+
+**User-approved prototype update — 2026-09-09:** include an optional supporting-document picker for packing lists, SDS/MSDS and dangerous-goods declarations. The prototype may validate file count, extension and size in the browser, but production upload remains blocked until secure transport, server-side content validation, malware scanning, storage, retention, access and deletion responsibilities are approved. Never send file names or document contents to analytics.
+
+**User-approved pricing-orientation update — 2026-09-09:** explain the factors that shape a quotation — route and mode, cargo profile, collection/delivery conditions, timing and frequency, specialist requirements, and current capacity or operating costs. Do not show indicative rates or price ranges without validated lanes, dates and commercial assumptions. State that final pricing follows review of the complete requirement and operational feasibility.
 
 ### Form UX requirements
 
@@ -1332,7 +1348,7 @@ Never choose heading levels for visual size.
 
 Implement JSON-LD only where it matches visible, validated content:
 
-- `Organization` on the homepage or About page;
+- `Organization` on the homepage or combined Why Holsen / company page, only with validated entity details;
 - `WebSite` on the homepage;
 - `BreadcrumbList` on internal pages;
 - `Service` on appropriate service pages as a semantic entity, without assuming a Google rich result;
@@ -2021,7 +2037,7 @@ If no old domain or URL control exists, document that constraint and focus on en
 
 - internal Service pages;
 - internal Industry pages;
-- Why Holsen, About, Contact and carrier pages;
+- Why Holsen (including company overview), Contact and carrier pages;
 - Insights archive and articles;
 - Resources / ESG landing template;
 - full Request a Quote workflow and back-end integration;

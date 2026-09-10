@@ -7,14 +7,6 @@ import { initMarketsMaps } from "./markets-map.js";
 
 const root = document.documentElement;
 const body = document.body;
-const isServicesPage = window.location.pathname.replace(/\/+$/, "") === "/services";
-if (isServicesPage) {
-  body.classList.add("is-services-page");
-  document.querySelectorAll("main > section").forEach((section) => {
-    if (section.id === "comparison-full") section.removeAttribute("hidden");
-    else section.setAttribute("hidden", "");
-  });
-}
 const header = document.querySelector("[data-site-header]");
 const menuToggle = document.querySelector("[data-menu-toggle]");
 const mobileMenu = document.querySelector("[data-mobile-menu]");

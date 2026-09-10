@@ -1,0 +1,42 @@
+/* Industry pages reuse the internal-page shell, not a separate design system. */
+.industry-page main section { scroll-margin-top: var(--jump-anchor-margin, 4rem); }
+.industry-page .service-hero__media > img { object-position: center 55%; }
+.industry-page .industry-matrix { padding-block: var(--service-space); }
+.industry-page .alternative-comparison__table th[scope="row"] > span { color: var(--color-carbon); }
+.industry-page .alternative-comparison__table th[scope="row"] > strong { font-size: clamp(1.3rem, 2vw, 2rem); }
+.industry-matrix a { text-underline-offset: 0.25em; }
+.industry-matrix__link { margin-top: 0.65rem; }
+.industry-page .industry-compliance .section-title { font-size: clamp(2.5rem, 3.9vw, 4.9rem); line-height: 0.98; }
+.industry-page .partnership-copy .eyebrow { margin-bottom: 0; }
+.industry-page .partnership-copy .lede { line-height: 1.25; }
+.industry-page .industry-requirement { flex-direction: column; align-items: flex-start; gap: 0.6rem; }
+.industry-page .industry-requirement h3 { margin: 0; font-size: 1.15rem; font-weight: 600; letter-spacing: -0.02em; }
+.industry-page main .industry-requirement p { margin: 0; font-size: 1rem; font-weight: 400; line-height: 1.5; }
+.industry-page .industry-review-note { display: flex; align-items: baseline; gap: 0.65rem; padding-top: 1.25rem; border-top: 1px solid var(--color-carbon); }
+.industry-review-note::before { content: ""; width: 0.45rem; height: 0.45rem; flex: 0 0 0.45rem; background: var(--color-holsen-orange); }
+.industry-proof { display: grid; grid-template-columns: 5fr 6fr; gap: var(--service-gap); margin-top: var(--service-space); padding-top: clamp(2.5rem, 5vw, 5rem); border-top: 1px solid var(--line-dark); }
+.industry-proof h3 { margin: 0 0 1.25rem; font-size: clamp(1.75rem, 2.5vw, 2.75rem); }
+.industry-proof__status { display: inline-flex; align-items: center; gap: 0.65rem; margin: 0 0 1.5rem; color: var(--color-light-grey); }
+.industry-proof__status::before { content: ""; width: 0.45rem; height: 0.45rem; flex: 0 0 0.45rem; background: var(--color-holsen-orange); }
+.industry-proof p:not(.eyebrow) { color: var(--color-light-grey); }
+.industry-proof dl { display: grid; gap: 0; margin: 0; }
+.industry-proof dl > div {
+  display: grid;
+  grid-template-columns: 7rem 1fr;
+  gap: 1.5rem;
+  padding-block: 1.5rem;
+  border-top: 1px solid var(--line-dark);
+}
+.industry-proof dl > div:last-child { border-bottom: 1px solid var(--line-dark); }
+.industry-proof dt { font-weight: 500; }
+.industry-proof dd { margin: 0; color: var(--color-light-grey); line-height: 1.5; }
+.industry-page .industry-faq { padding-block: var(--service-space); }
+.industry-page .service-disclosures summary:focus-visible { outline-color: var(--color-core-black); }
+@media (max-width: 47.99rem) {
+  .industry-proof { grid-template-columns: 1fr; }
+  .industry-proof dl > div { grid-template-columns: 1fr; gap: 0.5rem; }
+  .industry-page .service-hero__media { -webkit-mask-size: 100% 100%; mask-size: 100% 100%; }
+}
+.industry-page .trust-strip.chemical-qualification {
+  border-bottom: 0;
+}
