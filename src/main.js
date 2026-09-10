@@ -18,10 +18,6 @@ import { initInsightArticle } from "./insight-article.js";
 
 const root = document.documentElement;
 const body = document.body;
-const header = document.querySelector("[data-site-header]");
-const menuToggle = document.querySelector("[data-menu-toggle]");
-const mobileMenu = document.querySelector("[data-mobile-menu]");
-const navShell = document.querySelector("[data-nav-shell]");
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 gsap.registerPlugin(ScrollTrigger);
@@ -87,158 +83,182 @@ root.classList.add("reveal-enabled");
 
 let activeScrollContainer = document.querySelector("#swup");
 let removeHeaderScrollListener = () => {};
+let activeHeaderController = null;
 
-const setHeaderState = () => {
-  header?.classList.toggle("is-scrolled", (activeScrollContainer?.scrollTop || 0) > 16);
-};
-
-const bindHeaderScroll = (container) => {
+const bindHeaderScroll = (container, controller = activeHeaderController) => {
   removeHeaderScrollListener();
   activeScrollContainer = container;
+  const setHeaderState = () => {
+    controller?.header?.classList.toggle("is-scrolled", (container?.scrollTop || 0) > 16);
+  };
   container?.addEventListener("scroll", setHeaderState, { passive: true });
   removeHeaderScrollListener = () => container?.removeEventListener("scroll", setHeaderState);
   setHeaderState();
 };
 
-const closeDesktopDropdowns = (exceptButton = null) => {
-  document.querySelectorAll("[data-nav-dropdown]").forEach((button) => {
-    if (button === exceptButton) return;
-    button.setAttribute("aria-expanded", "false");
-    const panel = document.getElementById(button.getAttribute("aria-controls"));
+const initHeader = (scope = document.querySelector("header.site-header")) => {
+  if (!scope) return { header: null, closeAll: () => {}, cleanup: () => {} };
 
-    if (panel?._menuTimeline && !reduceMotion) panel._menuTimeline.reverse();
-    else panel?.setAttribute("data-open", "false");
-  });
-};
+  const cleanups = [];
+  const menuToggle = scope.querySelector("[data-menu-toggle]");
+  const mobileMenu = scope.querySelector("[data-mobile-menu]");
+  const navShell = scope.querySelector("[data-nav-shell]");
+  const dropdownButtons = [...scope.querySelectorAll("[data-nav-dropdown]")];
+  const timelines = new Map();
 
-document.querySelectorAll("[data-nav-dropdown]").forEach((button) => {
-  const panel = document.getElementById(button.getAttribute("aria-controls"));
-  const parent = button.closest(".nav-dropdown");
-  const panelInner = panel?.querySelector(".nav-dropdown__inner");
-  const panelItems = panel ? gsap.utils.toArray(".nav-dropdown__links a, .nav-dropdown__feature", panel) : [];
-
-  if (panel && panelInner && !reduceMotion) {
-    panel._menuTimeline = gsap
-      .timeline({
-        paused: true,
-        defaults: { ease: "power3.inOut" },
-        onStart: () => panel.setAttribute("data-open", "true"),
-        onReverseComplete: () => panel.setAttribute("data-open", "false"),
-      })
-      .fromTo(panel, { height: 0 }, { height: "min(68vh, 34rem)", duration: 0.58 }, 0)
-      .fromTo(panelInner, { autoAlpha: 0, y: -22 }, { autoAlpha: 1, y: 0, duration: 0.38, ease: "power3.out" }, 0.2)
-      .fromTo(panelItems, { autoAlpha: 0, y: 18 }, { autoAlpha: 1, y: 0, duration: 0.34, stagger: 0.035, ease: "power3.out" }, 0.25);
-  }
-
-  const setOpen = (open) => {
-    closeDesktopDropdowns(open ? button : null);
-    button.setAttribute("aria-expanded", String(open));
-
-    if (!panel) return;
-    if (reduceMotion || !panel._menuTimeline) {
-      panel.setAttribute("data-open", String(open));
-      return;
-    }
-
-    if (open) panel._menuTimeline.play();
-    else panel._menuTimeline.reverse();
+  const closeDesktopDropdowns = (exceptButton = null) => {
+    dropdownButtons.forEach((button) => {
+      if (button === exceptButton) return;
+      button.setAttribute("aria-expanded", "false");
+      const panel = scope.querySelector(`#${CSS.escape(button.getAttribute("aria-controls"))}`);
+      const timeline = timelines.get(button);
+      if (timeline && !reduceMotion) timeline.reverse();
+      else panel?.setAttribute("data-open", "false");
+    });
   };
 
-  button.addEventListener("click", (event) => {
-    const isOpen = button.getAttribute("aria-expanded") === "true";
-    const usesHover = window.matchMedia("(hover: hover) and (pointer: fine) and (min-width: 68.01rem)").matches;
+  dropdownButtons.forEach((button) => {
+    const panel = scope.querySelector(`#${CSS.escape(button.getAttribute("aria-controls"))}`);
+    const parent = button.closest(".nav-dropdown");
+    const panelInner = panel?.querySelector(".nav-dropdown__inner");
+    const panelItems = panel ? gsap.utils.toArray(".nav-dropdown__links a, .nav-dropdown__feature", panel) : [];
 
-    // On desktop the pointer has already opened the menu before the click
-    // arrives. Keep it open; keyboard and touch activation still toggle it.
-    if (usesHover && event.detail > 0 && isOpen) return;
-    setOpen(!isOpen);
-  });
-
-  parent?.addEventListener("pointerenter", (event) => {
-    if (
-      event.pointerType === "mouse" &&
-      event.buttons === 0 &&
-      window.matchMedia("(min-width: 68.01rem)").matches
-    ) {
-      setOpen(true);
+    if (panel && panelInner && !reduceMotion) {
+      timelines.set(
+        button,
+        gsap
+          .timeline({
+            paused: true,
+            defaults: { ease: "power3.inOut" },
+            onStart: () => panel.setAttribute("data-open", "true"),
+            onReverseComplete: () => panel.setAttribute("data-open", "false"),
+          })
+          .fromTo(panel, { height: 0 }, { height: "min(68vh, 34rem)", duration: 0.58 }, 0)
+          .fromTo(panelInner, { autoAlpha: 0, y: -22 }, { autoAlpha: 1, y: 0, duration: 0.38, ease: "power3.out" }, 0.2)
+          .fromTo(panelItems, { autoAlpha: 0, y: 18 }, { autoAlpha: 1, y: 0, duration: 0.34, stagger: 0.035, ease: "power3.out" }, 0.25),
+      );
     }
+
+    const setOpen = (open) => {
+      closeDesktopDropdowns(open ? button : null);
+      button.setAttribute("aria-expanded", String(open));
+      if (!panel) return;
+      const timeline = timelines.get(button);
+      if (reduceMotion || !timeline) panel.setAttribute("data-open", String(open));
+      else if (open) timeline.play();
+      else timeline.reverse();
+    };
+    const onClick = (event) => {
+      const isOpen = button.getAttribute("aria-expanded") === "true";
+      const usesHover = window.matchMedia("(hover: hover) and (pointer: fine) and (min-width: 68.01rem)").matches;
+      if (usesHover && event.detail > 0 && isOpen) return;
+      setOpen(!isOpen);
+    };
+    const onPointerEnter = (event) => {
+      if (event.pointerType === "mouse" && event.buttons === 0 && window.matchMedia("(min-width: 68.01rem)").matches) {
+        setOpen(true);
+      }
+    };
+    const onPointerLeave = (event) => {
+      if (event.pointerType === "mouse" && !parent?.contains(document.activeElement)) setOpen(false);
+    };
+    const onFocusOut = (event) => {
+      if (!parent?.contains(event.relatedTarget)) setOpen(false);
+    };
+
+    button.addEventListener("click", onClick);
+    parent?.addEventListener("pointerenter", onPointerEnter);
+    parent?.addEventListener("pointerleave", onPointerLeave);
+    parent?.addEventListener("focusout", onFocusOut);
+    cleanups.push(() => {
+      button.removeEventListener("click", onClick);
+      parent?.removeEventListener("pointerenter", onPointerEnter);
+      parent?.removeEventListener("pointerleave", onPointerLeave);
+      parent?.removeEventListener("focusout", onFocusOut);
+    });
   });
 
-  parent?.addEventListener("pointerleave", (event) => {
-    if (event.pointerType === "mouse" && !parent.contains(document.activeElement)) {
-      setOpen(false);
-    }
-  });
-
-  parent?.addEventListener("focusout", (event) => {
-    if (!parent.contains(event.relatedTarget)) setOpen(false);
-  });
-});
-
-const openMobileMenu = () => {
-  if (!menuToggle || !mobileMenu) return;
-  menuToggle.setAttribute("aria-expanded", "true");
-  menuToggle.setAttribute("aria-label", "Close navigation menu");
-  mobileMenu.hidden = false;
-  menuToggle.querySelector(".menu-toggle__icon")?.classList.replace("ri-menu-line", "ri-close-line");
-  body.classList.add("menu-open");
-  mobileMenu.querySelector("a, summary, button")?.focus();
-};
-
-const closeMobileMenu = ({ restoreFocus = true } = {}) => {
-  if (!menuToggle || !mobileMenu) return;
-  menuToggle.setAttribute("aria-expanded", "false");
-  menuToggle.setAttribute("aria-label", "Open navigation menu");
-  mobileMenu.hidden = true;
-  menuToggle.querySelector(".menu-toggle__icon")?.classList.replace("ri-close-line", "ri-menu-line");
-  body.classList.remove("menu-open");
-  if (restoreFocus) menuToggle.focus();
-};
-
-menuToggle?.addEventListener("click", () => {
-  if (menuToggle.getAttribute("aria-expanded") === "true") closeMobileMenu();
-  else openMobileMenu();
-});
-
-mobileMenu?.querySelectorAll("a").forEach((link) => {
-  link.addEventListener("click", () => closeMobileMenu({ restoreFocus: false }));
-});
-
-document.addEventListener("click", (event) => {
-  if (navShell && !navShell.contains(event.target)) closeDesktopDropdowns();
-});
-
-document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape") {
-    const openDropdown = document.querySelector('[data-nav-dropdown][aria-expanded="true"]');
-    closeDesktopDropdowns();
-    openDropdown?.focus();
+  const openMobileMenu = () => {
+    if (!menuToggle || !mobileMenu) return;
+    menuToggle.setAttribute("aria-expanded", "true");
+    menuToggle.setAttribute("aria-label", "Close navigation menu");
+    mobileMenu.hidden = false;
+    menuToggle.querySelector(".menu-toggle__icon")?.classList.replace("ri-menu-line", "ri-close-line");
+    body.classList.add("menu-open");
+    mobileMenu.querySelector("a, summary, button")?.focus();
+  };
+  const closeMobileMenu = ({ restoreFocus = true } = {}) => {
+    if (!menuToggle || !mobileMenu) return;
+    menuToggle.setAttribute("aria-expanded", "false");
+    menuToggle.setAttribute("aria-label", "Open navigation menu");
+    mobileMenu.hidden = true;
+    menuToggle.querySelector(".menu-toggle__icon")?.classList.replace("ri-close-line", "ri-menu-line");
+    body.classList.remove("menu-open");
+    if (restoreFocus) menuToggle.focus();
+  };
+  const onMenuToggle = () => {
     if (menuToggle?.getAttribute("aria-expanded") === "true") closeMobileMenu();
-    return;
-  }
+    else openMobileMenu();
+  };
+  const onMobileLink = () => closeMobileMenu({ restoreFocus: false });
+  const onDocumentClick = (event) => {
+    if (navShell && !navShell.contains(event.target)) closeDesktopDropdowns();
+  };
+  const onDocumentKeydown = (event) => {
+    if (event.key === "Escape") {
+      const openDropdown = scope.querySelector('[data-nav-dropdown][aria-expanded="true"]');
+      closeDesktopDropdowns();
+      openDropdown?.focus();
+      if (menuToggle?.getAttribute("aria-expanded") === "true") closeMobileMenu();
+      return;
+    }
+    if (event.key !== "Tab" || menuToggle?.getAttribute("aria-expanded") !== "true" || !mobileMenu) return;
+    const focusable = [menuToggle, ...mobileMenu.querySelectorAll("a, summary, button")].filter(
+      (element) => !element.hidden && element.getClientRects().length > 0,
+    );
+    const first = focusable[0];
+    const last = focusable.at(-1);
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last?.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first?.focus();
+    }
+  };
+  const desktopQuery = window.matchMedia("(min-width: 68.01rem)");
+  const onDesktopChange = (event) => {
+    if (event.matches && menuToggle?.getAttribute("aria-expanded") === "true") {
+      closeMobileMenu({ restoreFocus: false });
+    }
+  };
 
-  if (event.key !== "Tab" || menuToggle?.getAttribute("aria-expanded") !== "true" || !mobileMenu) return;
+  menuToggle?.addEventListener("click", onMenuToggle);
+  mobileMenu?.querySelectorAll("a").forEach((link) => link.addEventListener("click", onMobileLink));
+  document.addEventListener("click", onDocumentClick);
+  document.addEventListener("keydown", onDocumentKeydown);
+  desktopQuery.addEventListener("change", onDesktopChange);
 
-  const focusable = [menuToggle, ...mobileMenu.querySelectorAll("a, summary, button")].filter(
-    (element) => !element.hidden && element.getClientRects().length > 0,
-  );
-  const first = focusable[0];
-  const last = focusable.at(-1);
-
-  if (event.shiftKey && document.activeElement === first) {
-    event.preventDefault();
-    last?.focus();
-  } else if (!event.shiftKey && document.activeElement === last) {
-    event.preventDefault();
-    first?.focus();
-  }
-});
-
-window.matchMedia("(min-width: 68.01rem)").addEventListener("change", (event) => {
-  if (event.matches && menuToggle?.getAttribute("aria-expanded") === "true") {
-    closeMobileMenu({ restoreFocus: false });
-  }
-});
+  return {
+    header: scope,
+    closeAll: () => {
+      closeDesktopDropdowns();
+      if (menuToggle?.getAttribute("aria-expanded") === "true") closeMobileMenu({ restoreFocus: false });
+    },
+    cleanup: () => {
+      closeDesktopDropdowns();
+      body.classList.remove("menu-open");
+      cleanups.splice(0).forEach((cleanup) => cleanup());
+      menuToggle?.removeEventListener("click", onMenuToggle);
+      mobileMenu?.querySelectorAll("a").forEach((link) => link.removeEventListener("click", onMobileLink));
+      document.removeEventListener("click", onDocumentClick);
+      document.removeEventListener("keydown", onDocumentKeydown);
+      desktopQuery.removeEventListener("change", onDesktopChange);
+      timelines.forEach((timeline) => timeline.kill());
+      timelines.clear();
+    },
+  };
+};
 
 const initPageContent = (scope = document.querySelector("#swup")) => {
   if (!scope) return { cleanup: () => {}, startReveals: () => {} };
@@ -946,9 +966,9 @@ if (year) year.textContent = String(new Date().getFullYear());
   };
 };
 
-const syncPersistentNavigation = () => {
+const syncPersistentNavigation = (headerScope = document.querySelector("header.site-header")) => {
   const currentPath = window.location.pathname.replace(/index\.html$/, "");
-  const links = document.querySelectorAll(".site-header a[href]");
+  const links = headerScope?.querySelectorAll("a[href]") || [];
 
   links.forEach((link) => link.removeAttribute("aria-current"));
   links.forEach((link) => {
@@ -973,14 +993,15 @@ const syncBodyData = (incomingDocument) => {
 let activePageContent = initPageContent();
 const initialPageContent = activePageContent;
 whenPageReady(() => initialPageContent.startReveals());
-bindHeaderScroll(document.querySelector("#swup"));
-syncPersistentNavigation();
+activeHeaderController = initHeader();
+bindHeaderScroll(document.querySelector("#swup"), activeHeaderController);
+syncPersistentNavigation(activeHeaderController.header);
 
 const swup = new Swup({
   animateHistoryBrowsing: true,
-  containers: ["#swup"],
+  containers: ["#swup", "header.site-header"],
   plugins: [
-    new SwupHeadPlugin({ persistAssets: true, awaitAssets: true }),
+    new SwupHeadPlugin({ persistAssets: true }),
     new SwupBodyClassPlugin(),
     new SwupPreloadPlugin(),
     new SwupParallelPlugin(),
@@ -988,10 +1009,7 @@ const swup = new Swup({
 });
 
 swup.hooks.on("visit:start", () => {
-  closeDesktopDropdowns();
-  if (menuToggle?.getAttribute("aria-expanded") === "true") {
-    closeMobileMenu({ restoreFocus: false });
-  }
+  activeHeaderController?.closeAll();
   activePageContent.cleanup();
 });
 
@@ -1023,15 +1041,18 @@ swup.hooks.replace("scroll:anchor", (_visit, { hash, options }) => {
 
 swup.hooks.on("content:replace", (visit) => {
   const nextContainer = document.querySelector("#swup");
+  const nextHeader = document.querySelector("header.site-header");
   syncBodyData(visit.to.document);
+  activeHeaderController?.cleanup();
+  activeHeaderController = initHeader(nextHeader);
   activePageContent = initPageContent(nextContainer);
-  bindHeaderScroll(nextContainer);
-  syncPersistentNavigation();
+  bindHeaderScroll(nextContainer, activeHeaderController);
+  syncPersistentNavigation(activeHeaderController.header);
+  activePageContent.startReveals();
 });
 
 swup.hooks.on("visit:end", () => {
   const main = document.querySelector("#swup #main-content");
-  activePageContent.startReveals();
   main?.focus({ preventScroll: true });
   requestAnimationFrame(() => ScrollTrigger.refresh());
 });

@@ -29,7 +29,7 @@ const sharedShell = () => ({
 
       if (!output.includes('id="swup"')) {
         output = output
-          .replace(/(<header class="site-header"[\s\S]*?<\/header>)/, '<div class="app">$1\n<div id="swup" class="transition-fade">')
+          .replace(/(<header class="site-header[^"]*"[\s\S]*?<\/header>)/, '<div class="app">$1\n<div id="swup" class="transition-swup hide-scrollbar">')
           .replace(/(<\/footer>)(?![\s\S]*<\/footer>)/, "$1\n</div>\n</div>");
       }
 
