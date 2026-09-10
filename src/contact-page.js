@@ -71,5 +71,5 @@ checkButton.addEventListener("click", () => {
     errorSummary.scrollIntoView({ block: "center", behavior: "instant" });
     return;
   }
-  status.textContent = "Details checked. Nothing has been sent — this preview is not connected to an enquiry recipient.";
+  status.textContent = "Your enquiry details are complete. Nothing has been sent — this preview is not connected to an enquiry recipient.";
 });

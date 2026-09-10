@@ -1,9 +1,10 @@
 /* Why Holsen composes the approved internal-page and homepage primitives. */
 .why-page { --section-space: clamp(5rem, 8vw, 8rem); }
 .why-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
-.why-hero .service-breadcrumbs { margin-bottom: clamp(1rem, 1.5vw, 1.5rem); }
-.why-hero__layout { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); align-items: center; gap: var(--service-gap); }
-.why-hero__copy { padding-block: 1rem 2rem; }
+.why-hero { padding-top: clamp(6.5rem, 8vw, 7.5rem); padding-bottom: clamp(2.5rem, 4vw, 3.5rem); }
+.why-hero .service-breadcrumbs { margin-bottom: clamp(1.75rem, 3vw, 2.5rem); }
+.why-hero__layout { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); align-items: start; gap: var(--service-gap); }
+.why-hero__copy { padding-block: 0; }
 .why-hero__copy h1 { text-wrap: initial; }
 .why-page .why-hero__description { max-width: 33rem; margin: 1.75rem 0 2rem; color: var(--color-carbon); }
 .why-hero__media { min-width: 0; margin: 0; }
@@ -11,7 +12,7 @@
   position: relative;
   width: 100%;
   aspect-ratio: 4 / 5;
-  max-height: 36rem;
+  max-height: 32rem;
   overflow: hidden;
   background: var(--color-carbon);
   -webkit-mask-image: url("./assets/Vector.svg"), linear-gradient(#000 0 0), url("./assets/Group 2.svg");
@@ -28,18 +29,6 @@
 
 @media (min-width: 48rem) and (min-height: 36rem) {
   .why-page { --hero-title-size: clamp(3rem, min(5.5vw, 9vh), 5.5rem); }
-  .why-hero {
-    height: 100svh;
-    padding-top: clamp(6.5rem, 8vw, 7.5rem);
-    padding-bottom: clamp(3rem, 6vh, 4rem);
-  }
-  .why-hero__layout { min-height: 0; }
-  .why-hero__copy { padding-bottom: 0; }
-  .why-hero__image {
-    height: calc(100svh - clamp(6.5rem, 8vw, 7.5rem) - clamp(1rem, 1.5vw, 1.5rem) - 1.2rem - clamp(3rem, 6vh, 4rem));
-    max-height: none;
-    aspect-ratio: auto;
-  }
 }
 
 .why-page .trust-strip { border-block: 0; background: var(--color-soft-white); padding-top: var(--section-space); }

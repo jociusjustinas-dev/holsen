@@ -6,8 +6,10 @@ const form = document.querySelector(".quote-form");
 const panels = [...form.querySelectorAll("[data-quote-panel]")];
 const progress = document.querySelector(".quote-progress");
 const stepButtons = [...progress.querySelectorAll("button")];
+const completedSteps = new Set();
 const next = form.querySelector("[data-quote-next]");
 const back = form.querySelector("[data-quote-back]");
+const responseCommitment = form.querySelector("[data-response-commitment]");
 const status = form.querySelector("[data-quote-status]");
 const errors = form.querySelector("#quote-errors");
 const errorList = errors.querySelector("ul");
@@ -159,14 +161,26 @@ function validateStep(index) {
 function showStep(index, focus = true) {
   current = index;
   visited = Math.max(visited, current);
+  const progressValue = completedSteps.has(1) ? 100 : completedSteps.has(0) ? 50 : 0;
+  progress.style.setProperty("--quote-progress", `${progressValue}%`);
   panels.forEach((panel, i) => { panel.hidden = i !== current; });
   stepButtons.forEach((button, i) => {
     button.disabled = i > visited;
     if (i === current) button.setAttribute("aria-current", "step");
     else button.removeAttribute("aria-current");
+    const isComplete = completedSteps.has(i);
+    button.toggleAttribute("data-complete", isComplete);
+    button.querySelector(".quote-progress__marker").textContent = isComplete ? "✓" : String(i + 1).padStart(2, "0");
+    button.querySelector("[data-step-status]").textContent = isComplete ? ", completed" : "";
   });
   back.hidden = current === 0;
-  next.textContent = ["Continue to Your Logistics", "Continue to About You", "Check Quote Details"][current];
+  responseCommitment.hidden = current !== 2;
+  next.textContent = ["Continue to Your Logistics", "Continue to About You", "Submit Quote Request"][current];
+  if (current === 2) {
+    next.setAttribute("aria-describedby", "quote-privacy quote-response-time");
+  } else {
+    next.removeAttribute("aria-describedby");
+  }
   document.querySelector("[data-quote-tip]").textContent = tips[current];
   status.textContent = "";
   if (current === 2) renderReview();
@@ -188,8 +202,12 @@ next.addEventListener("click", () => {
     focusElement(errors);
     return;
   }
+  completedSteps.add(current);
   if (current < 2) showStep(current + 1);
-  else status.textContent = "Quote details checked. Nothing has been sent — this preview is not connected to a recipient. No price or booking has been confirmed.";
+  else {
+    showStep(current, false);
+    status.textContent = "Quote details checked. Nothing has been sent — this preview is not connected to a recipient. No price or booking has been confirmed.";
+  }
 });
 back.addEventListener("click", () => showStep(Math.max(0, current - 1)));
 stepButtons.forEach((button, index) => button.addEventListener("click", () => { if (index <= visited) showStep(index); }));
@@ -197,6 +215,7 @@ edit.addEventListener("click", () => showStep(1));
 form.addEventListener("submit", event => event.preventDefault());
 form.addEventListener("input", event => {
   status.textContent = "";
+  if (completedSteps.delete(current)) showStep(current, false);
   if (radios.includes(event.target)) validateStep(0);
   else if (event.target === upload) return;
   else if (event.target.hasAttribute("aria-invalid")) validateField(event.target);

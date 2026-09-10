@@ -590,17 +590,27 @@ body:has(.hero) .site-header:not(.is-scrolled) .nav-actions .button--outline:not
 }
 
 .custom-select__trigger:hover { border-color: var(--color-core-black); }
+.custom-select[data-has-value="false"] .custom-select__trigger { background: var(--color-soft-white); }
+.custom-select[data-has-value="false"] .custom-select__value { color: var(--color-holsen-grey); font-weight: 400; }
+.custom-select[data-has-value="true"] .custom-select__trigger { border-color: var(--color-core-black); }
+.custom-select[data-has-value="true"] .custom-select__value { color: var(--color-core-black); font-weight: 500; }
 .custom-select__trigger:focus-visible {
   outline: 2px solid var(--color-core-black);
   outline-offset: 3px;
 }
 .custom-select__trigger[aria-invalid="true"] { border: 2px solid var(--color-core-black); }
-.custom-select__trigger > i {
+.custom-select__icon {
+  display: block;
   flex: 0 0 auto;
-  font-size: 1.25rem;
+  width: 0.7rem;
+  height: 0.7rem;
+  margin: -0.2rem 0.2rem 0 0;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
   transition: transform 180ms var(--ease-out);
 }
-.custom-select[data-open="true"] .custom-select__trigger > i { transform: rotate(180deg); }
+.custom-select[data-open="true"] .custom-select__icon { transform: translateY(0.2rem) rotate(225deg); }
 
 .custom-select__listbox {
   position: absolute;
@@ -671,7 +681,7 @@ body:has(.hero) .site-header:not(.is-scrolled) .nav-actions .button--outline:not
 
 @media (prefers-reduced-motion: reduce) {
   .custom-select__trigger,
-  .custom-select__trigger > i { transition: none; }
+  .custom-select__icon { transition: none; }
 }
 
 /* Shared text CTA: light/dark context supplies its accessible text colour. */
@@ -5266,6 +5276,12 @@ body:has(.hero) .site-header:not(.is-scrolled) .menu-toggle {
 
 .esg-download input::placeholder {
   color: color-mix(in srgb, #ffffff 72%, transparent);
+  font-weight: 400;
+}
+
+.esg-download input[placeholder]:not(:placeholder-shown) {
+  border-color: #ffffff;
+  font-weight: 600;
 }
 
 .esg-download input:focus-visible {

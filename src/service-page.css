@@ -46,9 +46,10 @@
 .service-hero__heading { display: grid; grid-template-columns: 7fr 5fr; align-items: end; gap: var(--service-gap); padding-bottom: 3.5rem; }
 .service-hero h1 { font-size: var(--hero-title-size); line-height: var(--hero-title-leading); letter-spacing: var(--hero-title-tracking); font-weight: 500; margin: 0; text-wrap: balance; }
 .service-hero h1 span { color: var(--color-holsen-orange); }
-.service-hero__intro { max-width: 33rem; padding-bottom: 0.3rem; }
+.service-hero__intro { max-width: 33rem; padding-bottom: 0; }
 .service-lead { font-size: clamp(1.5rem, 2.15vw, 2.5rem); line-height: 1.2 !important; letter-spacing: -0.035em; margin: 0 0 1.25rem; }
 .service-hero__intro > p:not(.service-lead) { color: var(--color-carbon); margin: 0 0 1.75rem; }
+.service-hero__intro > p:not(.service-lead):last-child { margin-bottom: 0; }
 .service-hero__media {
   position: relative;
   height: clamp(19rem, 31vw, 33rem);

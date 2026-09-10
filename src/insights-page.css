@@ -4,7 +4,7 @@
 .insights-hero { padding-top: clamp(6.5rem, 8vw, 7.5rem); }
 .insights-hero .service-breadcrumbs { margin-bottom: clamp(1.75rem, 3vw, 2.5rem); }
 body.insights-page #main-content > .insights-hero:has(+ [data-section-spacing="attached"]) .service-hero__heading { padding-bottom: clamp(2.5rem, 4vw, 3.5rem); }
-.insights-hero .service-hero__heading { align-items: start; }
+.insights-hero .service-hero__heading { align-items: end; }
 .insights-hero .service-hero__intro { justify-self: end; }
 
 

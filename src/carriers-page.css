@@ -2,7 +2,7 @@
 .carriers-page .site-header :is(.desktop-nav, .mobile-menu) a[aria-current="page"] { color: var(--color-holsen-orange) !important; text-decoration: none; }
 .carriers-hero { padding-top: clamp(6.5rem, 8vw, 7.5rem); }
 .carriers-hero .service-breadcrumbs { margin-bottom: clamp(1.75rem, 3vw, 2.5rem); }
-.carriers-hero .service-hero__heading { align-items: start; padding-bottom: clamp(2.5rem, 4vw, 3.5rem); }
+.carriers-hero .service-hero__heading { align-items: end; padding-bottom: clamp(2.5rem, 4vw, 3.5rem); }
 .carriers-hero .service-hero__intro { justify-self: end; }
 body.carriers-page #main-content > .carriers-hero:has(+ [data-section-spacing="attached"]) .service-hero__heading { padding-bottom: clamp(2.5rem, 4vw, 3.5rem); }
 .carriers-directory { padding-bottom: var(--service-space); }
@@ -52,7 +52,10 @@ body.carriers-page #main-content > .carriers-hero:has(+ [data-section-spacing="a
 .carriers-form__errors { grid-column: 1 / -1; }
 .carriers-field label { display: block; margin-bottom: 0.65rem; font-size: 0.95rem; font-weight: 500; }
 .carriers-field label span { font-weight: 400; }
-.carriers-field :is(input, select, textarea) { display: block; width: 100%; min-height: 3.25rem; padding: 0.8rem 1rem; border: 1px solid var(--color-holsen-grey); border-radius: 0.5rem; background: var(--color-functional-white); color: var(--color-core-black); font: inherit; font-size: 1rem; line-height: 1.5; scroll-margin-top: calc(var(--header-offset) + 1rem); transition: border-color 180ms var(--ease-out), box-shadow 180ms var(--ease-out); }
+.carriers-field :is(input, select, textarea) { display: block; width: 100%; min-height: 3.25rem; padding: 0.8rem 1rem; border: 1px solid var(--color-holsen-grey); border-radius: 0.5rem; background: var(--color-functional-white); color: var(--color-core-black); font: inherit; font-size: 1rem; line-height: 1.5; scroll-margin-top: calc(var(--header-offset) + 1rem); transition: background-color 180ms linear, border-color 180ms var(--ease-out), box-shadow 180ms var(--ease-out); }
+.carriers-field :is(input, textarea)[placeholder]:placeholder-shown { background: var(--color-soft-white); }
+.carriers-field :is(input, textarea)::placeholder { color: var(--color-holsen-grey); font-weight: 400; opacity: 1; }
+.carriers-field :is(input, textarea)[placeholder]:not(:placeholder-shown):not([aria-invalid="true"]) { border-color: var(--color-core-black); font-weight: 500; }
 .carriers-field textarea { min-height: 8rem; resize: vertical; }
 .carriers-field :is(input, select, textarea):hover { border-color: var(--color-core-black); }
 .carriers-field :is(input, select, textarea):focus-visible,

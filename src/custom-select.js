@@ -54,7 +54,7 @@ const createCustomSelect = (select) => {
   }
   value.id = valueId;
   value.className = "custom-select__value";
-  icon.className = "ri-arrow-down-s-line";
+  icon.className = "custom-select__icon";
   icon.setAttribute("aria-hidden", "true");
   trigger.append(value, icon);
 
@@ -99,6 +99,7 @@ const createCustomSelect = (select) => {
   const sync = () => {
     const current = select.selectedOptions[0] || select.options[0];
     value.textContent = current?.textContent || "";
+    wrapper.dataset.hasValue = current?.value ? "true" : "false";
     optionButtons.forEach((button, index) => {
       button.setAttribute("aria-selected", index === select.selectedIndex ? "true" : "false");
     });
