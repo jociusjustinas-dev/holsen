@@ -1,9 +1,20 @@
 import "./styles.css";
-import Lenis from "lenis";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Swup from "swup";
+import SwupBodyClassPlugin from "@swup/body-class-plugin";
+import SwupHeadPlugin from "@swup/head-plugin";
+import SwupParallelPlugin from "@swup/parallel-plugin";
+import SwupPreloadPlugin from "@swup/preload-plugin";
 import { initHolsenLoops } from "./holsen-loop.js";
 import { initMarketsMaps } from "./markets-map.js";
+import { initServicePage } from "./service-page.js";
+import { initContactPage } from "./contact-page.js";
+import { initCarriersPage } from "./carriers-page.js";
+import { initQuotePage } from "./quote-page.js";
+import { initInsightsPage } from "./insights-page.js";
+import { initIndustriesOverview } from "./industries-overview.js";
+import { initInsightArticle } from "./insight-article.js";
 
 const root = document.documentElement;
 const body = document.body;
@@ -14,8 +25,12 @@ const navShell = document.querySelector("[data-nav-shell]");
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 gsap.registerPlugin(ScrollTrigger);
-initHolsenLoops();
-initMarketsMaps();
+if (document.readyState === "complete") {
+  requestAnimationFrame(() => ScrollTrigger.refresh());
+} else {
+  window.addEventListener("load", () => ScrollTrigger.refresh(), { once: true });
+}
+document.fonts?.ready.then(() => ScrollTrigger.refresh());
 root.classList.add("styles-ready");
 requestAnimationFrame(() => {
   requestAnimationFrame(() => root.classList.remove("is-booting"));
@@ -68,30 +83,22 @@ if (!preloader) {
     .to(preloader, { yPercent: -100, duration: 0.72, ease: "power4.inOut" }, "+=0.14");
 }
 
-let lenis = null;
-
-if (!reduceMotion) {
-  lenis = new Lenis({
-    lerp: 0.1,
-    wheelMultiplier: 0.7,
-    gestureOrientation: "vertical",
-    smoothWheel: true,
-    syncTouch: false,
-  });
-
-  lenis.on("scroll", ScrollTrigger.update);
-  gsap.ticker.add((time) => lenis.raf(time * 1000));
-  gsap.ticker.lagSmoothing(0);
-}
-
 root.classList.add("reveal-enabled");
 
+let activeScrollContainer = document.querySelector("#swup");
+let removeHeaderScrollListener = () => {};
+
 const setHeaderState = () => {
-  header?.classList.toggle("is-scrolled", window.scrollY > 16);
+  header?.classList.toggle("is-scrolled", (activeScrollContainer?.scrollTop || 0) > 16);
 };
 
-setHeaderState();
-window.addEventListener("scroll", setHeaderState, { passive: true });
+const bindHeaderScroll = (container) => {
+  removeHeaderScrollListener();
+  activeScrollContainer = container;
+  container?.addEventListener("scroll", setHeaderState, { passive: true });
+  removeHeaderScrollListener = () => container?.removeEventListener("scroll", setHeaderState);
+  setHeaderState();
+};
 
 const closeDesktopDropdowns = (exceptButton = null) => {
   document.querySelectorAll("[data-nav-dropdown]").forEach((button) => {
@@ -233,17 +240,26 @@ window.matchMedia("(min-width: 68.01rem)").addEventListener("change", (event) =>
   }
 });
 
-document.querySelectorAll("[data-accordion-group]").forEach((group) => {
+const initPageContent = (scope = document.querySelector("#swup")) => {
+  if (!scope) return () => {};
+
+  const cleanups = [];
+  delete root.dataset.pageInitError;
+  initHolsenLoops(scope);
+  ScrollTrigger.defaults({ scroller: scope });
+
+  const animationContext = gsap.context(() => {
+scope.querySelectorAll("[data-accordion-group]").forEach((group) => {
   const buttons = [...group.querySelectorAll("[data-accordion-button]")];
 
   const setItem = (button, open) => {
-    const panel = document.getElementById(button.getAttribute("aria-controls"));
+    const panel = scope.querySelector(`#${CSS.escape(button.getAttribute("aria-controls"))}`);
     button.setAttribute("aria-expanded", String(open));
     panel?.setAttribute("data-open", String(open));
 
     if (open && group.hasAttribute("data-industry-group")) {
-      const title = document.querySelector("[data-industry-title]");
-      const copy = document.querySelector("[data-industry-copy]");
+      const title = scope.querySelector("[data-industry-title]");
+      const copy = scope.querySelector("[data-industry-copy]");
       if (title) title.textContent = button.dataset.title || "";
       if (copy) copy.textContent = button.dataset.copy || "";
     }
@@ -261,14 +277,14 @@ document.querySelectorAll("[data-accordion-group]").forEach((group) => {
 // Internal templates use the same progressive reveal language as the homepage.
 // Existing hand-authored reveal groups keep their own timing; otherwise each
 // section's primary content blocks are enhanced automatically.
-if (body.hasAttribute("data-page-type")) {
+if (scope.querySelector(".service-hero")) {
   const addReveal = (item, delay = 0) => {
     if (!item || item.classList.contains("reveal") || item.querySelector(".reveal")) return;
     item.classList.add("reveal");
     if (delay > 0) item.dataset.delay = String(Math.min(delay, 3));
   };
 
-  const internalHero = document.querySelector("main .service-hero");
+  const internalHero = scope.querySelector("main .service-hero");
 
   if (internalHero) {
     const internalHeroItems = [
@@ -288,7 +304,7 @@ if (body.hasAttribute("data-page-type")) {
     [...new Set(internalHeroItems)].forEach((item, index) => addReveal(item, index));
   }
 
-  document
+  scope
     .querySelectorAll("main > section:not(.service-hero):not(.final-cta) > .site-container")
     .forEach((container) => {
       const blocks = [...container.children].filter(
@@ -299,12 +315,12 @@ if (body.hasAttribute("data-page-type")) {
       else blocks.forEach((item, index) => addReveal(item, index));
     });
 
-  document
+  scope
     .querySelectorAll("main .final-cta__copy, main .carriers-application__intro, main .carriers-form-wrap")
     .forEach((item, index) => addReveal(item, index % 2));
 }
 
-const revealItems = [...document.querySelectorAll(".reveal")];
+const revealItems = [...scope.querySelectorAll(".reveal")];
 const heroRevealItems = revealItems.filter((item) => item.closest(".hero, .service-hero"));
 const scrollRevealItems = revealItems.filter((item) => !item.closest(".hero, .service-hero"));
 
@@ -325,13 +341,14 @@ if (reduceMotion || !("IntersectionObserver" in window)) {
         observer.unobserve(entry.target);
       });
     },
-    { rootMargin: "0px 0px -26%", threshold: 0.12 },
+    { root: scope, rootMargin: "0px 0px -26%", threshold: 0.12 },
   );
 
   scrollRevealItems.forEach((item) => revealObserver.observe(item));
+  cleanups.push(() => revealObserver.disconnect());
 }
 
-const servicesMarquees = document.querySelector("[data-services-marquees]");
+const servicesMarquees = scope.querySelector("[data-services-marquees]");
 const servicesForward = servicesMarquees?.querySelector('[data-services-marquee="forward"]');
 const servicesReverse = servicesMarquees?.querySelector('[data-services-marquee="reverse"]');
 
@@ -350,7 +367,7 @@ if (servicesMarquees && !servicesMarquees.hidden && servicesForward && servicesR
   gsap.fromTo(servicesReverse, { x: 0 }, { x: marqueeTravel, ease: "none", scrollTrigger: { ...marqueeScroll } });
 }
 
-const whyShowcase = document.querySelector("[data-why-showcase]");
+const whyShowcase = scope.querySelector("[data-why-showcase]");
 
 if (whyShowcase) {
   const whyTabs = [...whyShowcase.querySelectorAll("[data-why-tab]")];
@@ -406,7 +423,7 @@ if (whyShowcase) {
   });
 }
 
-document.querySelectorAll("[data-industry-tabs]").forEach((widget) => {
+scope.querySelectorAll("[data-industry-tabs]").forEach((widget) => {
   const tabs = [...widget.querySelectorAll('[role="tab"]')];
   const panels = [...widget.querySelectorAll('[role="tabpanel"]')];
 
@@ -423,7 +440,7 @@ document.querySelectorAll("[data-industry-tabs]").forEach((widget) => {
       panel.hidden = panel.id !== panelId;
     });
 
-    const activePanel = document.getElementById(panelId);
+    const activePanel = scope.querySelector(`#${CSS.escape(panelId)}`);
     const activeMedia = activePanel?.querySelector(".industry-feature__media");
     const activeContent = activePanel ? gsap.utils.toArray(".industry-feature__content > *", activePanel) : [];
 
@@ -462,7 +479,7 @@ document.querySelectorAll("[data-industry-tabs]").forEach((widget) => {
   });
 });
 
-document.querySelectorAll("[data-case-carousel]").forEach((viewport) => {
+scope.querySelectorAll("[data-case-carousel]").forEach((viewport) => {
   const section = viewport.closest(".case-section");
   const slides = [...viewport.querySelectorAll("[data-case-slide]")];
   const previousButton = section?.querySelector("[data-case-prev]");
@@ -526,7 +543,7 @@ document.querySelectorAll("[data-case-carousel]").forEach((viewport) => {
   setActiveIndex(0);
 });
 
-const marketsSection = document.querySelector("[data-markets-network]");
+const marketsSection = scope.querySelector("[data-markets-network]");
 const marketsIntro = marketsSection?.querySelector("[data-markets-intro]");
 const marketsRegions = marketsSection?.querySelector("[data-markets-regions]");
 const marketsMap = marketsSection?.querySelector("[data-markets-map]");
@@ -565,7 +582,7 @@ const parseCountUpValue = (rawValue) => {
 };
 
 if (!reduceMotion) {
-  document.querySelectorAll("[data-count-up]").forEach((element) => {
+  scope.querySelectorAll("[data-count-up]").forEach((element) => {
     if (element.closest(".proof-section")) return;
 
     const rawValue = element.textContent.trim();
@@ -600,7 +617,7 @@ if (!reduceMotion) {
   });
 }
 
-const proofChart = document.querySelector("[data-proof-chart]");
+const proofChart = scope.querySelector("[data-proof-chart]");
 const proofBarsContainer = proofChart?.querySelector("[data-proof-bars]");
 const proofCurveStart = 0;
 const proofCurvePoint = (progress) => {
@@ -760,10 +777,7 @@ if (reduceMotion) {
   }
 }
 
-window.addEventListener("load", () => ScrollTrigger.refresh(), { once: true });
-document.fonts?.ready.then(() => ScrollTrigger.refresh());
-
-const sustainabilitySection = document.querySelector(".sustainability-section");
+const sustainabilitySection = scope.querySelector(".sustainability-section");
 const sustainabilityImage = sustainabilitySection?.querySelector("[data-sustainability-image]");
 
 if (sustainabilitySection && sustainabilityImage && !reduceMotion) {
@@ -783,7 +797,7 @@ if (sustainabilitySection && sustainabilityImage && !reduceMotion) {
   );
 }
 
-const finalCtaSection = document.querySelector(".final-cta");
+const finalCtaSection = scope.querySelector(".final-cta");
 const finalCtaLoop = finalCtaSection?.querySelector(".final-cta__loop");
 const finalCtaLoopDashes = finalCtaLoop
   ? gsap.utils.toArray("[data-loop-dash]", finalCtaLoop)
@@ -819,7 +833,7 @@ if (finalCtaSection && finalCtaLoop && finalCtaLoopDashes.length && !reduceMotio
   });
 }
 
-const esgForm = document.querySelector("[data-esg-form]");
+const esgForm = scope.querySelector("[data-esg-form]");
 const esgStatus = esgForm?.querySelector("[data-esg-status]");
 
 esgForm?.addEventListener("submit", (event) => {
@@ -849,11 +863,11 @@ esgForm?.elements.email?.addEventListener("input", (event) => {
   esgStatus.textContent = "";
 });
 
-document.querySelectorAll('[aria-disabled="true"]').forEach((link) => {
+scope.querySelectorAll('[aria-disabled="true"]').forEach((link) => {
   link.addEventListener("click", (event) => event.preventDefault());
 });
 
-document.querySelectorAll("[data-event]").forEach((element) => {
+scope.querySelectorAll("[data-event]").forEach((element) => {
   element.addEventListener("click", () => {
     document.dispatchEvent(
       new CustomEvent("holsen:interaction", {
@@ -867,5 +881,125 @@ document.querySelectorAll("[data-event]").forEach((element) => {
   });
 });
 
-const year = document.querySelector("[data-current-year]");
+const year = scope.querySelector("[data-current-year]");
 if (year) year.textContent = String(new Date().getFullYear());
+  }, scope);
+
+  const safelyInit = (name, initializer) => {
+    try {
+      return initializer();
+    } catch (error) {
+      console.error(`[Holsen] Failed to initialise ${name}.`, error);
+      root.dataset.pageInitError = `${name}: ${error instanceof Error ? error.message : String(error)}`;
+      return () => {};
+    }
+  };
+
+  cleanups.push(
+    safelyInit("markets map", () => initMarketsMaps(scope, { scrollRoot: scope })),
+    safelyInit("service page", () => initServicePage(scope, scope)),
+    safelyInit("contact form", () => initContactPage(scope)),
+    safelyInit("partner form", () => initCarriersPage(scope)),
+    safelyInit("quote form", () => initQuotePage(scope)),
+    safelyInit("insights", () => initInsightsPage(scope)),
+    safelyInit("industries", () => initIndustriesOverview(scope)),
+    safelyInit("insight article", () => initInsightArticle(scope, scope)),
+  );
+
+  requestAnimationFrame(() => ScrollTrigger.refresh());
+
+  return () => {
+    cleanups.splice(0).forEach((cleanup) => cleanup?.());
+    ScrollTrigger.getAll()
+      .filter((trigger) => trigger.trigger && scope.contains(trigger.trigger))
+      .forEach((trigger) => trigger.kill());
+    animationContext.revert();
+  };
+};
+
+const syncPersistentNavigation = () => {
+  const currentPath = window.location.pathname.replace(/index\.html$/, "");
+  const links = document.querySelectorAll(".site-header a[href]");
+
+  links.forEach((link) => link.removeAttribute("aria-current"));
+  links.forEach((link) => {
+    const url = new URL(link.href, window.location.origin);
+    const linkPath = url.pathname.replace(/index\.html$/, "");
+    const isCurrent = linkPath === currentPath
+      || (currentPath.startsWith("/insights/") && currentPath !== "/insights/" && linkPath === "/insights/");
+    if (isCurrent) link.setAttribute("aria-current", "page");
+  });
+};
+
+const syncBodyData = (incomingDocument) => {
+  [...document.body.attributes]
+    .filter((attribute) => attribute.name.startsWith("data-"))
+    .forEach((attribute) => document.body.removeAttribute(attribute.name));
+
+  [...(incomingDocument?.body?.attributes || [])]
+    .filter((attribute) => attribute.name.startsWith("data-"))
+    .forEach((attribute) => document.body.setAttribute(attribute.name, attribute.value));
+};
+
+let cleanupPageContent = initPageContent();
+bindHeaderScroll(document.querySelector("#swup"));
+syncPersistentNavigation();
+
+const swup = new Swup({
+  animateHistoryBrowsing: true,
+  containers: ["#swup"],
+  plugins: [
+    new SwupHeadPlugin({ persistAssets: true, awaitAssets: true }),
+    new SwupBodyClassPlugin(),
+    new SwupPreloadPlugin(),
+    new SwupParallelPlugin(),
+  ],
+});
+
+swup.hooks.on("visit:start", () => {
+  closeDesktopDropdowns();
+  if (menuToggle?.getAttribute("aria-expanded") === "true") {
+    closeMobileMenu({ restoreFocus: false });
+  }
+  cleanupPageContent();
+});
+
+swup.hooks.on("content:insert", (_visit, { containers }) => {
+  containers.forEach(({ previous }) => {
+    previous.inert = true;
+  });
+});
+
+swup.hooks.replace("scroll:top", (_visit, { options }) => {
+  const nextContainer = document.querySelector("#swup");
+  nextContainer?.scrollTo({ ...options, top: 0, left: 0 });
+  return true;
+});
+
+swup.hooks.replace("scroll:anchor", (_visit, { hash, options }) => {
+  if (!hash) return false;
+  let id = hash.replace(/^#/, "");
+  try {
+    id = decodeURIComponent(id);
+  } catch {
+    // Keep the original fragment if it is not valid URI-encoded text.
+  }
+  const target = document.querySelector(`#swup #${CSS.escape(id)}`);
+  if (!target) return false;
+  target.scrollIntoView(options);
+  return true;
+});
+
+swup.hooks.on("content:replace", (visit) => {
+  const nextContainer = document.querySelector("#swup");
+  syncBodyData(visit.to.document);
+  cleanupPageContent = initPageContent(nextContainer);
+  bindHeaderScroll(nextContainer);
+  syncPersistentNavigation();
+});
+
+swup.hooks.on("visit:end", () => {
+  const main = document.querySelector("#swup #main-content");
+  main?.focus({ preventScroll: true });
+  requestAnimationFrame(() => ScrollTrigger.refresh());
+});

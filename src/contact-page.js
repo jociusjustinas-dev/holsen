@@ -1,8 +1,9 @@
-import "./service-page.js";
 import { enhanceCustomSelects, focusFormControl, syncCustomSelect } from "./custom-select.js";
 
 // Deliberately client-only: no endpoint, payload, persistence or enquiry analytics.
-const form = document.querySelector(".contact-form");
+export const initContactPage = (scope = document) => {
+const form = scope.querySelector("form.contact-form[data-wp-form='contact_enquiry']");
+if (!form) return () => {};
 const checkButton = form.querySelector("[data-check-enquiry]");
 const status = form.querySelector("[data-contact-status]");
 const errorSummary = form.querySelector("#contact-errors");
@@ -26,7 +27,7 @@ topic.addEventListener("change", updateTopic);
 
 function validate(field) {
   const invalid = !field.value.trim() || !field.validity.valid;
-  const error = document.getElementById(`${field.id}-error`);
+  const error = scope.querySelector(`#${CSS.escape(field.id)}-error`);
   field.toggleAttribute("data-invalid", invalid);
   if (invalid) field.setAttribute("aria-invalid", "true");
   else field.removeAttribute("aria-invalid");
@@ -73,3 +74,5 @@ checkButton.addEventListener("click", () => {
   }
   status.textContent = "Your enquiry details are complete. Nothing has been sent — this preview is not connected to an enquiry recipient.";
 });
+return () => {};
+};

@@ -1,8 +1,8 @@
-import "./service-page.js";
 import { enhanceCustomSelects, focusFormControl, setCustomSelectValue, syncCustomSelect } from "./custom-select.js";
 
 // Client-side preview only: there is no endpoint, persistence or lead analytics yet.
-const form = document.querySelector("[data-partner-form]");
+export const initCarriersPage = (scope = document) => {
+const form = scope.querySelector("[data-partner-form]");
 
 if (form) {
   const checkButton = form.querySelector("[data-check-partner]");
@@ -23,7 +23,7 @@ if (form) {
 
   const validate = (field) => {
     const invalid = !field.value.trim() || !field.validity.valid;
-    const error = document.getElementById(`${field.id}-error`);
+    const error = scope.querySelector(`#${CSS.escape(field.id)}-error`);
     field.toggleAttribute("data-invalid", invalid);
     if (invalid) field.setAttribute("aria-invalid", "true");
     else field.removeAttribute("aria-invalid");
@@ -52,12 +52,12 @@ if (form) {
     errorSummary.hidden = !errorList.children.length;
   };
 
-  document.querySelectorAll("[data-partner-choice]").forEach((link) => {
+  scope.querySelectorAll("[data-partner-choice]").forEach((link) => {
     link.addEventListener("click", () => {
       setCustomSelectValue(partnerType, link.dataset.partnerChoice || "");
       partnerType.removeAttribute("aria-invalid");
       partnerType.removeAttribute("data-invalid");
-      const error = document.getElementById("partner-type-error");
+      const error = scope.querySelector("#partner-type-error");
       if (error) error.hidden = true;
       refreshSummary();
     });
@@ -85,3 +85,5 @@ if (form) {
     status.textContent = "Your partner enquiry details are complete. Nothing has been sent — this preview is not connected to a partner-enquiry recipient.";
   });
 }
+return () => {};
+};

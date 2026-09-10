@@ -7316,6 +7316,68 @@ body.is-services-page:has(.hero) .site-header:not(.is-scrolled) .menu-toggle {
   color: var(--color-core-black);
 }
 
+/* Persistent shell and parallel Swup page transition. */
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+
+.app {
+  display: grid;
+  grid-template-areas:
+    "header"
+    "main";
+  grid-template-rows: 0 minmax(0, 1fr);
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.app > .site-header {
+  grid-area: header;
+}
+
+#swup {
+  position: relative;
+  z-index: calc(2 - var(--swup-parallel-container, 0));
+  grid-area: main;
+  min-width: 0;
+  min-height: 0;
+  overflow-x: clip;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  background: var(--color-soft-white);
+  scrollbar-gutter: stable;
+}
+
+#swup.is-previous-container {
+  z-index: 1;
+  pointer-events: none;
+}
+
+html.is-changing .transition-fade {
+  transition:
+    opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    filter 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.transition-fade.is-previous-container,
+.transition-fade.is-next-container {
+  opacity: 0;
+  filter: blur(5px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.is-changing .transition-fade {
+    transition: none !important;
+  }
+
+  .transition-fade.is-previous-container,
+  .transition-fade.is-next-container {
+    filter: none;
+  }
+}
+
 @media (min-width: 68.01rem) {
   .industries-explorer {
     display: grid;

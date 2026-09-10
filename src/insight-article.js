@@ -1,10 +1,9 @@
-import "./service-page.js";
-
 // Highlight the section at the reading line. The content and anchors stay native.
-const toc = document.querySelector("[data-article-toc]");
+export const initInsightArticle = (scope = document, scrollRoot = window) => {
+const toc = scope.querySelector("[data-article-toc]");
 if (toc) {
   const links = [...toc.querySelectorAll('a[href^="#"]')];
-  const sections = links.map((link) => document.getElementById(link.hash.slice(1)));
+  const sections = links.map((link) => scope.querySelector(`#${CSS.escape(link.hash.slice(1))}`)).filter(Boolean);
   let frame = 0;
   const update = () => {
     frame = 0;
@@ -18,9 +17,16 @@ if (toc) {
     });
   };
   const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
-  window.addEventListener("scroll", schedule, { passive: true });
+  scrollRoot.addEventListener("scroll", schedule, { passive: true });
   window.addEventListener("resize", schedule);
-  window.addEventListener("load", schedule);
   document.addEventListener("toggle", schedule, true);
   update();
+  return () => {
+    scrollRoot.removeEventListener("scroll", schedule);
+    window.removeEventListener("resize", schedule);
+    document.removeEventListener("toggle", schedule, true);
+    if (frame) cancelAnimationFrame(frame);
+  };
 }
+return () => {};
+};

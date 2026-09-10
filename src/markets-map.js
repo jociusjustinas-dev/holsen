@@ -63,15 +63,17 @@ const makeRoute = (origin, destination) => {
   return Array.from({ length: 65 }, (_, index) => interpolate(index / 64));
 };
 
-const initialiseMap = (stage) => {
+const initialiseMap = (stage, { scrollRoot = null } = {}) => {
+  if (stage.dataset.marketsMapReady === "true") return () => {};
   const canvas = stage.querySelector("[data-markets-map-canvas]");
   const pins = [...stage.querySelectorAll("[data-markets-map-pin]")];
   const context = canvas?.getContext("2d");
-  if (!canvas || !context || pins.length < 2) return;
+  if (!canvas || !context || pins.length < 2) return () => {};
 
   const baseMapCanvas = document.createElement("canvas");
   const baseMapContext = baseMapCanvas.getContext("2d");
-  if (!baseMapContext) return;
+  if (!baseMapContext) return () => {};
+  stage.dataset.marketsMapReady = "true";
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const computedRoot = window.getComputedStyle(document.documentElement);
@@ -385,12 +387,13 @@ const initialiseMap = (stage) => {
       if (isVisible) startAnimation();
       else stopAnimation();
     },
-    { rootMargin: "10% 0px" },
+    { root: scrollRoot, rootMargin: "10% 0px" },
   );
   visibilityObserver.observe(stage);
 
+  let viewTween = null;
   if (!reduceMotion) {
-    gsap.to(view, {
+    viewTween = gsap.to(view, {
       longitude: END_VIEW.longitude,
       latitude: END_VIEW.latitude,
       zoom: END_VIEW.zoom,
@@ -408,14 +411,25 @@ const initialiseMap = (stage) => {
     });
   }
 
-  window.addEventListener("resize", () => {
+  const handleResize = () => {
     window.clearTimeout(resizeTimer);
     resizeTimer = window.setTimeout(() => {
       build();
     }, 150);
-  });
+  };
+  window.addEventListener("resize", handleResize);
+
+  return () => {
+    stopAnimation();
+    window.clearTimeout(resizeTimer);
+    visibilityObserver.disconnect();
+    window.removeEventListener("resize", handleResize);
+    viewTween?.scrollTrigger?.kill();
+    viewTween?.kill();
+  };
 };
 
-export const initMarketsMaps = () => {
-  document.querySelectorAll("[data-markets-map]").forEach(initialiseMap);
+export const initMarketsMaps = (root = document, options = {}) => {
+  const cleanups = [...root.querySelectorAll("[data-markets-map]")].map((stage) => initialiseMap(stage, options));
+  return () => cleanups.forEach((cleanup) => cleanup?.());
 };

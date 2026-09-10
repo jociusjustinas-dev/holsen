@@ -9,20 +9,31 @@ const sharedShell = () => ({
   transformIndexHtml: {
     order: "pre",
     handler(html, context) {
-      if (!html.includes("<!-- holsen:header -->")) return html;
       const home = readFileSync(new URL("./index.html", import.meta.url), "utf8");
       const part = (tag) => {
         const match = home.match(new RegExp(`<${tag}\\b[\\s\\S]*?<\\/${tag}>`));
         if (!match) throw new Error(`Missing shared Holsen ${tag}`);
         return match[0].replaceAll('src="./src/', 'src="/src/');
       };
-      const path = context.path.replace(/index\.html$/, "");
-      const header = path.startsWith("/insights/") && path !== "/insights/"
-        ? part("header").replaceAll('href="/insights/"', 'href="/insights/" aria-current="true"')
-        : part("header");
-      return html.replace("<!-- holsen:header -->", header)
-        .replace("<!-- holsen:footer -->", part("footer"))
-        .replaceAll(`href="${path}"`, `href="${path}" aria-current="page"`);
+      let output = html;
+
+      if (output.includes("<!-- holsen:header -->")) {
+        const path = context.path.replace(/index\.html$/, "");
+        const header = path.startsWith("/insights/") && path !== "/insights/"
+          ? part("header").replaceAll('href="/insights/"', 'href="/insights/" aria-current="true"')
+          : part("header");
+        output = output.replace("<!-- holsen:header -->", header)
+          .replace("<!-- holsen:footer -->", part("footer"))
+          .replaceAll(`href="${path}"`, `href="${path}" aria-current="page"`);
+      }
+
+      if (!output.includes('id="swup"')) {
+        output = output
+          .replace(/(<header class="site-header"[\s\S]*?<\/header>)/, '<div class="app">$1\n<div id="swup" class="transition-fade">')
+          .replace(/(<\/footer>)(?![\s\S]*<\/footer>)/, "$1\n</div>\n</div>");
+      }
+
+      return output;
     },
   },
 });

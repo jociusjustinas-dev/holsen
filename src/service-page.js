@@ -1,4 +1,7 @@
-import "./main.js";
+export const initServicePage = (scope = document, scrollRoot = window) => {
+const cleanups = [];
+const getScrollTop = () => scrollRoot === window ? window.scrollY : scrollRoot.scrollTop;
+const getScrollRootTop = () => scrollRoot === window ? 0 : scrollRoot.getBoundingClientRect().top;
 
 const alignHashTarget = () => {
   const hash = window.location.hash;
@@ -11,7 +14,7 @@ const alignHashTarget = () => {
     targetId = hash.slice(1);
   }
 
-  const target = document.getElementById(targetId);
+  const target = scope.querySelector(`#${CSS.escape(targetId)}`);
   if (!target) return;
 
   window.requestAnimationFrame(() => {
@@ -19,15 +22,15 @@ const alignHashTarget = () => {
   });
 };
 
-if (document.readyState === "complete") alignHashTarget();
-else window.addEventListener("load", alignHashTarget, { once: true });
+alignHashTarget();
 window.addEventListener("hashchange", alignHashTarget);
+cleanups.push(() => window.removeEventListener("hashchange", alignHashTarget));
 
-const serviceJump = document.querySelector(".service-jump");
+const serviceJump = scope.querySelector(".service-jump");
 
 if (serviceJump) {
   const jumpLinks = [...serviceJump.querySelectorAll('a[href^="#"]')];
-  const jumpSections = jumpLinks.map((link) => document.querySelector(link.hash));
+  const jumpSections = jumpLinks.map((link) => scope.querySelector(link.hash)).filter(Boolean);
   let jumpStateFrame = 0;
 
   const updateJumpState = () => {
@@ -35,12 +38,14 @@ if (serviceJump) {
     // Account for the document's scroll-padding instead of adding header space twice.
     const documentInset = Number.parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
     document.body.style.setProperty("--jump-anchor-margin", `${Math.max(0, stickyTop + serviceJump.offsetHeight + 8 - documentInset)}px`);
-    const isStuck = serviceJump.getBoundingClientRect().top <= stickyTop + 0.5 && window.scrollY > 0;
+    const scrollTop = getScrollTop();
+    const scrollRootTop = getScrollRootTop();
+    const isStuck = serviceJump.getBoundingClientRect().top <= scrollRootTop + stickyTop + 0.5 && scrollTop > 0;
     serviceJump.classList.toggle("is-stuck", isStuck);
     document.body.classList.toggle("service-jump-active", isStuck);
 
-    const sectionStarts = jumpSections.map((section) => window.scrollY + section.getBoundingClientRect().top);
-    const readingPosition = window.scrollY + stickyTop + serviceJump.offsetHeight + 8;
+    const sectionStarts = jumpSections.map((section) => scrollTop + section.getBoundingClientRect().top - scrollRootTop);
+    const readingPosition = scrollTop + stickyTop + serviceJump.offsetHeight + 8;
     let activeIndex = 0;
 
     sectionStarts.forEach((start, index) => {
@@ -50,7 +55,7 @@ if (serviceJump) {
     const activeStart = sectionStarts[activeIndex];
     const activeSection = jumpSections[activeIndex];
     const activeEnd = sectionStarts[activeIndex + 1]
-      ?? window.scrollY + activeSection.getBoundingClientRect().bottom;
+      ?? scrollTop + activeSection.getBoundingClientRect().bottom - scrollRootTop;
     const progress = Math.min(1, Math.max(0, (readingPosition - activeStart) / Math.max(1, activeEnd - activeStart)));
 
     jumpLinks.forEach((link, index) => {
@@ -70,14 +75,20 @@ if (serviceJump) {
   };
 
   updateJumpState();
-  window.addEventListener("scroll", requestJumpStateUpdate, { passive: true });
+  scrollRoot.addEventListener("scroll", requestJumpStateUpdate, { passive: true });
   window.addEventListener("resize", requestJumpStateUpdate);
-  window.addEventListener("load", requestJumpStateUpdate);
   window.addEventListener("hashchange", requestJumpStateUpdate);
+  cleanups.push(() => {
+    scrollRoot.removeEventListener("scroll", requestJumpStateUpdate);
+    window.removeEventListener("resize", requestJumpStateUpdate);
+    window.removeEventListener("hashchange", requestJumpStateUpdate);
+    if (jumpStateFrame) cancelAnimationFrame(jumpStateFrame);
+    document.body.classList.remove("service-jump-active");
+  });
 }
 
 // Native details retain keyboard, touch and no-JavaScript support.
-document.querySelectorAll("[data-service-accordion] details").forEach((item) => {
+scope.querySelectorAll("[data-service-accordion] details").forEach((item) => {
   item.querySelector("summary").addEventListener("click", () => {
     // Native keyboard activation also dispatches click; initial open state does not.
     const faqSection = item.closest("#road-faq, #services-faq, [data-industry-faq], [data-page-faq]");
@@ -94,3 +105,6 @@ document.querySelectorAll("[data-service-accordion] details").forEach((item) => 
     }));
   });
 });
+
+return () => cleanups.splice(0).forEach((cleanup) => cleanup());
+};

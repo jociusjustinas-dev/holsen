@@ -1,10 +1,11 @@
-import "./service-page.js";
 import { enhanceCustomSelects, focusFormControl, syncCustomSelect } from "./custom-select.js";
 
 // Preview only: values stay in the current DOM. No storage, requests or RFQ analytics.
-const form = document.querySelector(".quote-form");
+export const initQuotePage = (scope = document) => {
+const form = scope.querySelector(".quote-form");
+if (!form) return () => {};
 const panels = [...form.querySelectorAll("[data-quote-panel]")];
-const progress = document.querySelector(".quote-progress");
+const progress = scope.querySelector(".quote-progress");
 const stepButtons = [...progress.querySelectorAll("button")];
 const completedSteps = new Set();
 const next = form.querySelector("[data-quote-next]");
@@ -43,7 +44,7 @@ const labels = {
 enhanceCustomSelects(form);
 let current = 0;
 let visited = 0;
-const value = id => document.getElementById(id).value.trim();
+const value = id => scope.querySelector(`#${CSS.escape(id)}`).value.trim();
 const service = () => radios.find(radio => radio.checked)?.value;
 const files = () => [...upload.files];
 const formatFileSize = bytes => bytes < 1024 * 1024
@@ -86,7 +87,7 @@ function validateFiles() {
 }
 
 function renderReview() {
-  const frequency = document.getElementById("quote-frequency");
+    const frequency = scope.querySelector("#quote-frequency");
   const entries = [
     ["Service", service() || "Not selected"],
     ["Origin", value("quote-origin")], ["Destination", value("quote-destination")],
@@ -118,7 +119,7 @@ function refreshErrors() {
     ? (serviceError.hidden ? [] : [{ element: radios[0], text: serviceError.textContent }])
     : [...panels[current].querySelectorAll('[aria-invalid="true"]:not(.custom-select__trigger)')].map(element => ({
       element,
-      text: document.getElementById(`${element.id}-error`)?.textContent || labels[element.id],
+      text: scope.querySelector(`#${CSS.escape(element.id)}-error`)?.textContent || labels[element.id],
     }));
   invalid.forEach(({ element, text }) => {
     const item = document.createElement("li");
@@ -134,7 +135,7 @@ function refreshErrors() {
 
 function validateField(field) {
   const invalid = !field.value.trim() || !field.validity.valid;
-  const error = document.getElementById(`${field.id}-error`);
+  const error = scope.querySelector(`#${CSS.escape(field.id)}-error`);
   error.hidden = !invalid;
   error.textContent = invalid ? labels[field.id] : "";
   if (invalid) field.setAttribute("aria-invalid", "true");
@@ -181,7 +182,7 @@ function showStep(index, focus = true) {
   } else {
     next.removeAttribute("aria-describedby");
   }
-  document.querySelector("[data-quote-tip]").textContent = tips[current];
+  scope.querySelector("[data-quote-tip]").textContent = tips[current];
   status.textContent = "";
   if (current === 2) renderReview();
   refreshErrors();
@@ -241,3 +242,5 @@ edit.disabled = false;
 progress.hidden = false;
 renderFileSelection();
 showStep(0, false);
+return () => {};
+};

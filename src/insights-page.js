@@ -1,10 +1,9 @@
-import "./main.js";
-
 // Progressive enhancement: without JavaScript every topic link remains available.
-const filterBar = document.querySelector("[data-insights-filters]");
+export const initInsightsPage = (scope = document) => {
+const filterBar = scope.querySelector("[data-insights-filters]");
 if (filterBar) {
   const buttons = [...filterBar.querySelectorAll("[data-topic]")];
-  const cards = [...document.querySelectorAll("[data-insights-topic]")];
+  const cards = [...scope.querySelectorAll("[data-insights-topic]")];
   const count = filterBar.querySelector("[data-insights-count]");
   const topics = new Set(buttons.map((button) => button.dataset.topic));
 
@@ -37,7 +36,7 @@ if (filterBar) {
     if (window.location.hash !== "#insights-library") return;
     window.requestAnimationFrame(() => {
       window.requestAnimationFrame(() => {
-        document.querySelector("#insights-library")?.scrollIntoView({ block: "start" });
+        scope.querySelector("#insights-library")?.scrollIntoView({ block: "start" });
       });
     });
   };
@@ -52,4 +51,7 @@ if (filterBar) {
   } else {
     scrollToRequestedLibrary();
   }
+  return () => window.removeEventListener("popstate", restoreFilter);
 }
+return () => {};
+};
