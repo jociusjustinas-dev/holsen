@@ -615,15 +615,15 @@
           <p class="comparison-intro body-copy reveal" data-delay="1">
             We compare distance, urgency, capacity, route access, cargo requirements and total supply-chain cost before recommending a mode. When one mode is not enough, the proposed plan connects the stages and assigns responsibility across them.
           </p>
-          <section class="table-scroll reveal" data-delay="2" tabindex="0" aria-label="Transport mode comparison table. Scroll horizontally on small screens.">
+          <section class="table-scroll reveal" data-delay="2" aria-label="Transport mode comparison table.">
             <table class="comparison-table">
               <caption>General comparison of road, rail, sea and air freight</caption>
               <thead><tr><th scope="col">Mode</th><th scope="col">Best for</th><th scope="col">Flexibility</th><th scope="col">Typical speed</th><th scope="col">Capacity</th><th scope="col">Relative CO₂ profile</th></tr></thead>
               <tbody>
-                <tr><th scope="row">Road</th><td>Door-to-door European transport and flexible routes</td><td><span class="comparison-table__label" aria-hidden="true">Flexibility</span>Very high</td><td><span class="comparison-table__label" aria-hidden="true">Typical speed</span>High</td><td><span class="comparison-table__label" aria-hidden="true">Capacity</span>Medium</td><td><span class="comparison-table__label" aria-hidden="true">Relative CO₂ profile</span>Medium</td></tr>
-                <tr><th scope="row">Rail</th><td>High-volume inland corridors and long distances</td><td><span class="comparison-table__label" aria-hidden="true">Flexibility</span>Medium</td><td><span class="comparison-table__label" aria-hidden="true">Typical speed</span>Medium</td><td><span class="comparison-table__label" aria-hidden="true">Capacity</span>High</td><td><span class="comparison-table__label" aria-hidden="true">Relative CO₂ profile</span>Lower</td></tr>
-                <tr><th scope="row">Sea</th><td>Very high-volume, long-distance freight</td><td><span class="comparison-table__label" aria-hidden="true">Flexibility</span>Low</td><td><span class="comparison-table__label" aria-hidden="true">Typical speed</span>Low</td><td><span class="comparison-table__label" aria-hidden="true">Capacity</span>Very high</td><td><span class="comparison-table__label" aria-hidden="true">Relative CO₂ profile</span>Lower</td></tr>
-                <tr><th scope="row">Air</th><td>Urgent, high-value or time-critical freight</td><td><span class="comparison-table__label" aria-hidden="true">Flexibility</span>Medium</td><td><span class="comparison-table__label" aria-hidden="true">Typical speed</span>Very high</td><td><span class="comparison-table__label" aria-hidden="true">Capacity</span>Low</td><td><span class="comparison-table__label" aria-hidden="true">Relative CO₂ profile</span>Highest</td></tr>
+                <tr><th scope="row">Road</th><td data-label="Best for">Door-to-door European transport and flexible routes</td><td data-label="Flexibility"><span class="comparison-table__label" aria-hidden="true">Flexibility</span>Very high</td><td data-label="Typical speed"><span class="comparison-table__label" aria-hidden="true">Typical speed</span>High</td><td data-label="Capacity"><span class="comparison-table__label" aria-hidden="true">Capacity</span>Medium</td><td data-label="Relative CO₂ profile"><span class="comparison-table__label" aria-hidden="true">Relative CO₂ profile</span>Medium</td></tr>
+                <tr><th scope="row">Rail</th><td data-label="Best for">High-volume inland corridors and long distances</td><td data-label="Flexibility"><span class="comparison-table__label" aria-hidden="true">Flexibility</span>Medium</td><td data-label="Typical speed"><span class="comparison-table__label" aria-hidden="true">Typical speed</span>Medium</td><td data-label="Capacity"><span class="comparison-table__label" aria-hidden="true">Capacity</span>High</td><td data-label="Relative CO₂ profile"><span class="comparison-table__label" aria-hidden="true">Relative CO₂ profile</span>Lower</td></tr>
+                <tr><th scope="row">Sea</th><td data-label="Best for">Very high-volume, long-distance freight</td><td data-label="Flexibility"><span class="comparison-table__label" aria-hidden="true">Flexibility</span>Low</td><td data-label="Typical speed"><span class="comparison-table__label" aria-hidden="true">Typical speed</span>Low</td><td data-label="Capacity"><span class="comparison-table__label" aria-hidden="true">Capacity</span>Very high</td><td data-label="Relative CO₂ profile"><span class="comparison-table__label" aria-hidden="true">Relative CO₂ profile</span>Lower</td></tr>
+                <tr><th scope="row">Air</th><td data-label="Best for">Urgent, high-value or time-critical freight</td><td data-label="Flexibility"><span class="comparison-table__label" aria-hidden="true">Flexibility</span>Medium</td><td data-label="Typical speed"><span class="comparison-table__label" aria-hidden="true">Typical speed</span>Very high</td><td data-label="Capacity"><span class="comparison-table__label" aria-hidden="true">Capacity</span>Low</td><td data-label="Relative CO₂ profile"><span class="comparison-table__label" aria-hidden="true">Relative CO₂ profile</span>Highest</td></tr>
               </tbody>
             </table>
           </section>
@@ -652,7 +652,7 @@
             <a class="button button--dark" href="/contact/" data-event="comparison_engagement">Talk to Our Logistics Team</a>
           </header>
 
-          <div class="alternative-comparison__table-wrap reveal" data-delay="1" tabindex="0" aria-label="Alternative transport mode comparison table. Scroll horizontally on small screens.">
+          <div class="alternative-comparison__table-wrap reveal" data-delay="1">
             <table class="alternative-comparison__table">
               <caption>Alternative layout comparing road, rail, sea and air freight</caption>
               <colgroup>
@@ -670,8 +670,8 @@
               <tbody>
                 <tr>
                   <th scope="row"><span>01</span><strong>Road</strong></th>
-                  <td>Door-to-door European transport and flexible routes</td>
-                  <td>
+                  <td data-label="Best for">Door-to-door European transport and flexible routes</td>
+                  <td data-label="Operational profile">
                     <dl class="alternative-comparison__metrics">
                       <div><dt>Flexibility</dt><dd>Very high</dd></div>
                       <div><dt>Typical speed</dt><dd>High</dd></div>
@@ -682,8 +682,8 @@
                 </tr>
                 <tr>
                   <th scope="row"><span>02</span><strong>Rail</strong></th>
-                  <td>High-volume inland corridors and long distances</td>
-                  <td>
+                  <td data-label="Best for">High-volume inland corridors and long distances</td>
+                  <td data-label="Operational profile">
                     <dl class="alternative-comparison__metrics">
                       <div><dt>Flexibility</dt><dd>Medium</dd></div>
                       <div><dt>Typical speed</dt><dd>Medium</dd></div>
@@ -694,8 +694,8 @@
                 </tr>
                 <tr>
                   <th scope="row"><span>03</span><strong>Sea</strong></th>
-                  <td>Very high-volume, long-distance freight</td>
-                  <td>
+                  <td data-label="Best for">Very high-volume, long-distance freight</td>
+                  <td data-label="Operational profile">
                     <dl class="alternative-comparison__metrics">
                       <div><dt>Flexibility</dt><dd>Low</dd></div>
                       <div><dt>Typical speed</dt><dd>Low</dd></div>
@@ -706,8 +706,8 @@
                 </tr>
                 <tr>
                   <th scope="row"><span>04</span><strong>Air</strong></th>
-                  <td>Urgent, high-value or time-critical freight</td>
-                  <td>
+                  <td data-label="Best for">Urgent, high-value or time-critical freight</td>
+                  <td data-label="Operational profile">
                     <dl class="alternative-comparison__metrics">
                       <div><dt>Flexibility</dt><dd>Medium</dd></div>
                       <div><dt>Typical speed</dt><dd>Very high</dd></div>

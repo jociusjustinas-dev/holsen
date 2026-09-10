@@ -100,6 +100,19 @@
   .article-content { max-width: 100%; }
   .article-related__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+@media (max-width: 48rem) {
+  .article-table-wrap { overflow-x: visible; }
+  .article-table, .article-table tbody, .article-table tr, .article-table th, .article-table td { display: block; width: 100%; }
+  .article-table { min-width: 0; table-layout: auto; }
+  .article-table caption { display: block; width: 100%; }
+  .article-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
+  .article-table tbody { display: grid; gap: 1rem; }
+  .article-table tbody tr { overflow: hidden; border: 1px solid var(--color-light-grey); border-radius: 0.5rem; }
+  .article-table tbody th, .article-table tbody td { border-bottom: 1px solid var(--color-light-grey); padding: 1rem; }
+  .article-table tbody th:first-child { width: 100%; background: var(--color-core-black); color: var(--color-functional-white); }
+  .article-table tbody td:last-child { border-bottom: 0; }
+  .article-table tbody td::before { content: attr(data-label); display: block; margin-bottom: 0.4rem; color: var(--color-grey); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.07em; line-height: 1.25; text-transform: uppercase; }
+}
 @media (max-width: 35.99rem) {
   .article-toc ol { grid-template-columns: minmax(0, 1fr); }
   .article-hero h1 { width: 100%; max-width: none; }
@@ -110,5 +123,4 @@
   .article-related__heading { align-items: start; flex-direction: column; }
   .article-related__grid { grid-template-columns: minmax(0, 1fr); }
   .insight-article-page main .article-content p:not(.eyebrow) { font-size: 1rem; }
-  .insight-article-page main .article-content .article-table-hint { display: block; font-size: 0.85rem; }
 }
