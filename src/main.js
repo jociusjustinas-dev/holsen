@@ -434,8 +434,44 @@ if (whyShowcase) {
   const whyTabs = [...whyShowcase.querySelectorAll("[data-why-tab]")];
   const whyPanels = [...whyShowcase.querySelectorAll("[data-why-panel]")];
   const whyImages = [...whyShowcase.querySelectorAll("[data-why-image]")];
+  const whyTabsContainer = whyShowcase.querySelector(".why-showcase__tabs");
+  const whyPanelsContainer = whyShowcase.querySelector(".why-showcase__panels");
   const canHover = window.matchMedia("(hover: hover)");
+  const mobileWhyAccordion = window.matchMedia("(max-width: 48rem)");
   let activeWhyIndex = Math.max(0, whyTabs.findIndex((tab) => tab.getAttribute("aria-selected") === "true"));
+
+  const applyWhyLayout = () => {
+    const isAccordion = mobileWhyAccordion.matches;
+
+    if (isAccordion) {
+      whyTabsContainer?.setAttribute("role", "group");
+
+      whyTabs.forEach((tab, index) => {
+        const panel = whyPanels[index];
+        tab.removeAttribute("role");
+        tab.removeAttribute("aria-selected");
+        tab.setAttribute("aria-expanded", String(index === activeWhyIndex));
+        tab.tabIndex = 0;
+        panel?.setAttribute("role", "region");
+        if (panel) tab.after(panel);
+      });
+    } else {
+      whyTabsContainer?.setAttribute("role", "tablist");
+
+      whyPanels.forEach((panel) => {
+        panel.setAttribute("role", "tabpanel");
+        whyPanelsContainer?.append(panel);
+      });
+
+      whyTabs.forEach((tab, index) => {
+        const isActive = index === activeWhyIndex;
+        tab.setAttribute("role", "tab");
+        tab.removeAttribute("aria-expanded");
+        tab.setAttribute("aria-selected", String(isActive));
+        tab.tabIndex = isActive ? 0 : -1;
+      });
+    }
+  };
 
   const activateWhyItem = (nextIndex, { moveFocus = false } = {}) => {
     if (!whyTabs[nextIndex] || nextIndex === activeWhyIndex) {
@@ -446,8 +482,13 @@ if (whyShowcase) {
     whyTabs.forEach((tab, index) => {
       const isActive = index === nextIndex;
       tab.classList.toggle("is-active", isActive);
-      tab.setAttribute("aria-selected", String(isActive));
-      tab.tabIndex = isActive ? 0 : -1;
+      if (mobileWhyAccordion.matches) {
+        tab.setAttribute("aria-expanded", String(isActive));
+        tab.tabIndex = 0;
+      } else {
+        tab.setAttribute("aria-selected", String(isActive));
+        tab.tabIndex = isActive ? 0 : -1;
+      }
     });
 
     whyPanels.forEach((panel, index) => {
@@ -467,7 +508,9 @@ if (whyShowcase) {
     tab.addEventListener("mouseenter", () => {
       if (canHover.matches) activateWhyItem(index);
     });
-    tab.addEventListener("focus", () => activateWhyItem(index));
+    tab.addEventListener("focus", () => {
+      if (!mobileWhyAccordion.matches) activateWhyItem(index);
+    });
     tab.addEventListener("click", () => activateWhyItem(index));
     tab.addEventListener("keydown", (event) => {
       let nextIndex = null;
@@ -482,19 +525,70 @@ if (whyShowcase) {
       activateWhyItem(nextIndex, { moveFocus: true });
     });
   });
+
+  applyWhyLayout();
+  mobileWhyAccordion.addEventListener("change", () => {
+    applyWhyLayout();
+    requestAnimationFrame(() => ScrollTrigger.refresh());
+  });
 }
 
 scope.querySelectorAll("[data-industry-tabs]").forEach((widget) => {
   const tabs = [...widget.querySelectorAll('[role="tab"]')];
   const panels = [...widget.querySelectorAll('[role="tabpanel"]')];
+  const selector = widget.querySelector(".industries-selector");
+  const mobileIndustryAccordion = window.matchMedia("(max-width: 48rem)");
+  let activeIndustryTab = tabs.find((tab) => tab.getAttribute("aria-selected") === "true") || tabs[0];
+
+  const applyIndustryLayout = () => {
+    const isAccordion = mobileIndustryAccordion.matches;
+
+    if (isAccordion) {
+      selector?.setAttribute("role", "group");
+      selector?.removeAttribute("aria-orientation");
+
+      tabs.forEach((tab, index) => {
+        const panel = panels[index];
+        const isActive = tab === activeIndustryTab;
+        tab.removeAttribute("role");
+        tab.removeAttribute("aria-selected");
+        tab.setAttribute("aria-expanded", String(isActive));
+        tab.tabIndex = 0;
+        panel?.setAttribute("role", "region");
+        if (panel) tab.after(panel);
+      });
+    } else {
+      selector?.setAttribute("role", "tablist");
+      selector?.setAttribute("aria-orientation", "vertical");
+
+      panels.forEach((panel) => {
+        panel.setAttribute("role", "tabpanel");
+        widget.append(panel);
+      });
+
+      tabs.forEach((tab) => {
+        const isActive = tab === activeIndustryTab;
+        tab.setAttribute("role", "tab");
+        tab.removeAttribute("aria-expanded");
+        tab.setAttribute("aria-selected", String(isActive));
+        tab.tabIndex = isActive ? 0 : -1;
+      });
+    }
+  };
 
   const activateTab = (tab, { moveFocus = false } = {}) => {
     const panelId = tab.getAttribute("aria-controls");
+    activeIndustryTab = tab;
 
     tabs.forEach((candidate) => {
       const isActive = candidate === tab;
-      candidate.setAttribute("aria-selected", String(isActive));
-      candidate.tabIndex = isActive ? 0 : -1;
+      if (mobileIndustryAccordion.matches) {
+        candidate.setAttribute("aria-expanded", String(isActive));
+        candidate.tabIndex = 0;
+      } else {
+        candidate.setAttribute("aria-selected", String(isActive));
+        candidate.tabIndex = isActive ? 0 : -1;
+      }
     });
 
     panels.forEach((panel) => {
@@ -537,6 +631,12 @@ scope.querySelectorAll("[data-industry-tabs]").forEach((widget) => {
       event.preventDefault();
       activateTab(tabs[nextIndex], { moveFocus: true });
     });
+  });
+
+  applyIndustryLayout();
+  mobileIndustryAccordion.addEventListener("change", () => {
+    applyIndustryLayout();
+    requestAnimationFrame(() => ScrollTrigger.refresh());
   });
 });
 
