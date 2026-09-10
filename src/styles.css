@@ -4923,6 +4923,11 @@ body:has(.hero) .site-header:not(.is-scrolled) .menu-toggle {
     object-position: 59% center;
   }
 
+  .hero__media {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
   .hero::after {
     background: linear-gradient(180deg, color-mix(in srgb, #000000 38%, transparent), color-mix(in srgb, #000000 25%, transparent) 35%, color-mix(in srgb, #000000 82%, transparent));
   }
@@ -4936,8 +4941,10 @@ body:has(.hero) .site-header:not(.is-scrolled) .menu-toggle {
   }
 
   .hero .display-title {
-    max-width: none;
+    max-width: 100%;
     font-size: var(--hero-title-size);
+    white-space: normal;
+    text-wrap: balance;
   }
 
   .hero .lede {
