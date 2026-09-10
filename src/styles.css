@@ -4800,6 +4800,14 @@ body:has(.hero) .site-header:not(.is-scrolled) .menu-toggle {
   .sustainability-section {
     min-height: 42rem;
   }
+
+  .final-cta__loop {
+    top: 50%;
+    right: 50%;
+    width: min(44rem, 150vw);
+    max-width: none;
+    transform: translate(50%, -50%);
+  }
 }
 
 /* Final Home A hero composition override. The first viewport keeps only the
