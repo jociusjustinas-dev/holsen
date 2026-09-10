@@ -1,0 +1,42 @@
+/* Page-level vertical rhythm. 64px on mobile, fluid to 96px on desktop.
+ * content: light section / inset card; neighbours share ONE gap.
+ * attached: first content below a hero heading; the hero owns the gap above.
+ * surface: full-width contrasting background; retains its own inner padding.
+ * flush: media owns the background and delegates padding to its content.
+ * Scope deliberately excludes nested accordions, cards, tabs and sticky nav.
+ * Specificity wins over page-specific legacy padding without !important.
+ */
+body #main-content > [data-section-spacing] {
+  margin-block: 0;
+  padding-block: var(--section-space);
+}
+
+body #main-content > [data-section-spacing="attached"] {
+  padding-top: 0;
+}
+
+body #main-content > :is([data-section-spacing="content"], [data-section-spacing="attached"]):has(+ :is([data-section-spacing="content"], [data-section-spacing="attached"])) {
+  padding-bottom: 0;
+}
+
+body #main-content > .service-hero:has(+ [data-section-spacing="attached"]) .service-hero__heading {
+  padding-bottom: var(--section-space);
+}
+
+body #main-content > [data-section-spacing="flush"] {
+  padding-block: 0;
+}
+
+body #main-content > [data-section-spacing="flush"] > :is(.markets-network, .why-showcase__layout),
+body #main-content > [data-section-spacing="flush"] .sustainability-card__content {
+  padding-block: var(--section-space);
+}
+
+/* Article sections are parts of one reading column, not full-width modules. */
+body #main-content > article > .article-layout {
+  padding-block: var(--section-space);
+}
+
+body #main-content .article-content > section + section {
+  margin-top: calc(var(--section-space) * 0.75);
+}
