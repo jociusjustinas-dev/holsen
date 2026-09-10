@@ -7376,6 +7376,14 @@ body {
   scrollbar-gutter: stable;
 }
 
+@media (max-width: 48rem) {
+  main .section-title.section-title {
+    width: 100%;
+    max-width: none;
+    text-wrap: pretty;
+  }
+}
+
 @media (min-width: 68.01rem) {
   .industries-explorer {
     display: grid;

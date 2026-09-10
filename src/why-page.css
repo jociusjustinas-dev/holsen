@@ -87,7 +87,7 @@
   .why-actions { flex-direction: column; align-items: flex-start; }
   .why-hero__layout { grid-template-columns: minmax(0, 1fr); gap: 2rem; }
   .why-hero__copy { padding: 0; }
-  .why-hero__copy h1 { max-width: 13ch; }
+  .why-hero__copy h1 { width: 100%; max-width: none; }
   .why-hero__image {
     -webkit-mask-image: url("./assets/Vector.svg");
     mask-image: url("./assets/Vector.svg");

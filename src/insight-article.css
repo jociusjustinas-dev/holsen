@@ -102,7 +102,7 @@
 }
 @media (max-width: 35.99rem) {
   .article-toc ol { grid-template-columns: minmax(0, 1fr); }
-  .article-hero h1 { max-width: 14ch; }
+  .article-hero h1 { width: 100%; max-width: none; }
   .article-hero__meta { grid-template-columns: minmax(0, 1fr); }
   .article-hero__meta > div:nth-child(odd) { padding-right: 0; }
   .article-callout { grid-template-columns: minmax(0, 1fr); gap: 1rem; }
