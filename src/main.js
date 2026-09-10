@@ -268,6 +268,26 @@ if (body.hasAttribute("data-page-type")) {
     if (delay > 0) item.dataset.delay = String(Math.min(delay, 3));
   };
 
+  const internalHero = document.querySelector("main .service-hero");
+
+  if (internalHero) {
+    const internalHeroItems = [
+      internalHero.querySelector(".service-breadcrumbs"),
+      internalHero.querySelector(".eyebrow"),
+      internalHero.querySelector("h1"),
+      internalHero.querySelector(".service-hero__intro"),
+      internalHero.querySelector(".why-hero__description"),
+      internalHero.querySelector(".why-actions"),
+      internalHero.querySelector(".article-hero__categories"),
+      internalHero.querySelector(".article-hero__summary"),
+      internalHero.querySelector(".service-hero__media"),
+      internalHero.querySelector(".why-hero__media"),
+      internalHero.querySelector(".article-hero__media"),
+    ].filter(Boolean);
+
+    [...new Set(internalHeroItems)].forEach((item, index) => addReveal(item, index));
+  }
+
   document
     .querySelectorAll("main > section:not(.service-hero):not(.final-cta) > .site-container")
     .forEach((container) => {
@@ -285,8 +305,8 @@ if (body.hasAttribute("data-page-type")) {
 }
 
 const revealItems = [...document.querySelectorAll(".reveal")];
-const heroRevealItems = revealItems.filter((item) => item.closest(".hero"));
-const scrollRevealItems = revealItems.filter((item) => !item.closest(".hero"));
+const heroRevealItems = revealItems.filter((item) => item.closest(".hero, .service-hero"));
+const scrollRevealItems = revealItems.filter((item) => !item.closest(".hero, .service-hero"));
 
 if (reduceMotion || !("IntersectionObserver" in window)) {
   revealItems.forEach((item) => item.classList.add("is-visible"));
