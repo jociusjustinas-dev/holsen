@@ -2653,7 +2653,7 @@ body:has(.hero) .site-header:not(.is-scrolled) .menu-toggle {
 }
 
 @media (max-width: 48rem) {
-  :root { --hero-title-size: clamp(2.6rem, 12.6vw, 3.75rem); }
+  :root { --hero-title-size: clamp(2.2rem, 10.8vw, 2.75rem); }
 
   .hero {
     min-height: 100svh;
