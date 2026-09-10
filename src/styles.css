@@ -5888,7 +5888,7 @@ body:has(.hero) .site-header:not(.is-scrolled) .menu-toggle {
   }
 
   .industry-feature__media {
-    min-height: 13rem;
+    display: none;
   }
 
   .industry-feature__content {
