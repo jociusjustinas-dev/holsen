@@ -340,6 +340,24 @@ if (scope.querySelector(".service-hero")) {
       "main .article-sidebar, main [data-article-section], main .article-related__heading, main .article-related__card",
     )
     .forEach((item, index) => addReveal(item, index % 3));
+
+  const insightsFeature = scope.querySelector(".insights-feature__layout");
+  if (insightsFeature) {
+    insightsFeature.classList.remove("reveal");
+    delete insightsFeature.dataset.delay;
+    [
+      insightsFeature.querySelector(".insights-feature__media"),
+      insightsFeature.querySelector(".insights-feature__copy"),
+    ].forEach((item, index) => addReveal(item, index));
+  }
+
+  const insightsGrid = scope.querySelector(".insights-grid");
+  if (insightsGrid) {
+    insightsGrid.classList.remove("reveal");
+    delete insightsGrid.dataset.delay;
+    [...insightsGrid.querySelectorAll(":scope > .insights-topic")]
+      .forEach((item, index) => addReveal(item, index % 3));
+  }
 }
 
 const revealItems = [...scope.querySelectorAll(".reveal")];
