@@ -3486,7 +3486,7 @@ body:has(.hero) .site-header:not(.is-scrolled) .menu-toggle {
 
   .qualification-audience .trust-strip__grid--snapshot strong {
     margin-top: 2rem;
-    font-size: clamp(1.45rem, 7vw, 2rem);
+    font-size: clamp(1.25rem, 5.75vw, 1.65rem);
   }
 
   .qualification-audience .trust-strip__meta {
