@@ -7316,7 +7316,7 @@ body.is-services-page:has(.hero) .site-header:not(.is-scrolled) .menu-toggle {
   color: var(--color-core-black);
 }
 
-/* Persistent shell and parallel Swup page transition. */
+/* Viewport shell with an internal document scroll container. */
 html,
 body {
   height: 100%;
@@ -7324,7 +7324,6 @@ body {
 }
 
 .app {
-  background: var(--color-core-black);
   display: grid;
   grid-template-areas:
     "header"
@@ -7338,75 +7337,17 @@ body {
   grid-area: header;
 }
 
-#swup {
+#page-scroll {
   position: relative;
-  z-index: calc(2 - var(--swup-parallel-container, 0));
+  z-index: 2;
   grid-area: main;
   min-width: 0;
   min-height: 0;
   overflow-x: clip;
   overflow-y: auto;
-  clip-path: inset(0 0 0 0);
-  transform: translateY(0) scale(1);
-  opacity: 1;
   overscroll-behavior-y: contain;
   background: var(--color-soft-white);
   scrollbar-gutter: stable;
-}
-
-#swup.is-previous-container {
-  z-index: 1;
-}
-
-#swup.is-previous-container,
-header.site-header.is-previous-container {
-  pointer-events: none;
-}
-
-html.is-changing .transition-swup {
-  --transitions-ease: cubic-bezier(0.4, 0.3, 0, 1);
-  transition:
-    transform 1.4s var(--transitions-ease),
-    opacity 1.4s var(--transitions-ease),
-    clip-path 1.4s var(--transitions-ease);
-}
-
-html.is-changing .transition-swup.header:not(.is-previous-container) {
-  transition:
-    opacity 0.4s var(--transitions-ease) 0.9s,
-    transform 0.8s var(--transitions-ease) 0.7s;
-}
-
-.transition-swup.is-previous-container {
-  transform: translateY(-160px) scale(0.95);
-  opacity: 0.5;
-}
-
-.transition-swup.is-previous-container.header {
-  opacity: 0;
-}
-
-.transition-swup.is-next-container {
-  transform: translateY(50dvh);
-  clip-path: inset(70% 0 0 0);
-}
-
-.transition-swup.is-next-container.header {
-  opacity: 0;
-  transform: translateY(10dvh);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html.is-changing .transition-swup {
-    transition: none !important;
-  }
-
-  .transition-swup.is-previous-container,
-  .transition-swup.is-next-container {
-    transform: none;
-    opacity: 1;
-    clip-path: inset(0 0 0 0);
-  }
 }
 
 @media (min-width: 68.01rem) {

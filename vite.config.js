@@ -27,9 +27,9 @@ const sharedShell = () => ({
           .replaceAll(`href="${path}"`, `href="${path}" aria-current="page"`);
       }
 
-      if (!output.includes('id="swup"')) {
+      if (!output.includes('id="page-scroll"')) {
         output = output
-          .replace(/(<header class="site-header[^"]*"[\s\S]*?<\/header>)/, '<div class="app">$1\n<div id="swup" class="transition-swup hide-scrollbar">')
+          .replace(/(<header class="site-header"[\s\S]*?<\/header>)/, '<div class="app">$1\n<div id="page-scroll">')
           .replace(/(<\/footer>)(?![\s\S]*<\/footer>)/, "$1\n</div>\n</div>");
       }
 

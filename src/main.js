@@ -1,11 +1,6 @@
 import "./styles.css";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Swup from "swup";
-import SwupBodyClassPlugin from "@swup/body-class-plugin";
-import SwupHeadPlugin from "@swup/head-plugin";
-import SwupParallelPlugin from "@swup/parallel-plugin";
-import SwupPreloadPlugin from "@swup/preload-plugin";
 import { initHolsenLoops } from "./holsen-loop.js";
 import { initMarketsMaps } from "./markets-map.js";
 import { initServicePage } from "./service-page.js";
@@ -81,7 +76,7 @@ if (!preloader) {
 
 root.classList.add("reveal-enabled");
 
-let activeScrollContainer = document.querySelector("#swup");
+let activeScrollContainer = document.querySelector("#page-scroll");
 let removeHeaderScrollListener = () => {};
 let activeHeaderController = null;
 
@@ -260,7 +255,7 @@ const initHeader = (scope = document.querySelector("header.site-header")) => {
   };
 };
 
-const initPageContent = (scope = document.querySelector("#swup")) => {
+const initPageContent = (scope = document.querySelector("#page-scroll")) => {
   if (!scope) return { cleanup: () => {}, startReveals: () => {} };
 
   const cleanups = [];
@@ -377,19 +372,21 @@ startReveals = () => {
   }
 
   requestAnimationFrame(() => {
-    if (!scope.isConnected) return;
+    requestAnimationFrame(() => {
+      if (!scope.isConnected) return;
 
-    const scrollBounds = scope.getBoundingClientRect();
-    const visibleTop = Math.max(0, scrollBounds.top);
-    const visibleBottom = Math.min(window.innerHeight, scrollBounds.bottom);
+      const scrollBounds = scope.getBoundingClientRect();
+      const visibleTop = Math.max(0, scrollBounds.top);
+      const visibleBottom = Math.min(window.innerHeight, scrollBounds.bottom);
 
-    heroRevealItems.forEach((item) => item.classList.add("is-visible"));
-    scrollRevealItems.forEach((item) => {
-      const bounds = item.getBoundingClientRect();
-      const isInViewport = bounds.bottom > visibleTop && bounds.top < visibleBottom;
+      heroRevealItems.forEach((item) => item.classList.add("is-visible"));
+      scrollRevealItems.forEach((item) => {
+        const bounds = item.getBoundingClientRect();
+        const isInViewport = bounds.bottom > visibleTop && bounds.top < visibleBottom;
 
-      if (isInViewport) item.classList.add("is-visible");
-      else revealObserver.observe(item);
+        if (isInViewport) item.classList.add("is-visible");
+        else revealObserver.observe(item);
+      });
     });
   });
 };
@@ -980,79 +977,8 @@ const syncPersistentNavigation = (headerScope = document.querySelector("header.s
   });
 };
 
-const syncBodyData = (incomingDocument) => {
-  [...document.body.attributes]
-    .filter((attribute) => attribute.name.startsWith("data-"))
-    .forEach((attribute) => document.body.removeAttribute(attribute.name));
-
-  [...(incomingDocument?.body?.attributes || [])]
-    .filter((attribute) => attribute.name.startsWith("data-"))
-    .forEach((attribute) => document.body.setAttribute(attribute.name, attribute.value));
-};
-
-let activePageContent = initPageContent();
-const initialPageContent = activePageContent;
-whenPageReady(() => initialPageContent.startReveals());
+const activePageContent = initPageContent();
+whenPageReady(() => activePageContent.startReveals());
 activeHeaderController = initHeader();
-bindHeaderScroll(document.querySelector("#swup"), activeHeaderController);
+bindHeaderScroll(document.querySelector("#page-scroll"), activeHeaderController);
 syncPersistentNavigation(activeHeaderController.header);
-
-const swup = new Swup({
-  animateHistoryBrowsing: true,
-  containers: ["#swup", "header.site-header"],
-  plugins: [
-    new SwupHeadPlugin({ persistAssets: true }),
-    new SwupBodyClassPlugin(),
-    new SwupPreloadPlugin(),
-    new SwupParallelPlugin(),
-  ],
-});
-
-swup.hooks.on("visit:start", () => {
-  activeHeaderController?.closeAll();
-  activePageContent.cleanup();
-});
-
-swup.hooks.on("content:insert", (_visit, { containers }) => {
-  containers.forEach(({ previous }) => {
-    previous.inert = true;
-  });
-});
-
-swup.hooks.replace("scroll:top", (_visit, { options }) => {
-  const nextContainer = document.querySelector("#swup");
-  nextContainer?.scrollTo({ ...options, top: 0, left: 0 });
-  return true;
-});
-
-swup.hooks.replace("scroll:anchor", (_visit, { hash, options }) => {
-  if (!hash) return false;
-  let id = hash.replace(/^#/, "");
-  try {
-    id = decodeURIComponent(id);
-  } catch {
-    // Keep the original fragment if it is not valid URI-encoded text.
-  }
-  const target = document.querySelector(`#swup #${CSS.escape(id)}`);
-  if (!target) return false;
-  target.scrollIntoView(options);
-  return true;
-});
-
-swup.hooks.on("content:replace", (visit) => {
-  const nextContainer = document.querySelector("#swup");
-  const nextHeader = document.querySelector("header.site-header");
-  syncBodyData(visit.to.document);
-  activeHeaderController?.cleanup();
-  activeHeaderController = initHeader(nextHeader);
-  activePageContent = initPageContent(nextContainer);
-  bindHeaderScroll(nextContainer, activeHeaderController);
-  syncPersistentNavigation(activeHeaderController.header);
-  activePageContent.startReveals();
-});
-
-swup.hooks.on("visit:end", () => {
-  const main = document.querySelector("#swup #main-content");
-  main?.focus({ preventScroll: true });
-  requestAnimationFrame(() => ScrollTrigger.refresh());
-});
