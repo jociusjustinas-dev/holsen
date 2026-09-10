@@ -604,6 +604,78 @@ scope.querySelectorAll("[data-case-carousel]").forEach((viewport) => {
   setActiveIndex(0);
 });
 
+const servicesCarousel = scope.querySelector("[data-services-carousel]");
+
+if (servicesCarousel) {
+  const servicesSection = servicesCarousel.closest(".services-section");
+  const serviceSlides = [...servicesCarousel.children];
+  const previousServiceButton = servicesSection?.querySelector("[data-service-prev]");
+  const nextServiceButton = servicesSection?.querySelector("[data-service-next]");
+  const serviceStatus = servicesSection?.querySelector("[data-service-carousel-status]");
+  const mobileServicesCarousel = window.matchMedia("(max-width: 48rem)");
+  let activeServiceIndex = -1;
+  let serviceScrollFrame = 0;
+
+  const getServiceLeft = (slide) => slide.offsetLeft - servicesCarousel.firstElementChild.offsetLeft;
+
+  const setActiveServiceIndex = (index) => {
+    const nextIndex = Math.max(0, Math.min(index, serviceSlides.length - 1));
+    const changed = nextIndex !== activeServiceIndex;
+    activeServiceIndex = nextIndex;
+    previousServiceButton?.toggleAttribute("disabled", activeServiceIndex === 0);
+    nextServiceButton?.toggleAttribute("disabled", activeServiceIndex === serviceSlides.length - 1);
+
+    if (serviceStatus && changed) {
+      serviceStatus.textContent = `Service ${activeServiceIndex + 1} of ${serviceSlides.length}`;
+    }
+  };
+
+  const goToService = (index) => {
+    const nextIndex = Math.max(0, Math.min(index, serviceSlides.length - 1));
+    const slide = serviceSlides[nextIndex];
+    if (!slide) return;
+
+    servicesCarousel.scrollTo({
+      left: getServiceLeft(slide),
+      behavior: reduceMotion ? "auto" : "smooth",
+    });
+    setActiveServiceIndex(nextIndex);
+  };
+
+  const syncServiceCarouselMode = () => {
+    servicesCarousel.tabIndex = mobileServicesCarousel.matches ? 0 : -1;
+  };
+
+  previousServiceButton?.addEventListener("click", () => goToService(activeServiceIndex - 1));
+  nextServiceButton?.addEventListener("click", () => goToService(activeServiceIndex + 1));
+
+  servicesCarousel.addEventListener("keydown", (event) => {
+    if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+    event.preventDefault();
+    goToService(activeServiceIndex + (event.key === "ArrowRight" ? 1 : -1));
+  });
+
+  servicesCarousel.addEventListener(
+    "scroll",
+    () => {
+      cancelAnimationFrame(serviceScrollFrame);
+      serviceScrollFrame = requestAnimationFrame(() => {
+        const nearestIndex = serviceSlides.reduce((closestIndex, slide, index) => {
+          const closestDistance = Math.abs(getServiceLeft(serviceSlides[closestIndex]) - servicesCarousel.scrollLeft);
+          const slideDistance = Math.abs(getServiceLeft(slide) - servicesCarousel.scrollLeft);
+          return slideDistance < closestDistance ? index : closestIndex;
+        }, 0);
+        setActiveServiceIndex(nearestIndex);
+      });
+    },
+    { passive: true },
+  );
+
+  mobileServicesCarousel.addEventListener("change", syncServiceCarouselMode);
+  syncServiceCarouselMode();
+  setActiveServiceIndex(0);
+}
+
 const marketsSection = scope.querySelector("[data-markets-network]");
 const marketsIntro = marketsSection?.querySelector("[data-markets-intro]");
 const marketsRegions = marketsSection?.querySelector("[data-markets-regions]");

@@ -3415,6 +3415,10 @@ body:has(.hero) .site-header:not(.is-scrolled) .menu-toggle {
   border-left: 1px solid var(--line);
 }
 
+.services-carousel__controls {
+  display: none;
+}
+
 .home-audience-fit {
   margin-top: clamp(2.5rem, 4vw, 4rem);
   border-block: 1px solid var(--line);
@@ -7381,6 +7385,74 @@ body {
     width: 100%;
     max-width: none;
     text-wrap: pretty;
+  }
+
+  .services-carousel__controls {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin: 1.5rem 0 1rem;
+  }
+
+  .services-carousel__controls button {
+    display: inline-grid;
+    width: 3rem;
+    height: 3rem;
+    place-items: center;
+    border: 1px solid var(--color-core-black);
+    border-radius: 0.5rem;
+    background: transparent;
+    color: var(--color-core-black);
+    font-size: 1.15rem;
+    cursor: pointer;
+    transition: background-color 180ms linear, color 180ms linear, opacity 180ms linear;
+  }
+
+  .services-carousel__controls button:not(:disabled):hover,
+  .services-carousel__controls button:not(:disabled):focus-visible {
+    background: var(--color-core-black);
+    color: var(--color-functional-white);
+  }
+
+  .services-carousel__controls button:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+
+  .services-section .service-list {
+    display: flex;
+    width: calc(100% + 1rem);
+    align-items: stretch;
+    gap: 0.75rem;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    border: 0;
+    padding: 0 1rem 0 0;
+    scroll-padding-inline: 0;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .services-section .service-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .services-section .service-list:focus-visible {
+    outline: 2px solid var(--color-core-black);
+    outline-offset: 0.25rem;
+  }
+
+  .services-section .service-row,
+  .services-section .service-cta {
+    min-height: 22rem;
+    flex: 0 0 min(82vw, 20rem);
+    border: 1px solid var(--line);
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
+  .services-section .service-cta {
+    grid-column: auto;
   }
 }
 
