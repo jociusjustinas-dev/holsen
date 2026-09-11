@@ -263,7 +263,7 @@
     -webkit-mask-size: auto 100%;
     mask-size: auto 100%;
   }
-  body[data-page-type="service"] .service-hero__media {
+  body:is([data-page-type="service"], [data-page-type="industry"]) .service-hero__media {
     width: calc(100% + (var(--page-gutter) * 2));
     margin-inline: calc(var(--page-gutter) * -1);
     -webkit-mask-image: none;
