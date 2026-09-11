@@ -2718,6 +2718,23 @@ body:has(.hero) .site-header:not(.is-scrolled) .menu-toggle {
     background: color-mix(in srgb, #000000 18%, transparent);
     backdrop-filter: blur(0.6rem);
   }
+
+  body.menu-open:has(.hero) .site-header:not(.is-scrolled) .nav-shell {
+    background: var(--color-functional-white);
+    box-shadow: 0 0.5rem 2.5rem color-mix(in srgb, #000000 12%, transparent);
+    color: var(--color-core-black);
+    backdrop-filter: none;
+  }
+
+  body.menu-open:has(.hero) .site-header:not(.is-scrolled) .brand-link img {
+    filter: none;
+  }
+
+  body.menu-open:has(.hero) .site-header:not(.is-scrolled) .menu-toggle {
+    border-color: var(--color-core-black);
+    background: var(--color-functional-white);
+    color: var(--color-core-black);
+  }
 }
 
 /* Final operational proof composition. */
