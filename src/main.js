@@ -1149,8 +1149,8 @@ if (finalCtaSection && finalCtaLoop && finalCtaLoopDashes.length && !reduceMotio
       })
       .fromTo(
         finalCtaLoop,
-        { autoAlpha: 0, scale: 0.94, xPercent: -2 },
-        { autoAlpha: 0.38, scale: 1, xPercent: 0, duration: 1.05, ease: "power3.out" },
+        { autoAlpha: 0, scale: 0.94 },
+        { autoAlpha: 0.38, scale: 1, duration: 1.05, ease: "power3.out" },
         0,
       )
       .fromTo(

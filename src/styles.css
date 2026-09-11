@@ -4906,10 +4906,11 @@ body:has(.hero) .site-header:not(.is-scrolled) .menu-toggle {
 
   .final-cta__loop {
     top: 50%;
-    right: 50%;
+    right: auto;
+    left: 50%;
     width: min(44rem, 150vw);
     max-width: none;
-    transform: translate(50%, -50%);
+    transform: translate(-50%, -50%);
   }
 }
 
