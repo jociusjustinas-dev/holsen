@@ -7672,10 +7672,22 @@ body {
 }
 
 @media (max-width: 48rem) {
-  main .section-title.section-title {
+  main :is(.display-title, .section-title) {
     width: 100%;
     max-width: none;
-    text-wrap: pretty;
+    text-wrap: wrap;
+  }
+
+  main :is(.display-title, .section-title) br {
+    display: none;
+  }
+
+  main :is(.display-title, .section-title) > span {
+    display: inline;
+  }
+
+  main :is(.display-title, .section-title) > span + span::before {
+    content: " ";
   }
 
   .services-carousel__controls,

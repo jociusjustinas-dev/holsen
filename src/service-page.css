@@ -242,7 +242,11 @@
   .service-page .service-road-comparison__header > .body-copy { justify-self: start; }
 }
 @media (max-width: 47.99rem) {
-  .service-page { --service-gap: 2.5rem; }
+  .service-page { --service-gap: 2.5rem; --hero-title-size: clamp(2.35rem, 10.125vw, 3rem); }
+  .service-page main :is(h1, h2:not(.sr-only), h3) { max-width: none; text-wrap: wrap; }
+  .service-page main :is(h1, h2, h3) br { display: none; }
+  .service-page main .section-title > span { display: inline; }
+  .service-page main .section-title > span + span::before { content: " "; }
   .service-page .footer-credit__easter-egg { left: auto; right: 0; transform-origin: right bottom; }
   .service-hero { padding-top: 7rem; }
   .service-breadcrumbs { margin-bottom: 2.5rem; }
