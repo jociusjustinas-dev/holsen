@@ -5838,6 +5838,26 @@ body:has(.hero) .site-header:not(.is-scrolled) .menu-toggle {
   }
 }
 
+/* Mobile operational proof: keep the evidence readable without the chart. */
+@media (max-width: 48rem) {
+  .proof-section .proof-chart {
+    display: none;
+  }
+
+  .proof-section .proof-chart__stats {
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(2rem, 9vw, 3rem) 1rem;
+    margin-top: 2rem;
+    padding-bottom: 0;
+  }
+
+  .proof-section .proof-stat {
+    width: 100%;
+    max-width: none;
+  }
+}
+
 @media (min-width: 48.01rem) {
   .industry-feature {
     background: transparent;
