@@ -71,7 +71,7 @@
 .quote-progress button:focus-visible { z-index: 1; outline: 2px solid var(--color-core-black); outline-offset: -2px; }
 .quote-progress li:first-child button { align-items: flex-start; text-align: left; }
 .quote-progress li:last-child button { align-items: flex-end; text-align: right; }
-.quote-pricing-mobile { display: none; margin: 0 0 2rem; border: 1px solid var(--color-core-black); background: var(--color-functional-white); }
+.quote-pricing-mobile { display: none; overflow: hidden; margin: 0 0 2rem; border: 1px solid var(--color-core-black); border-radius: 0.5rem; background: var(--color-functional-white); }
 .quote-pricing-mobile summary { display: flex; min-height: 3.5rem; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.85rem 1rem; font-weight: 600; list-style: none; cursor: pointer; }
 .quote-pricing-mobile summary::-webkit-details-marker { display: none; }
 .quote-pricing-mobile summary::after { color: var(--color-holsen-orange); content: "+"; font-size: 1.4rem; font-weight: 400; line-height: 1; }
