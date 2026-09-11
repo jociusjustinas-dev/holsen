@@ -5990,6 +5990,8 @@ body:has(.hero) .site-header:not(.is-scrolled) .menu-toggle {
     min-height: 0;
     grid-template-columns: 1fr;
     margin: 0 0 0.75rem;
+    overflow: visible;
+    background: transparent;
     animation: mobile-accordion-in 300ms var(--ease-out) both;
   }
 
@@ -5998,7 +6000,25 @@ body:has(.hero) .site-header:not(.is-scrolled) .menu-toggle {
   }
 
   .industry-feature__content {
-    min-height: 14rem;
+    display: block;
+    min-height: 0;
+    padding: 0.25rem 0.5rem 1.5rem 3.65rem;
+  }
+
+  .industry-feature__content .eyebrow,
+  .industry-feature__content h3,
+  .industry-feature__content .button {
+    display: none;
+  }
+
+  .industry-feature__content > div {
+    margin-top: 0;
+  }
+
+  .industry-feature__content p:not(.eyebrow) {
+    max-width: 32rem;
+    color: var(--color-light-grey);
+    font-size: 1rem;
   }
 }
 
