@@ -157,3 +157,7 @@
 .quote-form [hidden] { display: none !important; }
 @media (max-width: 68rem) { .quote-layout { grid-template-columns: 1fr; } .quote-fit h2 { white-space: normal; } .quote-pricing-mobile { display: block; } .quote-context { max-width: none; } .quote-context__note { display: none; } }
 @media (max-width: 47.99rem) { .quote-services { grid-template-columns: 1fr; } .quote-page .quote-step__intro { white-space: normal; } .quote-progress ol::before { top: 1.2rem; right: 0.65rem; left: 0.65rem; } .quote-progress button { min-height: 4rem; padding-inline: 0.35rem; font-size: 0.75rem; gap: 0.4rem; } .quote-progress__marker { flex-basis: 1.3rem; width: 1.3rem; height: 1.3rem; font-size: 0.58rem; } .quote-extras > div { grid-template-columns: 1fr; } .quote-actions { flex-wrap: wrap; } .quote-actions [data-quote-next] { flex: 1; padding-inline: 1rem; } .quote-review__heading { flex-wrap: wrap; } }
+@media (max-width: 47.99rem) {
+  .quote-extras > div { row-gap: 0; }
+  .quote-extras label { gap: 0.5rem; }
+}
