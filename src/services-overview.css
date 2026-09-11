@@ -23,7 +23,6 @@
 .services-overview-page .service-disclosures summary:focus-visible { outline: 2px solid var(--color-core-black); outline-offset: 4px; }
 @media (max-width: 767px) {
   .overview-hero .service-hero__heading { grid-template-columns: 1fr; gap: 2rem; }
-  .overview-actions { align-items: flex-start; flex-direction: column; }
   body.services-overview-page #main-content > .overview-catalogue { padding-bottom: 2rem; }
   .services-overview-page .alternative-comparison__table tbody > tr > td:last-child::before { margin-bottom: 1.1rem; }
   .services-overview-page .alternative-comparison__metrics { gap: 1.6rem 1.4rem; }

@@ -95,7 +95,6 @@
 .why-page .why-faq { padding-block: var(--service-space); }
 .why-page .service-disclosures summary:focus-visible { outline-color: var(--color-core-black); }
 @media (max-width: 47.99rem) {
-  .why-actions { flex-direction: column; align-items: flex-start; }
   .why-hero__layout { grid-template-columns: minmax(0, 1fr); gap: 2rem; }
   .why-hero__copy { padding: 0; }
   .why-hero__copy h1 { width: 100%; max-width: none; }

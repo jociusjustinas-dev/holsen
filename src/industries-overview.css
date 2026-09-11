@@ -47,6 +47,5 @@
   .industry-directory .service-row__arrow { grid-column: 3; grid-row: 1 / span 2; align-self: center; font-size: 1.25rem; }
   .industry-directory__body { padding: 1rem 1rem 1.25rem 2.75rem; border-right: 0; }
   .industry-directory > .service-cta { min-height: 11rem; margin-top: 1rem; }
-  .industries-actions { flex-direction: column; align-items: flex-start; }
   .industries-overview-page .industry-proof { grid-template-columns: 1fr; }
 }
