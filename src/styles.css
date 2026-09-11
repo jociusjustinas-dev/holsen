@@ -6048,9 +6048,13 @@ body:has(.hero) .site-header:not(.is-scrolled) .menu-toggle {
   }
 
   .industry-feature__content .eyebrow,
-  .industry-feature__content h3,
-  .industry-feature__content .button {
+  .industry-feature__content h3 {
     display: none;
+  }
+
+  .industry-feature__content .button {
+    display: inline-flex;
+    margin-top: 1.25rem;
   }
 
   .industry-feature__content > div {
