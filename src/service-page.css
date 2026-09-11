@@ -260,6 +260,12 @@
     -webkit-mask-size: auto 100%;
     mask-size: auto 100%;
   }
+  body[data-page-type="service"] .service-hero__media {
+    width: calc(100% + (var(--page-gutter) * 2));
+    margin-inline: calc(var(--page-gutter) * -1);
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
   .service-hero__media > img { object-position: 35% center; }
   .service-hero__media figcaption { padding: 2rem 1rem 1rem; font-size: 0.75rem; }
   .service-hero__media figcaption span:first-child { max-width: 12rem; }
