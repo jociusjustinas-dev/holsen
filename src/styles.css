@@ -4891,6 +4891,11 @@ body:has(.hero) .site-header:not(.is-scrolled) .menu-toggle {
     min-height: 30rem;
   }
 
+  .partnership-copy::before {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
   .case-step:nth-child(2),
   .case-step:nth-child(4) {
     transform: none;
