@@ -24,6 +24,7 @@
 @media (max-width: 767px) {
   .overview-hero .service-hero__heading { grid-template-columns: 1fr; gap: 2rem; }
   .overview-actions { align-items: flex-start; flex-direction: column; }
+  body.services-overview-page #main-content > .overview-catalogue { padding-bottom: 2rem; }
 }
 @media (prefers-reduced-motion: reduce) {
   .services-overview-page .service-row, .services-overview-page .service-row *, .services-overview-page .service-disclosures summary * { transition: none !important; }
