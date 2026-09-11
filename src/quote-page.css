@@ -67,7 +67,8 @@
 .quote-progress button[aria-current="step"] .quote-progress__marker { border-color: var(--color-holsen-orange); }
 .quote-progress button[data-complete] .quote-progress__marker { border-color: var(--color-holsen-orange); background: var(--color-holsen-orange); color: var(--color-core-black); font-size: 0.8rem; font-weight: 700; }
 .quote-progress button:disabled { cursor: default; opacity: 0.55; }
-.quote-progress button:not(:disabled):hover { color: var(--color-holsen-orange); }
+@media (hover: hover) and (pointer: fine) {
+.quote-progress button:not(:disabled):hover { color: var(--color-holsen-orange); } }
 .quote-progress button:focus-visible { z-index: 1; outline: 2px solid var(--color-core-black); outline-offset: -2px; }
 .quote-progress li:first-child button { align-items: flex-start; text-align: left; }
 .quote-progress li:last-child button { align-items: flex-end; text-align: right; }
@@ -100,7 +101,8 @@
   transition: border-color 180ms var(--ease-out), background-color 180ms var(--ease-out), color 180ms var(--ease-out);
 }
 .quote-services label:has(:checked) { color: var(--color-functional-white); background: var(--color-core-black); border-color: var(--color-core-black); }
-.quote-services label:hover { border-color: var(--color-core-black); }
+@media (hover: hover) and (pointer: fine) {
+.quote-services label:hover { border-color: var(--color-core-black); } }
 .quote-services input, .quote-extras input { width: 1.25rem; height: 1.25rem; flex: 0 0 1.25rem; accent-color: var(--color-core-black); }
 .quote-services label:has(:checked) input { accent-color: var(--color-holsen-orange); }
 .quote-services label:has(:focus-visible) { outline: 2px solid var(--color-core-black); outline-offset: 3px; }
@@ -116,7 +118,8 @@
 .quote-page .response-commitment strong { color: var(--color-core-black); font-weight: 650; }
 .quote-upload input[type="file"] { min-height: 4rem; padding: 0.5rem; cursor: pointer; }
 .quote-upload input[type="file"]::file-selector-button { min-height: 3rem; margin-right: 1rem; border: 0; border-radius: 0.35rem; background: var(--color-core-black); color: var(--color-functional-white); padding: 0.75rem 1rem; font: inherit; font-weight: 600; cursor: pointer; transition: background-color 200ms var(--ease-out), color 200ms var(--ease-out); }
-.quote-upload input[type="file"]:hover::file-selector-button { background: var(--color-holsen-orange); color: var(--color-core-black); }
+@media (hover: hover) and (pointer: fine) {
+.quote-upload input[type="file"]:hover::file-selector-button { background: var(--color-holsen-orange); color: var(--color-core-black); } }
 .quote-upload__selection { margin-top: 0.85rem; border: 1px solid var(--line); background: var(--color-functional-white); padding: 1rem; }
 .quote-upload__selection > div { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
 .quote-upload__selection strong { font-size: 0.9rem; font-weight: 600; }

@@ -52,8 +52,9 @@
 .why-team__member h3 { min-width: 0; font-size: clamp(1.5rem, 2.1vw, 2rem); margin: 0; }
 /* Visual slot only until client-approved personal profile URLs are supplied. */
 .why-team__linkedin { display: inline-grid; width: 2.75rem; height: 2.75rem; flex: 0 0 2.75rem; place-items: center; border: 1px solid var(--color-light-grey); border-radius: 0.5rem; color: var(--color-core-black); font-size: 1.15rem; line-height: 1; text-decoration: none; transition: background-color 200ms var(--ease-out), border-color 200ms var(--ease-out), color 200ms var(--ease-out), transform 200ms var(--ease-out); }
-.why-team__linkedin:hover,
 .why-team__linkedin:focus-visible { border-color: var(--color-core-black); background: var(--color-core-black); color: var(--color-functional-white); transform: translateY(-0.125rem); }
+@media (hover: hover) and (pointer: fine) {
+.why-team__linkedin:hover { border-color: var(--color-core-black); background: var(--color-core-black); color: var(--color-functional-white); transform: translateY(-0.125rem); } }
 .why-team__linkedin .ri-linkedin-box-fill::before { content: "\eeb3"; }
 .why-page .why-team__role { font-size: 0.85rem; color: var(--color-carbon); margin: 0; }
 .why-page .why-team__responsibility { font-size: 1rem; color: var(--color-carbon); border-top: 1px solid var(--line); padding-top: 1rem; margin: 1rem 0 0; line-height: 1.5; }

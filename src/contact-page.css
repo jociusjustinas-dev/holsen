@@ -18,8 +18,9 @@
 .contact-direct dd { min-width: 0; margin: 0; color: var(--color-functional-white); font-size: 0.95rem; overflow-wrap: anywhere; }
 .contact-direct address { font: inherit; }
 .contact-direct a { color: inherit; text-decoration-color: var(--color-holsen-orange); text-underline-offset: 0.25em; }
-.contact-direct a:hover,
 .contact-direct a:focus-visible { color: var(--color-holsen-orange); }
+@media (hover: hover) and (pointer: fine) {
+.contact-direct a:hover { color: var(--color-holsen-orange); } }
 .contact-context__item { border-top: 1px solid var(--line-dark); padding-block: 1.75rem; }
 .contact-context__item h3 { font-size: 1.5rem; margin: 0 0 0.75rem; }
 .contact-context__item p { color: var(--color-light-grey); margin: 0 0 0.75rem; }
@@ -51,7 +52,8 @@
 .contact-field :is(input, textarea)::placeholder { color: var(--color-holsen-grey); font-weight: 400; opacity: 1; }
 .contact-field :is(input, textarea)[placeholder]:not(:placeholder-shown):not([aria-invalid="true"]) { border-color: var(--color-core-black); font-weight: 500; }
 .contact-field textarea { resize: vertical; min-height: 10rem; }
-.contact-field :is(input, select, textarea):hover { border-color: var(--color-core-black); }
+@media (hover: hover) and (pointer: fine) {
+.contact-field :is(input, select, textarea):hover { border-color: var(--color-core-black); } }
 .contact-field :is(input, select, textarea):focus-visible, .contact-error-summary:focus-visible { border-color: var(--color-core-black); outline: 2px solid var(--color-core-black); outline-offset: 3px; }
 .contact-field :is(input, select, textarea)[aria-invalid="true"] { border: 2px solid var(--color-core-black); }
 .contact-page .contact-field__hint { font-size: 0.75rem; line-height: 1.5; color: var(--color-carbon); margin: 0.6rem 0 0; }
@@ -76,5 +78,7 @@
 /* Keep legal helper copy subordinate while preserving an obvious link affordance. */
 .contact-page main .form-privacy { font-size: 0.75rem; line-height: 1.5; }
 .contact-page main .form-privacy a { color: inherit; text-decoration-line: underline; text-decoration-color: currentColor; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
-.contact-page main .form-privacy a:is(:hover, :focus-visible) { color: var(--color-holsen-orange); }
+.contact-page main .form-privacy a:focus-visible { color: var(--color-holsen-orange); }
+@media (hover: hover) and (pointer: fine) {
+.contact-page main .form-privacy a:hover { color: var(--color-holsen-orange); } }
 .contact-page main .form-privacy a:focus-visible { outline: 2px solid var(--color-holsen-orange); outline-offset: 3px; }

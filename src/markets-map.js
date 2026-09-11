@@ -76,6 +76,7 @@ const initialiseMap = (stage, { scrollRoot = null } = {}) => {
   stage.dataset.marketsMapReady = "true";
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const canHover = window.matchMedia("(hover: hover) and (pointer: fine)");
   const computedRoot = window.getComputedStyle(document.documentElement);
   const accent = computedRoot.getPropertyValue("--color-holsen-orange").trim() || "#F1541C";
   const coreBlack = computedRoot.getPropertyValue("--color-core-black").trim() || "#000000";
@@ -373,8 +374,12 @@ const initialiseMap = (stage, { scrollRoot = null } = {}) => {
   };
 
   pins.forEach((pin, index) => {
-    pin.addEventListener("pointerenter", () => setActivePin(index));
-    pin.addEventListener("pointerleave", () => setActivePin(-1));
+    pin.addEventListener("pointerenter", (event) => {
+      if (event.pointerType === "mouse" && canHover.matches) setActivePin(index);
+    });
+    pin.addEventListener("pointerleave", (event) => {
+      if (event.pointerType === "mouse" && canHover.matches) setActivePin(-1);
+    });
     pin.addEventListener("focus", () => setActivePin(index));
     pin.addEventListener("blur", () => setActivePin(-1));
   });

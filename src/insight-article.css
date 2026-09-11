@@ -7,8 +7,9 @@
 .article-hero h1 { max-width: 19ch; }
 .article-hero__categories { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
 .article-hero__categories a { display: inline-flex; min-height: 2.75rem; align-items: center; padding: 0.55rem 0.8rem; border: 1px solid var(--color-light-grey); border-radius: 0.4rem; color: var(--color-core-black); font-size: 0.8rem; font-weight: 500; text-decoration: none; transition: background-color 200ms var(--ease-out), border-color 200ms var(--ease-out), color 200ms var(--ease-out); }
-.article-hero__categories a:hover,
 .article-hero__categories a:focus-visible { border-color: var(--color-holsen-orange); background: var(--color-holsen-orange); color: var(--color-core-black); text-decoration: none; }
+@media (hover: hover) and (pointer: fine) {
+.article-hero__categories a:hover { border-color: var(--color-holsen-orange); background: var(--color-holsen-orange); color: var(--color-core-black); text-decoration: none; } }
 .article-hero__summary { width: min(100%, 34rem); justify-self: end; }
 .article-hero__lead { max-width: 34rem; margin: 0 0 1.5rem; }
 .article-hero__meta { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 0; border-top: 1px solid var(--color-light-grey); color: var(--color-carbon); font-size: 0.75rem; line-height: 1.4; }
@@ -24,7 +25,8 @@
 .article-toc ol { list-style: none; margin: 0; padding: 0; }
 .article-toc li a { position: relative; display: flex; align-items: center; min-height: 2.75rem; padding: 0.5rem 0.5rem 0.5rem 1.25rem; font-size: 0.9rem; line-height: 1.4; color: var(--color-carbon); text-decoration: none; }
 .article-toc li a::before { content: ""; position: absolute; left: 0; width: 0.4rem; height: 0.4rem; border-radius: 0.1rem; background: transparent; }
-.article-toc li a:hover { color: var(--color-core-black); text-decoration: underline; text-underline-offset: 0.3em; }
+@media (hover: hover) and (pointer: fine) {
+.article-toc li a:hover { color: var(--color-core-black); text-decoration: underline; text-underline-offset: 0.3em; } }
 .article-toc li a[aria-current="location"] { color: var(--color-core-black); font-weight: 500; }
 .article-toc li a[aria-current="location"]::before { background: var(--color-holsen-orange); }
 .article-back { margin-top: 1.5rem; font-size: 0.85rem; text-decoration: none; }
@@ -37,8 +39,9 @@
 .insight-article-page main .article-content .article-answer { font-size: clamp(1.25rem, 1.65vw, 1.5rem); line-height: 1.5; color: var(--color-core-black); }
 .article-content p, .article-content li { color: var(--color-carbon); }
 .article-content a:not(.button) { color: var(--color-core-black); text-underline-offset: 0.25em; text-decoration-thickness: 1px; transition: color 200ms var(--ease-out); }
-.article-content a:not(.button):hover,
 .article-content a:not(.button):focus-visible { color: var(--color-holsen-orange); }
+@media (hover: hover) and (pointer: fine) {
+.article-content a:not(.button):hover { color: var(--color-holsen-orange); } }
 .article-content p a, .article-sources li > a { text-decoration-line: underline; }
 .article-inline-media { margin: 2.5rem 0 0; }
 .article-inline-media img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
@@ -56,8 +59,9 @@
 .article-callout .eyebrow { grid-row: 1 / span 2; align-self: start; color: var(--color-core-black); }
 .insight-article-page main .article-content .article-callout .body-copy { margin: 0; color: var(--color-carbon); font-size: 1rem; line-height: 1.55; }
 .article-callout .inline-cta { justify-self: start; color: var(--color-core-black); font-size: 0.95rem; text-decoration: none; }
-.article-callout .inline-cta:hover,
 .article-callout .inline-cta:focus-visible { color: var(--color-holsen-orange); text-decoration: none; }
+@media (hover: hover) and (pointer: fine) {
+.article-callout .inline-cta:hover { color: var(--color-holsen-orange); text-decoration: none; } }
 .article-checklist { list-style: none; padding: 0; margin: 2rem 0; counter-reset: brief; }
 .article-checklist li { counter-increment: brief; position: relative; padding: 1.25rem 0 1.25rem 3.5rem; border-bottom: 1px solid var(--color-light-grey); font-size: 1rem; line-height: 1.6; }
 .article-checklist li::before { content: counter(brief, decimal-leading-zero); position: absolute; left: 0; top: 1.25rem; color: var(--color-core-black); font-size: 0.85rem; }
@@ -80,14 +84,17 @@
 .insight-article-page .article-related__card h3 { margin: 0; font-size: clamp(1.5rem, 2.05vw, 2.25rem); transition: color 200ms var(--ease-out); }
 .article-related__action { display: flex; min-height: 3rem; align-items: center; justify-content: space-between; gap: 1rem; margin-top: auto; padding-block: 1rem; font-size: 0.95rem; font-weight: 500; transition: color 200ms var(--ease-out); }
 .article-related__action i { font-size: 1.25em; transition: transform 200ms var(--ease-out); }
-.article-related__card > a:hover h3,
 .article-related__card > a:focus-visible h3,
-.article-related__card > a:hover .article-related__action,
 .article-related__card > a:focus-visible .article-related__action { color: var(--color-holsen-orange); }
-.article-related__card > a:hover .article-related__image img,
+@media (hover: hover) and (pointer: fine) {
+.article-related__card > a:hover h3,
+.article-related__card > a:hover .article-related__action { color: var(--color-holsen-orange); } }
 .article-related__card > a:focus-visible .article-related__image img { transform: scale(1.035); }
-.article-related__card > a:hover .article-related__action i,
+@media (hover: hover) and (pointer: fine) {
+.article-related__card > a:hover .article-related__image img { transform: scale(1.035); } }
 .article-related__card > a:focus-visible .article-related__action i { transform: translateX(0.25rem); }
+@media (hover: hover) and (pointer: fine) {
+.article-related__card > a:hover .article-related__action i { transform: translateX(0.25rem); } }
 .insight-article-page main :is(a, summary, [tabindex="0"]):focus-visible { outline: 2px solid var(--color-core-black); outline-offset: 5px; }
 .insight-article-page main .final-cta a:focus-visible { outline-color: var(--color-functional-white); }
 @media (max-width: 63.99rem) {
