@@ -28,6 +28,10 @@
   .services-overview-page .alternative-comparison__table tbody > tr > td:last-child::before { margin-bottom: 1.1rem; }
   .services-overview-page .alternative-comparison__metrics { gap: 1.6rem 1.4rem; }
   .services-overview-page .alternative-comparison__metrics dt { margin-bottom: 0.4rem; }
+  .services-overview-page .overview-coordination .partnership-copy::before {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   .services-overview-page .service-row, .services-overview-page .service-row *, .services-overview-page .service-disclosures summary * { transition: none !important; }
