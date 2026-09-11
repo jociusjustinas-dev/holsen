@@ -21,6 +21,10 @@
 .services-overview-page main .overview-capability p { margin: 0; font-size: 1rem; line-height: 1.5; font-weight: 400; }
 .services-overview-page .overview-faq { padding-block: var(--service-space); }
 .services-overview-page .service-disclosures summary:focus-visible { outline: 2px solid var(--color-core-black); outline-offset: 4px; }
+@media (hover: hover) and (pointer: fine) {
+  .services-overview-page .service-row:hover:not(:focus-visible) { border-color: var(--line); }
+  .services-overview-page .service-row:hover:not(:focus-visible)::after { border-color: transparent; }
+}
 @media (max-width: 767px) {
   .overview-hero .service-hero__heading { grid-template-columns: 1fr; gap: 2rem; }
   body.services-overview-page #main-content > .overview-catalogue { padding-bottom: 2rem; }
