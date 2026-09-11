@@ -31,7 +31,48 @@ const serviceJump = scope.querySelector(".service-jump");
 if (serviceJump) {
   const jumpLinks = [...serviceJump.querySelectorAll('a[href^="#"]')];
   const jumpSections = jumpLinks.map((link) => scope.querySelector(link.hash)).filter(Boolean);
+  const jumpToggle = document.createElement("button");
+  const jumpPanel = document.createElement("div");
+  const jumpLinkList = document.createElement("div");
+  const jumpCurrent = document.createElement("span");
+  const jumpPanelId = "service-jump-sections";
   let jumpStateFrame = 0;
+
+  jumpToggle.type = "button";
+  jumpToggle.className = "service-jump__toggle";
+  jumpToggle.setAttribute("aria-expanded", "false");
+  jumpToggle.setAttribute("aria-controls", jumpPanelId);
+  jumpToggle.innerHTML = '<span class="service-jump__label">On this page</span><i class="ri-arrow-down-s-line" aria-hidden="true"></i>';
+  jumpCurrent.className = "service-jump__current";
+  jumpToggle.insertBefore(jumpCurrent, jumpToggle.lastElementChild);
+
+  jumpPanel.id = jumpPanelId;
+  jumpPanel.className = "service-jump__panel";
+  jumpLinkList.className = "service-jump__links";
+  jumpLinkList.append(...jumpLinks);
+  jumpPanel.append(jumpLinkList);
+  serviceJump.append(jumpToggle, jumpPanel);
+
+  const setJumpMenuOpen = (open) => {
+    serviceJump.classList.toggle("is-open", open);
+    jumpToggle.setAttribute("aria-expanded", String(open));
+  };
+
+  const toggleJumpMenu = () => setJumpMenuOpen(!serviceJump.classList.contains("is-open"));
+  const closeJumpMenu = () => setJumpMenuOpen(false);
+  const closeJumpMenuOnEscape = (event) => {
+    if (event.key !== "Escape" || !serviceJump.classList.contains("is-open")) return;
+    closeJumpMenu();
+    jumpToggle.focus();
+  };
+  const closeJumpMenuOutside = (event) => {
+    if (!serviceJump.contains(event.target)) closeJumpMenu();
+  };
+
+  jumpToggle.addEventListener("click", toggleJumpMenu);
+  serviceJump.addEventListener("keydown", closeJumpMenuOnEscape);
+  document.addEventListener("pointerdown", closeJumpMenuOutside);
+  jumpLinks.forEach((link) => link.addEventListener("click", closeJumpMenu));
 
   const updateJumpState = () => {
     const stickyTop = Number.parseFloat(getComputedStyle(serviceJump).top) || 0;
@@ -65,6 +106,7 @@ if (serviceJump) {
       const linkProgress = index < activeIndex ? 1 : index === activeIndex ? progress : 0;
       link.style.setProperty("--section-progress", `${linkProgress * 100}%`);
     });
+    jumpCurrent.textContent = jumpLinks[activeIndex]?.textContent.trim() || "Page sections";
 
     jumpStateFrame = 0;
   };
@@ -82,6 +124,10 @@ if (serviceJump) {
     scrollRoot.removeEventListener("scroll", requestJumpStateUpdate);
     window.removeEventListener("resize", requestJumpStateUpdate);
     window.removeEventListener("hashchange", requestJumpStateUpdate);
+    jumpToggle.removeEventListener("click", toggleJumpMenu);
+    serviceJump.removeEventListener("keydown", closeJumpMenuOnEscape);
+    document.removeEventListener("pointerdown", closeJumpMenuOutside);
+    jumpLinks.forEach((link) => link.removeEventListener("click", closeJumpMenu));
     if (jumpStateFrame) cancelAnimationFrame(jumpStateFrame);
     document.body.classList.remove("service-jump-active");
   });
