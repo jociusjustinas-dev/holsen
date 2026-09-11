@@ -5863,6 +5863,15 @@ body:has(.hero) .site-header:not(.is-scrolled) .menu-toggle {
 
 /* Mobile footer meta: legal information first, studio credit last. */
 @media (max-width: 48rem) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+    padding-block: 2.5rem;
+  }
+
+  .footer-grid > .footer-column:not(.footer-contact) {
+    display: none;
+  }
+
   .footer-meta {
     grid-template-columns: auto minmax(0, 1fr);
     gap: 0.75rem;
