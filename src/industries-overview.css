@@ -3,6 +3,8 @@
 .industries-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
 .industries-directory { padding-bottom: var(--service-space); }
 .industry-directory { align-items: start; }
+.industry-directory.service-list { gap: clamp(1rem, 1.5vw, 1.5rem); border: 0; }
+.industry-directory .service-row { border: 0; }
 .industry-directory > details { min-width: 0; scroll-margin-top: calc(var(--header-offset) + 2rem); }
 .industry-directory summary { cursor: pointer; list-style: none; min-height: 17rem; }
 .industry-directory summary::-webkit-details-marker { display: none; }
