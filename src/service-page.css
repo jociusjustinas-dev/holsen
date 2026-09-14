@@ -207,7 +207,7 @@
 .service-industries__card--chemicals { --industry-image: url("./assets/industry-chemicals-automotive.jpg"); }
 .service-industries__card--industrial { --industry-image: url("./assets/industry-industrial.jpg"); }
 .service-industries__card--consumer { --industry-image: url("./assets/industry-consumer-goods.jpg"); }
-.service-industries__grid .service-index { color: var(--color-holsen-orange); }
+.service-industries__grid .service-index { color: var(--color-holsen-orange); font-size: 1.25rem; line-height: 1; }
 .service-industries__grid h4 { margin: 2rem 0 auto; font-size: clamp(1.5rem, 2.1vw, 2.25rem); font-weight: 500; letter-spacing: -0.035em; line-height: 1.05; transition: transform 300ms var(--ease-out); }
 .service-industries__footer { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 1.5rem; color: var(--color-light-grey); font-size: 0.95rem; line-height: 1.35; }
 .service-industries__footer i { color: var(--color-holsen-orange); font-size: 1.35rem; transition: transform 300ms var(--ease-out); }

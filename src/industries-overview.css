@@ -56,7 +56,7 @@
   .industry-mobile-carousel__track .service-row::before,
   .industry-mobile-carousel__track .service-row > .service-row__media { opacity: 1; }
   .industry-mobile-carousel__track .service-row > .service-row__media { transform: none; }
-  .industry-mobile-carousel__track .service-row__number,
+  .industry-mobile-carousel__track .service-row__icon,
   .industry-mobile-carousel__track .service-row__arrow { color: var(--color-holsen-orange); }
   .industry-mobile-carousel__track .service-row__name { font-size: clamp(1.5rem, 8vw, 2rem); }
   .industries-overview-page .industry-proof { grid-template-columns: 1fr; }
