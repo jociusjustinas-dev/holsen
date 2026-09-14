@@ -14,7 +14,7 @@
 .industry-directory details[open] summary { background: var(--color-core-black); color: var(--color-functional-white); }
 .industry-directory details[open] .service-row__media,
 .industry-directory details[open] summary::before { opacity: 1; }
-.industry-directory details[open] .service-row__arrow { transform: rotate(45deg); color: var(--color-holsen-orange); }
+.industry-directory details[open] .service-row__arrow { transform: none; color: var(--color-holsen-orange); }
 .industry-directory__body { padding: 1.5rem; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--color-functional-white); }
 .industry-directory__body p { margin: 0; color: var(--color-carbon); }
 .industry-directory__body a { margin-top: 1rem; }
