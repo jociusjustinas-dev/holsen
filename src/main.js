@@ -11,6 +11,45 @@ import { initInsightsPage } from "./insights-page.js";
 import { initIndustriesOverview } from "./industries-overview.js";
 import { initInsightArticle } from "./insight-article.js";
 
+const INDEX_ONLY_HOST = "holsen-eight.vercel.app";
+const indexOnlySectionForPath = (pathname) => {
+  const normalizedPath = pathname.replace(/index\.html$/, "") || "/";
+  if (normalizedPath.startsWith("/services")) return "#services";
+  if (normalizedPath.startsWith("/industries")) return "#industries";
+  if (normalizedPath.startsWith("/why-holsen")) return "#why-holsen";
+  if (normalizedPath.startsWith("/for-carriers")) return "#partnership";
+  if (normalizedPath.startsWith("/contact")) return "#footer-contact";
+  if (normalizedPath.startsWith("/request-a-quote")) return "#final-cta";
+  return null;
+};
+
+const indexOnlyHost = window.location.hostname === INDEX_ONLY_HOST;
+const currentIndexOnlyPath = window.location.pathname.replace(/index\.html$/, "") || "/";
+
+if (indexOnlyHost && currentIndexOnlyPath !== "/") {
+  window.location.replace(`/${indexOnlySectionForPath(currentIndexOnlyPath) || ""}`);
+}
+
+const constrainIndexOnlyNavigation = (scope = document) => {
+  if (!indexOnlyHost) return;
+
+  scope.querySelectorAll("a[href]").forEach((link) => {
+    const url = new URL(link.getAttribute("href"), window.location.origin);
+    if (url.origin !== window.location.origin || (url.pathname.replace(/index\.html$/, "") || "/") === "/") return;
+
+    const section = indexOnlySectionForPath(url.pathname);
+    if (section) {
+      link.setAttribute("href", section);
+      return;
+    }
+
+    link.setAttribute("aria-disabled", "true");
+    link.addEventListener("click", (event) => event.preventDefault());
+  });
+};
+
+constrainIndexOnlyNavigation();
+
 const root = document.documentElement;
 const body = document.body;
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
