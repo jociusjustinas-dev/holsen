@@ -3862,15 +3862,17 @@ body:has(.hero) .site-header:not(.is-scrolled) .menu-toggle {
   transition: color 350ms var(--ease-out), transform 250ms var(--ease-out);
 }
 
-/* Service cards keep the imagery open while protecting the text locally. */
+/* Service and industry cards keep imagery open while protecting text locally. */
 #services .service-row,
-.services-overview-page .service-row {
+.services-overview-page .service-row,
+.industries-overview-page .service-row {
   grid-template-rows: 1fr auto auto;
   color: #ffffff;
 }
 
 #services .service-row::before,
-.services-overview-page .service-row::before {
+.services-overview-page .service-row::before,
+.industries-overview-page .service-row::before {
   background: linear-gradient(
     180deg,
     rgb(0 0 0 / 4%) 0%,
@@ -3881,12 +3883,14 @@ body:has(.hero) .site-header:not(.is-scrolled) .menu-toggle {
 }
 
 #services .service-row > .service-row__media,
-.services-overview-page .service-row > .service-row__media {
+.services-overview-page .service-row > .service-row__media,
+.industries-overview-page .service-row > .service-row__media {
   filter: brightness(1.16) saturate(0.96);
 }
 
 #services .service-row__name,
-.services-overview-page .service-row__name {
+.services-overview-page .service-row__name,
+.industries-overview-page .service-row__name {
   align-self: end;
 }
 
