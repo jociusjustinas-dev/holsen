@@ -3775,7 +3775,6 @@ body:has(.hero) .site-header:not(.is-scrolled) .menu-toggle {
 @media (hover: hover) and (pointer: fine){
 
 .service-row:hover {
-  border-color: var(--color-core-black);
   color: var(--color-functional-white);
   padding: 1.5rem;
 }
@@ -3783,13 +3782,6 @@ body:has(.hero) .site-header:not(.is-scrolled) .menu-toggle {
 
 .service-row:focus-visible::after {
   border-color: var(--color-core-black);
-}
-
-@media (hover: hover) and (pointer: fine){
-
-.service-row:hover::after {
-  border-color: var(--color-core-black);
-}
 }
 
 .service-row:focus-visible::before {
