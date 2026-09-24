@@ -11,45 +11,6 @@ import { initInsightsPage } from "./insights-page.js";
 import { initIndustriesOverview } from "./industries-overview.js";
 import { initInsightArticle } from "./insight-article.js";
 
-const INDEX_ONLY_HOST = "holsen-eight.vercel.app";
-const indexOnlySectionForPath = (pathname) => {
-  const normalizedPath = pathname.replace(/index\.html$/, "") || "/";
-  if (normalizedPath.startsWith("/services")) return "#services";
-  if (normalizedPath.startsWith("/industries")) return "#industries";
-  if (normalizedPath.startsWith("/why-holsen")) return "#why-holsen";
-  if (normalizedPath.startsWith("/for-carriers")) return "#partnership";
-  if (normalizedPath.startsWith("/contact")) return "#footer-contact";
-  if (normalizedPath.startsWith("/request-a-quote")) return "#final-cta";
-  return null;
-};
-
-const indexOnlyHost = window.location.hostname === INDEX_ONLY_HOST;
-const currentIndexOnlyPath = window.location.pathname.replace(/index\.html$/, "") || "/";
-
-if (indexOnlyHost && currentIndexOnlyPath !== "/") {
-  window.location.replace(`/${indexOnlySectionForPath(currentIndexOnlyPath) || ""}`);
-}
-
-const constrainIndexOnlyNavigation = (scope = document) => {
-  if (!indexOnlyHost) return;
-
-  scope.querySelectorAll("a[href]").forEach((link) => {
-    const url = new URL(link.getAttribute("href"), window.location.origin);
-    if (url.origin !== window.location.origin || (url.pathname.replace(/index\.html$/, "") || "/") === "/") return;
-
-    const section = indexOnlySectionForPath(url.pathname);
-    if (section) {
-      link.setAttribute("href", section);
-      return;
-    }
-
-    link.setAttribute("aria-disabled", "true");
-    link.addEventListener("click", (event) => event.preventDefault());
-  });
-};
-
-constrainIndexOnlyNavigation();
-
 const root = document.documentElement;
 const body = document.body;
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -475,7 +436,7 @@ if (whyShowcase) {
   const whyImages = [...whyShowcase.querySelectorAll("[data-why-image]")];
   const whyTabsContainer = whyShowcase.querySelector(".why-showcase__tabs");
   const whyPanelsContainer = whyShowcase.querySelector(".why-showcase__panels");
-  const canHover = window.matchMedia("(hover: hover)");
+  const canHover = window.matchMedia("(hover: hover) and (pointer: fine)");
   const mobileWhyAccordion = window.matchMedia("(max-width: 48rem)");
   let activeWhyIndex = Math.max(0, whyTabs.findIndex((tab) => tab.getAttribute("aria-selected") === "true"));
 
@@ -544,11 +505,9 @@ if (whyShowcase) {
   };
 
   whyTabs.forEach((tab, index) => {
-    tab.addEventListener("mouseenter", () => {
-      if (canHover.matches) activateWhyItem(index);
-    });
-    tab.addEventListener("focus", () => {
-      if (!mobileWhyAccordion.matches) activateWhyItem(index);
+    tab.addEventListener("pointerenter", (event) => {
+      if (event.pointerType === "touch" || !canHover.matches || mobileWhyAccordion.matches) return;
+      activateWhyItem(index);
     });
     tab.addEventListener("click", () => activateWhyItem(index));
     tab.addEventListener("keydown", (event) => {
@@ -657,7 +616,11 @@ scope.querySelectorAll("[data-industry-tabs]").forEach((widget) => {
   };
 
   tabs.forEach((tab, index) => {
-    tab.addEventListener("click", () => activateTab(tab));
+    tab.addEventListener("click", (event) => {
+      if (tab.hasAttribute("href")) return;
+      event.preventDefault();
+      activateTab(tab);
+    });
     tab.addEventListener("keydown", (event) => {
       let nextIndex = null;
 
@@ -828,7 +791,7 @@ scope.querySelectorAll("[data-mobile-carousel]").forEach((carousel) => {
 
   if (!group || !controls || !previousButton || !nextButton) return;
 
-  const mobileCarousel = window.matchMedia("(max-width: 48rem)");
+  const mobileCarousel = window.matchMedia(carousel.hasAttribute("data-carousel-always") ? "(min-width: 0px)" : "(max-width: 48rem)");
   const itemLabel = carousel.dataset.carouselItemLabel || "Item";
   let slides = [];
   let activeIndex = 0;

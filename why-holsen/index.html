@@ -69,13 +69,15 @@
       </section>
 
       <!-- Design-only fictional profiles and AI portraits. Replace with approved real team data before publication. -->
-      <section data-section-spacing="content" class="service-section why-team" id="why-team" aria-labelledby="team-title" data-wp-section="why_team" data-validation="required">
-        <div class="site-container" data-mobile-carousel-group>
+      <section data-section-spacing="content" class="service-section why-team" id="why-team" aria-labelledby="team-title" data-wp-section="why_team" data-validation="required" data-mobile-carousel-group>
+        <div class="site-container">
           <header class="service-section-heading">
             <div><p class="eyebrow">Our team</p><h2 id="team-title">People behind<br> the decisions.</h2></div>
             <div class="why-team__intro"><p class="body-copy">Clear responsibility starts with knowing who is involved and what they are accountable for.</p><a class="button button--outline" href="/contact/" data-event="contact_cta_click">Contact Our Team</a></div>
           </header>
-          <ul class="why-team__grid" aria-label="Team profiles" data-mobile-carousel data-carousel-item-label="Team member" tabindex="-1">
+        </div>
+        <div class="why-team__bleed">
+          <ul class="why-team__grid" aria-label="Team profiles" data-mobile-carousel data-carousel-always data-carousel-item-label="Team member" tabindex="0">
             <li class="why-team__member">
               <div class="why-team__portrait"><img src="/src/assets/team-demo-martynas.jpg" alt="" width="800" height="1200" loading="lazy" decoding="async"></div>
               <div class="why-team__name-row"><h3>Martynas Vaitkus</h3><span class="why-team__linkedin" aria-hidden="true"><i class="ri-linkedin-box-fill"></i></span></div>
@@ -94,12 +96,95 @@
               <p class="why-team__role body-copy">Transport Coordinator</p>
               <p class="why-team__responsibility body-copy">Coordinates capacity, shipment updates and delivery arrangements.</p>
             </li>
+            <li class="why-team__member">
+              <div class="why-team__portrait why-team__portrait--right"><img src="/src/assets/team-demo-martynas.jpg" alt="" width="800" height="1200" loading="lazy" decoding="async"></div>
+              <div class="why-team__name-row"><h3>Martynas Vaitkus</h3><span class="why-team__linkedin" aria-hidden="true"><i class="ri-linkedin-box-fill"></i></span></div>
+              <p class="why-team__role body-copy">Operations Lead</p>
+              <p class="why-team__responsibility body-copy">Coordinates transport planning and operational decisions.</p>
+            </li>
+            <li class="why-team__member">
+              <div class="why-team__portrait"><img src="/src/assets/team-demo-ieva.jpg" alt="" width="800" height="1200" loading="lazy" decoding="async"></div>
+              <div class="why-team__name-row"><h3>Ieva Kazlauskaitė</h3><span class="why-team__linkedin" aria-hidden="true"><i class="ri-linkedin-box-fill"></i></span></div>
+              <p class="why-team__role body-copy">Client Relations Manager</p>
+              <p class="why-team__responsibility body-copy">Keeps client requirements, communication and follow-up connected.</p>
+            </li>
+            <li class="why-team__member">
+              <div class="why-team__portrait why-team__portrait--right"><img src="/src/assets/team-demo-tomas.jpg" alt="" width="800" height="1200" loading="lazy" decoding="async"></div>
+              <div class="why-team__name-row"><h3>Tomas Radvila</h3><span class="why-team__linkedin" aria-hidden="true"><i class="ri-linkedin-box-fill"></i></span></div>
+              <p class="why-team__role body-copy">Transport Coordinator</p>
+              <p class="why-team__responsibility body-copy">Coordinates capacity, shipment updates and delivery arrangements.</p>
+            </li>
           </ul>
+        </div>
+        <div class="site-container">
           <div class="mobile-carousel__controls" data-mobile-carousel-controls aria-label="Team carousel controls">
             <button type="button" data-mobile-carousel-prev aria-label="Previous team member" disabled><i class="ri-arrow-left-line" aria-hidden="true"></i></button>
             <button type="button" data-mobile-carousel-next aria-label="Next team member"><i class="ri-arrow-right-line" aria-hidden="true"></i></button>
           </div>
-          <p class="sr-only" data-mobile-carousel-status aria-live="polite">Team member 1 of 3</p>
+          <p class="sr-only" data-mobile-carousel-status aria-live="polite">Team member 1 of 6</p>
+        </div>
+      </section>
+
+      <!-- Same carousel without portraits. Plain black cards until the cutout shape is added. Design-only names. -->
+      <section data-section-spacing="content" class="service-section why-team why-team--plain" id="why-team-plain" aria-labelledby="team-plain-title" data-wp-section="why_team_plain" data-mobile-carousel-group>
+        <div class="site-container">
+          <header class="service-section-heading">
+            <div><p class="eyebrow">Our team</p><h2 id="team-plain-title">People behind<br> the decisions.</h2></div>
+            <div class="why-team__intro"><p class="body-copy">Clear responsibility starts with knowing who is involved and what they are accountable for.</p><a class="button button--outline" href="/contact/" data-event="contact_cta_click">Contact Our Team</a></div>
+          </header>
+        </div>
+        <div class="why-team__bleed">
+          <ul class="why-team__grid" aria-label="Team profiles without photographs" data-mobile-carousel data-carousel-always data-carousel-item-label="Team member" tabindex="0">
+            <li class="why-team__member">
+              <article class="why-team__card">
+                <div class="why-team__name-row"><h3>Martynas Vaitkus</h3><span class="why-team__linkedin" aria-hidden="true"><i class="ri-linkedin-box-fill"></i></span></div>
+                <p class="why-team__role body-copy">Operations Lead</p>
+                <p class="why-team__responsibility body-copy">Coordinates transport planning and operational decisions.</p>
+              </article>
+            </li>
+            <li class="why-team__member">
+              <article class="why-team__card">
+                <div class="why-team__name-row"><h3>Ieva Kazlauskaitė</h3><span class="why-team__linkedin" aria-hidden="true"><i class="ri-linkedin-box-fill"></i></span></div>
+                <p class="why-team__role body-copy">Client Relations Manager</p>
+                <p class="why-team__responsibility body-copy">Keeps client requirements, communication and follow-up connected.</p>
+              </article>
+            </li>
+            <li class="why-team__member">
+              <article class="why-team__card">
+                <div class="why-team__name-row"><h3>Tomas Radvila</h3><span class="why-team__linkedin" aria-hidden="true"><i class="ri-linkedin-box-fill"></i></span></div>
+                <p class="why-team__role body-copy">Transport Coordinator</p>
+                <p class="why-team__responsibility body-copy">Coordinates capacity, shipment updates and delivery arrangements.</p>
+              </article>
+            </li>
+            <li class="why-team__member">
+              <article class="why-team__card">
+                <div class="why-team__name-row"><h3>Martynas Vaitkus</h3><span class="why-team__linkedin" aria-hidden="true"><i class="ri-linkedin-box-fill"></i></span></div>
+                <p class="why-team__role body-copy">Operations Lead</p>
+                <p class="why-team__responsibility body-copy">Coordinates transport planning and operational decisions.</p>
+              </article>
+            </li>
+            <li class="why-team__member">
+              <article class="why-team__card">
+                <div class="why-team__name-row"><h3>Ieva Kazlauskaitė</h3><span class="why-team__linkedin" aria-hidden="true"><i class="ri-linkedin-box-fill"></i></span></div>
+                <p class="why-team__role body-copy">Client Relations Manager</p>
+                <p class="why-team__responsibility body-copy">Keeps client requirements, communication and follow-up connected.</p>
+              </article>
+            </li>
+            <li class="why-team__member">
+              <article class="why-team__card">
+                <div class="why-team__name-row"><h3>Tomas Radvila</h3><span class="why-team__linkedin" aria-hidden="true"><i class="ri-linkedin-box-fill"></i></span></div>
+                <p class="why-team__role body-copy">Transport Coordinator</p>
+                <p class="why-team__responsibility body-copy">Coordinates capacity, shipment updates and delivery arrangements.</p>
+              </article>
+            </li>
+          </ul>
+        </div>
+        <div class="site-container">
+          <div class="mobile-carousel__controls" data-mobile-carousel-controls aria-label="Team carousel controls">
+            <button type="button" data-mobile-carousel-prev aria-label="Previous team member" disabled><i class="ri-arrow-left-line" aria-hidden="true"></i></button>
+            <button type="button" data-mobile-carousel-next aria-label="Next team member"><i class="ri-arrow-right-line" aria-hidden="true"></i></button>
+          </div>
+          <p class="sr-only" data-mobile-carousel-status aria-live="polite">Team member 1 of 6</p>
         </div>
       </section>
 
@@ -200,6 +285,29 @@
             <button class="why-showcase__tab" id="commitment-tab-2" type="button" role="tab" aria-selected="false" aria-controls="commitment-panel-2" tabindex="-1" data-why-tab><span class="why-showcase__tab-number" aria-hidden="true">02</span><span class="why-showcase__tab-title">A decision before booking</span></button>
             <button class="why-showcase__tab" id="commitment-tab-3" type="button" role="tab" aria-selected="false" aria-controls="commitment-panel-3" tabindex="-1" data-why-tab><span class="why-showcase__tab-number" aria-hidden="true">03</span><span class="why-showcase__tab-title">Agreed communication</span></button>
             <button class="why-showcase__tab" id="commitment-tab-4" type="button" role="tab" aria-selected="false" aria-controls="commitment-panel-4" tabindex="-1" data-why-tab><span class="why-showcase__tab-number" aria-hidden="true">04</span><span class="why-showcase__tab-title">Reviewable performance</span></button>
+          </div>
+        </div>
+      </section>
+
+      <section data-section-spacing="flush" class="sustainability-section section-shell" id="why-sustainability" aria-labelledby="why-sustainability-title" data-wp-section="why_sustainability" data-validation="required">
+        <div class="site-container">
+          <div class="sustainability-card">
+            <img class="sustainability-card__image" src="/src/assets/markets-winter.jpg" alt="" width="2000" height="1333" loading="lazy" decoding="async" aria-hidden="true" data-sustainability-image>
+            <div class="sustainability-card__scrim" aria-hidden="true"></div>
+            <div class="sustainability-card__content reveal">
+              <p class="eyebrow eyebrow--light">Sustainability</p>
+              <h2 class="section-title" id="why-sustainability-title">Sustainable logistics in practice.</h2>
+              <p class="lede">Explore how Holsen approaches operational efficiency, transport choices and emissions transparency across international supply chains.</p>
+              <form class="esg-download" data-esg-form data-wp-form="esg_report_download" novalidate data-validation="required" aria-describedby="why-esg-privacy why-esg-form-status">
+                <div class="esg-download__label"><strong>Get the ESG report</strong><span>Delivered to your work email</span></div>
+                <div class="esg-download__controls">
+                  <label class="esg-download__field" for="why-esg-email"><span>Work email</span><input id="why-esg-email" name="email" type="email" autocomplete="email" inputmode="email" required placeholder="name@company.com" aria-describedby="why-esg-privacy why-esg-form-status"></label>
+                  <button class="button button--primary" type="submit" data-event="lead_magnet_submit_attempt">Download report</button>
+                </div>
+                <p class="esg-download__privacy body-copy" id="why-esg-privacy">We use your email to deliver the requested report. Read the <a href="/privacy-policy/">Privacy Policy</a>.</p>
+                <p class="esg-download__status" id="why-esg-form-status" data-esg-status role="status" aria-live="polite" aria-atomic="true" hidden></p>
+              </form>
+            </div>
           </div>
         </div>
       </section>

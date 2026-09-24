@@ -237,6 +237,40 @@ uploadClear.addEventListener("click", () => {
   refreshErrors();
   upload.focus();
 });
+const params = new URLSearchParams(window.location.search);
+const serviceBySlug = {
+  "road-freight": "Road Freight",
+  "rail-freight": "Rail Freight",
+  "sea-freight": "Sea Freight",
+  "air-freight": "Air Freight",
+  "contract-logistics": "Contract Logistics",
+  "customs": "Customs Services",
+  "value-added": "Value-added Services",
+};
+const industryName = params.get("industry");
+const fromIndustry = params.get("context") === "industry" || Boolean(industryName);
+const presetService = serviceBySlug[params.get("service")];
+if (presetService) {
+  const match = radios.find((radio) => radio.value === presetService);
+  if (match) match.checked = true;
+  const intro = panels[0].querySelector(".quote-step__intro");
+  if (intro) intro.textContent = `${presetService} is selected from the page you came from. Change it if the operation needs a different service.`;
+}
+if (fromIndustry) {
+  const other = radios.find((radio) => radio.value === "Other / Not sure");
+  if (other) other.checked = true;
+  const heading = panels[0].querySelector("[data-step-heading]");
+  const intro = panels[0].querySelector(".quote-step__intro");
+  if (heading) heading.textContent = "How should we work together?";
+  if (intro) intro.textContent = industryName
+    ? `This enquiry starts from ${industryName}. You do not need to choose a transport mode — describe the operation and the team will define the setup.`
+    : "You do not need to choose a transport mode. Describe the operation and the team will define how to work together.";
+  const industryField = document.createElement("input");
+  industryField.type = "hidden";
+  industryField.name = "industry";
+  industryField.value = industryName || "General industry discussion";
+  form.append(industryField);
+}
 next.disabled = false;
 edit.disabled = false;
 progress.hidden = false;

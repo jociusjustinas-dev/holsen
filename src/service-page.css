@@ -11,6 +11,8 @@
 .service-page .brand-link img { filter: none; }
 .service-page .desktop-nav a,
 .service-page .nav-dropdown__toggle { color: var(--color-core-black); }
+body[data-page-type="service"] .desktop-nav .nav-dropdown:has(a[href="/services/"]) > .nav-dropdown__toggle,
+body[data-page-type="service"] .mobile-menu details:has(a[href="/services/"]) > summary { color: var(--color-holsen-orange); }
 .service-page .nav-actions .button--outline,
 .service-page .menu-toggle { color: var(--color-core-black); border-color: var(--color-core-black); }
 .service-page .site-header a[aria-current="page"] { text-decoration: none; }

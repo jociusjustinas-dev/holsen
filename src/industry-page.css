@@ -1,4 +1,6 @@
 /* Industry pages reuse the internal-page shell, not a separate design system. */
+.industry-page .desktop-nav .nav-dropdown:has(a[href="/industries/"]) > .nav-dropdown__toggle,
+.industry-page .mobile-menu details:has(a[href="/industries/"]) > summary { color: var(--color-holsen-orange); }
 .industry-page main section { scroll-margin-top: var(--jump-anchor-margin, 4rem); }
 .industry-page .service-hero__media > img { object-position: center 55%; }
 .industry-page .industry-matrix { padding-block: var(--service-space); }

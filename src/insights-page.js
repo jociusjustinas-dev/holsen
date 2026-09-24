@@ -4,19 +4,14 @@ const filterBar = scope.querySelector("[data-insights-filters]");
 if (filterBar) {
   const buttons = [...filterBar.querySelectorAll("[data-topic]")];
   const cards = [...scope.querySelectorAll("[data-insights-topic]")];
-  const count = filterBar.querySelector("[data-insights-count]");
   const topics = new Set(buttons.map((button) => button.dataset.topic));
 
   const applyFilter = (topic) => {
     const selected = topics.has(topic) ? topic : "all";
     buttons.forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.topic === selected)));
-    let visibleCount = 0;
     cards.forEach((card) => {
       card.hidden = selected !== "all" && card.dataset.insightsTopic !== selected;
-      if (!card.hidden) visibleCount += 1;
     });
-    const label = buttons.find((button) => button.dataset.topic === selected).textContent.trim();
-    count.textContent = `${visibleCount} planned ${visibleCount === 1 ? "guide" : "guides"}${selected === "all" ? "" : ` · ${label}`}`;
   };
 
   buttons.forEach((button) => button.addEventListener("click", () => {

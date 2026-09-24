@@ -32,82 +32,152 @@
             <div class="service-hero__intro">
               <p class="service-lead">Different requirements.<br>Clear responsibility.</p>
               <p>The right transport plan starts with the cargo, compliance requirements and operating realities — not a standard template.</p>
-              <div class="industries-actions hero__actions"><a class="button button--primary" href="/request-a-quote/" data-event="rfq_cta_click">Request a Quote</a><a class="button button--outline" href="#industry-directory">Explore Industries</a></div>
+              <div class="industries-actions hero__actions"><a class="button button--primary" href="/request-a-quote/?context=industry" data-event="rfq_cta_click">Request a Quote</a></div>
             </div>
           </div>
         </div>
       </section>
 
-      <section data-section-spacing="attached" class="industries-directory" id="industry-directory" aria-labelledby="directory-title" data-wp-section="industries_directory">
+      <section data-section-spacing="attached" class="industries-directory industries-section" id="industry-directory" aria-labelledby="directory-title" data-wp-section="industries_directory">
         <div class="site-container">
           <h2 id="directory-title" class="sr-only">Industry requirements</h2>
-          <div class="service-list industry-directory">
-            <details id="agriculture" name="industry-directory">
-              <summary class="service-row"><img class="service-row__media" src="/src/assets/industry-agriculture.jpg" alt="" width="1600" height="1066" loading="lazy" decoding="async"><h3 class="service-row__name">Agriculture</h3><span class="service-row__description">Seasonal volumes, market timing and dependable capacity.</span><i class="service-row__arrow ri-arrow-right-line" aria-hidden="true"></i></summary>
-              <div class="industry-directory__body"><p>Plan around seasonal peaks, product condition and collection windows. Specify packaging, cleanliness and any handling or temperature requirements before the transport setup is agreed.</p><a class="inline-cta" href="/services/road-freight/" data-event="service_link_click">Explore Road Freight <i class="ri-arrow-right-line" aria-hidden="true"></i></a></div>
+          <div class="industry-accordion">
+            <details id="agriculture">
+              <summary class="industry-select">
+                <span class="industry-select__marker" aria-hidden="true"></span>
+                <i class="industry-select__icon ri-plant-line" aria-hidden="true"></i>
+                <h3 class="industry-select__label">Agriculture<span class="industry-accordion__media" aria-hidden="true"><img src="/src/assets/industry-agriculture.jpg" alt="" width="1600" height="1066"></span></h3>
+              </summary>
+              <div class="industry-accordion__foot">
+                <div class="industry-accordion__copy">
+                  <p class="industry-accordion__lead">Seasonal volumes, market timing and dependable capacity.</p>
+                  <p>Plan around seasonal peaks, product condition and collection windows. Specify packaging, cleanliness and any handling or temperature requirements before the transport setup is agreed.</p>
+                </div>
+                <div class="industry-accordion__actions">
+                  <a class="button button--primary" href="/industries/chemicals/" data-event="industry_link_click">Explore Agriculture</a>
+                  <a class="button button--outline" href="/request-a-quote/?industry=Agriculture" data-event="rfq_cta_click">Discuss this industry</a>
+                </div>
+              </div>
             </details>
-            <details id="chemicals" name="industry-directory">
-              <summary class="service-row"><img class="service-row__media" src="/src/assets/industry-chemicals-automotive.jpg" alt="" width="1600" height="904" loading="lazy" decoding="async"><h3 class="service-row__name">Chemicals</h3><span class="service-row__description">Cargo-specific planning, documentation and handling.</span><i class="service-row__arrow ri-arrow-right-line" aria-hidden="true"></i></summary>
-              <div class="industry-directory__body"><p>Holsen reviews the product classification, packaging, route, equipment and documentation before accepting dangerous goods. The proposed scope states what is accepted before booking.</p><a class="inline-cta" href="/industries/chemicals/" data-event="industry_link_click">Explore Chemical Logistics <i class="ri-arrow-right-line" aria-hidden="true"></i></a></div>
+            <details id="chemicals">
+              <summary class="industry-select">
+                <span class="industry-select__marker" aria-hidden="true"></span>
+                <i class="industry-select__icon ri-flask-line" aria-hidden="true"></i>
+                <h3 class="industry-select__label">Chemicals<span class="industry-accordion__media" aria-hidden="true"><img src="/src/assets/industry-chemicals-automotive.jpg" alt="" width="1600" height="904"></span></h3>
+              </summary>
+              <div class="industry-accordion__foot">
+                <div class="industry-accordion__copy">
+                  <p class="industry-accordion__lead">Cargo-specific planning, documentation and handling.</p>
+                  <p>Holsen reviews the product classification, packaging, route, equipment and documentation before accepting dangerous goods. The proposed scope states what is accepted before booking.</p>
+                </div>
+                <div class="industry-accordion__actions">
+                  <a class="button button--primary" href="/industries/chemicals/" data-event="industry_link_click">Explore Chemical Logistics</a>
+                  <a class="button button--outline" href="/request-a-quote/?industry=Chemicals" data-event="rfq_cta_click">Discuss this industry</a>
+                </div>
+              </div>
             </details>
-            <details id="industrial" name="industry-directory">
-              <summary class="service-row"><img class="service-row__media" src="/src/assets/industry-industrial.jpg" alt="" width="1600" height="904" loading="lazy" decoding="async"><h3 class="service-row__name">Industrial</h3><span class="service-row__description">Flexible planning for complex freight and operating conditions.</span><i class="service-row__arrow ri-arrow-right-line" aria-hidden="true"></i></summary>
-              <div class="industry-directory__body"><p>Dimensions, weight and site access shape the transport plan. Include loading equipment, delivery constraints and any production dependencies when defining the requirement.</p><a class="inline-cta" href="/services/road-freight/#road-solutions" data-event="service_link_click">Review Road Transport Solutions <i class="ri-arrow-right-line" aria-hidden="true"></i></a></div>
+            <details id="industrial">
+              <summary class="industry-select">
+                <span class="industry-select__marker" aria-hidden="true"></span>
+                <i class="industry-select__icon ri-building-4-line" aria-hidden="true"></i>
+                <h3 class="industry-select__label">Industrial<span class="industry-accordion__media" aria-hidden="true"><img src="/src/assets/industry-industrial.jpg" alt="" width="1600" height="904"></span></h3>
+              </summary>
+              <div class="industry-accordion__foot">
+                <div class="industry-accordion__copy">
+                  <p class="industry-accordion__lead">Flexible planning for complex freight and operating conditions.</p>
+                  <p>Dimensions, weight and site access shape the transport plan. Include loading equipment, delivery constraints and any production dependencies when defining the requirement.</p>
+                </div>
+                <div class="industry-accordion__actions">
+                  <a class="button button--primary" href="/industries/chemicals/" data-event="industry_link_click">Explore Industrial</a>
+                  <a class="button button--outline" href="/request-a-quote/?industry=Industrial" data-event="rfq_cta_click">Discuss this industry</a>
+                </div>
+              </div>
             </details>
-            <details id="consumer-goods" name="industry-directory">
-              <summary class="service-row"><img class="service-row__media" src="/src/assets/industry-consumer-goods.jpg" alt="" width="1600" height="1200" loading="lazy" decoding="async"><h3 class="service-row__name">Consumer Goods</h3><span class="service-row__description">Reliable flow, cargo integrity and predictable delivery.</span><i class="service-row__arrow ri-arrow-right-line" aria-hidden="true"></i></summary>
-              <div class="industry-directory__body"><p>Define replenishment frequency, volume changes and delivery windows. Packaging, cargo integrity and receiving-site requirements should be part of the same plan.</p><a class="inline-cta" href="/services/#services-coordination" data-event="service_link_click">Explore Recurring Logistics Support <i class="ri-arrow-right-line" aria-hidden="true"></i></a></div>
+            <details id="consumer-goods">
+              <summary class="industry-select">
+                <span class="industry-select__marker" aria-hidden="true"></span>
+                <i class="industry-select__icon ri-shopping-bag-3-line" aria-hidden="true"></i>
+                <h3 class="industry-select__label">Consumer Goods<span class="industry-accordion__media" aria-hidden="true"><img src="/src/assets/industry-consumer-goods.jpg" alt="" width="1600" height="1200"></span></h3>
+              </summary>
+              <div class="industry-accordion__foot">
+                <div class="industry-accordion__copy">
+                  <p class="industry-accordion__lead">Reliable flow, cargo integrity and predictable delivery.</p>
+                  <p>Define replenishment frequency, volume changes and delivery windows. Packaging, cargo integrity and receiving-site requirements should be part of the same plan.</p>
+                </div>
+                <div class="industry-accordion__actions">
+                  <a class="button button--primary" href="/industries/chemicals/" data-event="industry_link_click">Explore Consumer Goods</a>
+                  <a class="button button--outline" href="/request-a-quote/?industry=Consumer%20Goods" data-event="rfq_cta_click">Discuss this industry</a>
+                </div>
+              </div>
             </details>
-            <details id="paper-packaging" name="industry-directory">
-              <summary class="service-row"><img class="service-row__media" src="/src/assets/industry-paper-packaging.jpg" alt="" width="1600" height="904" loading="lazy" decoding="async"><h3 class="service-row__name">Paper &amp; Packaging</h3><span class="service-row__description">Capacity and dependable scheduling for high-volume movements.</span><i class="service-row__arrow ri-arrow-right-line" aria-hidden="true"></i></summary>
-              <div class="industry-directory__body"><p>Assess load volume, weight and protection during handling. Align capacity and collection frequency with production output and the receiver’s unloading arrangements.</p><a class="inline-cta" href="/services/#services-comparison" data-event="comparison_engagement">Compare Transport Options <i class="ri-arrow-right-line" aria-hidden="true"></i></a></div>
+            <details id="paper-packaging">
+              <summary class="industry-select">
+                <span class="industry-select__marker" aria-hidden="true"></span>
+                <i class="industry-select__icon ri-archive-line" aria-hidden="true"></i>
+                <h3 class="industry-select__label">Paper &amp; Packaging<span class="industry-accordion__media" aria-hidden="true"><img src="/src/assets/industry-paper-packaging.jpg" alt="" width="1600" height="904"></span></h3>
+              </summary>
+              <div class="industry-accordion__foot">
+                <div class="industry-accordion__copy">
+                  <p class="industry-accordion__lead">Capacity and dependable scheduling for high-volume movements.</p>
+                  <p>Assess load volume, weight and protection during handling. Align capacity and collection frequency with production output and the receiver’s unloading arrangements.</p>
+                </div>
+                <div class="industry-accordion__actions">
+                  <a class="button button--primary" href="/industries/chemicals/" data-event="industry_link_click">Explore Paper &amp; Packaging</a>
+                  <a class="button button--outline" href="/request-a-quote/?industry=Paper%20%26%20Packaging" data-event="rfq_cta_click">Discuss this industry</a>
+                </div>
+              </div>
             </details>
-            <details id="technology" name="industry-directory">
-              <summary class="service-row"><img class="service-row__media" src="/src/assets/industry-technology.jpg" alt="" width="1600" height="1106" loading="lazy" decoding="async"><h3 class="service-row__name">Technology</h3><span class="service-row__description">Coordinated handling for sensitive, valuable and time-critical goods.</span><i class="service-row__arrow ri-arrow-right-line" aria-hidden="true"></i></summary>
-              <div class="industry-directory__body"><p>Share product sensitivity, packaging, handling restrictions and delivery deadlines. Review transfer points and communication needs alongside the transport options.</p><a class="inline-cta" href="/services/#services-comparison" data-event="comparison_engagement">Compare Transport Options <i class="ri-arrow-right-line" aria-hidden="true"></i></a></div>
+            <details id="technology">
+              <summary class="industry-select">
+                <span class="industry-select__marker" aria-hidden="true"></span>
+                <i class="industry-select__icon ri-cpu-line" aria-hidden="true"></i>
+                <h3 class="industry-select__label">Technology<span class="industry-accordion__media" aria-hidden="true"><img src="/src/assets/industry-technology.jpg" alt="" width="1600" height="1106"></span></h3>
+              </summary>
+              <div class="industry-accordion__foot">
+                <div class="industry-accordion__copy">
+                  <p class="industry-accordion__lead">Coordinated handling for sensitive, valuable and time-critical goods.</p>
+                  <p>Share product sensitivity, packaging, handling restrictions and delivery deadlines. Review transfer points and communication needs alongside the transport options.</p>
+                </div>
+                <div class="industry-accordion__actions">
+                  <a class="button button--primary" href="/industries/chemicals/" data-event="industry_link_click">Explore Technology</a>
+                  <a class="button button--outline" href="/request-a-quote/?industry=Technology" data-event="rfq_cta_click">Discuss this industry</a>
+                </div>
+              </div>
             </details>
-            <details id="automotive" name="industry-directory">
-              <summary class="service-row"><img class="service-row__media" src="/src/assets/industry-chemicals-automotive.jpg" alt="" width="1600" height="904" loading="lazy" decoding="async"><h3 class="service-row__name">Automotive</h3><span class="service-row__description">Time-sensitive supply chains and production continuity.</span><i class="service-row__arrow ri-arrow-right-line" aria-hidden="true"></i></summary>
-              <div class="industry-directory__body"><p>Connect shipment timing with production and receiving schedules. Define recurring volumes, loading requirements and the escalation process for changes that affect delivery.</p><a class="inline-cta" href="/services/road-freight/" data-event="service_link_click">Explore Road Freight <i class="ri-arrow-right-line" aria-hidden="true"></i></a></div>
+            <details id="automotive">
+              <summary class="industry-select">
+                <span class="industry-select__marker" aria-hidden="true"></span>
+                <i class="industry-select__icon ri-car-line" aria-hidden="true"></i>
+                <h3 class="industry-select__label">Automotive<span class="industry-accordion__media" aria-hidden="true"><img src="/src/assets/industry-chemicals-automotive.jpg" alt="" width="1600" height="904"></span></h3>
+              </summary>
+              <div class="industry-accordion__foot">
+                <div class="industry-accordion__copy">
+                  <p class="industry-accordion__lead">Time-sensitive supply chains and production continuity.</p>
+                  <p>Connect shipment timing with production and receiving schedules. Define recurring volumes, loading requirements and the escalation process for changes that affect delivery.</p>
+                </div>
+                <div class="industry-accordion__actions">
+                  <a class="button button--primary" href="/industries/chemicals/" data-event="industry_link_click">Explore Automotive</a>
+                  <a class="button button--outline" href="/request-a-quote/?industry=Automotive" data-event="rfq_cta_click">Discuss this industry</a>
+                </div>
+              </div>
             </details>
-            <details id="life-sciences-healthcare" name="industry-directory">
-              <summary class="service-row"><img class="service-row__media" src="/src/assets/industry-healthcare.jpg" alt="" width="1600" height="1067" loading="lazy" decoding="async"><h3 class="service-row__name">Life Sciences &amp; Healthcare</h3><span class="service-row__description">Requirements-led planning for sensitive products.</span><i class="service-row__arrow ri-arrow-right-line" aria-hidden="true"></i></summary>
-              <div class="industry-directory__body"><p>Define product-specific handling, documentation and any temperature requirements first. The industry listing does not confirm certification, temperature-controlled capability or acceptance of a particular product.</p><a class="inline-cta" href="#industry-planning">Review Specialist Requirements <i class="ri-arrow-right-line" aria-hidden="true"></i></a></div>
+            <details id="life-sciences">
+              <summary class="industry-select">
+                <span class="industry-select__marker" aria-hidden="true"></span>
+                <i class="industry-select__icon ri-heart-pulse-line" aria-hidden="true"></i>
+                <h3 class="industry-select__label">Life Sciences &amp; Healthcare<span class="industry-accordion__media" aria-hidden="true"><img src="/src/assets/industry-healthcare.jpg" alt="" width="1600" height="1067"></span></h3>
+              </summary>
+              <div class="industry-accordion__foot">
+                <div class="industry-accordion__copy">
+                  <p class="industry-accordion__lead">Requirements-led planning for sensitive products.</p>
+                  <p>Define product-specific handling, documentation and any temperature requirements first. The industry listing does not confirm certification, temperature-controlled capability or acceptance of a particular product.</p>
+                </div>
+                <div class="industry-accordion__actions">
+                  <a class="button button--primary" href="/industries/chemicals/" data-event="industry_link_click">Explore Life Sciences &amp; Healthcare</a>
+                  <a class="button button--outline" href="/request-a-quote/?industry=Life%20Sciences%20%26%20Healthcare" data-event="rfq_cta_click">Discuss this industry</a>
+                </div>
+              </div>
             </details>
-            <a class="service-cta" href="#industry-planning"><span class="service-cta__copy"><strong class="service-cta__label">Start with<br>your cargo.</strong><span class="service-cta__description">Your requirements may cross industry boundaries. Define the operation first.</span></span><i class="service-cta__arrow ri-arrow-right-down-line" aria-hidden="true"></i></a>
-          </div>
-          <div class="industry-mobile-carousel" data-mobile-carousel-group>
-            <div class="industry-mobile-carousel__track" data-mobile-carousel data-carousel-item-label="Industry" tabindex="-1" aria-label="Industry requirements">
-              <a class="service-row" href="/services/road-freight/" data-event="industry_link_click">
-                <img class="service-row__media" src="/src/assets/industry-agriculture.jpg" alt="" width="1600" height="1066" loading="lazy" decoding="async"><h3 class="service-row__name">Agriculture</h3><p class="service-row__description">Seasonal volumes, market timing and dependable capacity.</p><i class="service-row__arrow ri-arrow-right-line" aria-hidden="true"></i>
-              </a>
-              <a class="service-row" href="/industries/chemicals/" data-event="industry_link_click">
-                <img class="service-row__media" src="/src/assets/industry-chemicals-automotive.jpg" alt="" width="1600" height="904" loading="lazy" decoding="async"><h3 class="service-row__name">Chemicals</h3><p class="service-row__description">Cargo-specific planning, documentation and handling.</p><i class="service-row__arrow ri-arrow-right-line" aria-hidden="true"></i>
-              </a>
-              <a class="service-row" href="/services/road-freight/#road-solutions" data-event="industry_link_click">
-                <img class="service-row__media" src="/src/assets/industry-industrial.jpg" alt="" width="1600" height="904" loading="lazy" decoding="async"><h3 class="service-row__name">Industrial</h3><p class="service-row__description">Flexible planning for complex freight and operating conditions.</p><i class="service-row__arrow ri-arrow-right-line" aria-hidden="true"></i>
-              </a>
-              <a class="service-row" href="/services/#services-coordination" data-event="industry_link_click">
-                <img class="service-row__media" src="/src/assets/industry-consumer-goods.jpg" alt="" width="1600" height="1200" loading="lazy" decoding="async"><h3 class="service-row__name">Consumer Goods</h3><p class="service-row__description">Reliable flow, cargo integrity and predictable delivery.</p><i class="service-row__arrow ri-arrow-right-line" aria-hidden="true"></i>
-              </a>
-              <a class="service-row" href="/services/#services-comparison" data-event="industry_link_click">
-                <img class="service-row__media" src="/src/assets/industry-paper-packaging.jpg" alt="" width="1600" height="904" loading="lazy" decoding="async"><h3 class="service-row__name">Paper &amp; Packaging</h3><p class="service-row__description">Capacity and dependable scheduling for high-volume movements.</p><i class="service-row__arrow ri-arrow-right-line" aria-hidden="true"></i>
-              </a>
-              <a class="service-row" href="/services/#services-comparison" data-event="industry_link_click">
-                <img class="service-row__media" src="/src/assets/industry-technology.jpg" alt="" width="1600" height="1106" loading="lazy" decoding="async"><h3 class="service-row__name">Technology</h3><p class="service-row__description">Coordinated handling for sensitive, valuable and time-critical goods.</p><i class="service-row__arrow ri-arrow-right-line" aria-hidden="true"></i>
-              </a>
-              <a class="service-row" href="/services/road-freight/" data-event="industry_link_click">
-                <img class="service-row__media" src="/src/assets/industry-chemicals-automotive.jpg" alt="" width="1600" height="904" loading="lazy" decoding="async"><h3 class="service-row__name">Automotive</h3><p class="service-row__description">Time-sensitive supply chains and production continuity.</p><i class="service-row__arrow ri-arrow-right-line" aria-hidden="true"></i>
-              </a>
-              <a class="service-row" href="#industry-planning" data-event="industry_link_click">
-                <img class="service-row__media" src="/src/assets/industry-healthcare.jpg" alt="" width="1600" height="1067" loading="lazy" decoding="async"><h3 class="service-row__name">Life Sciences &amp; Healthcare</h3><p class="service-row__description">Requirements-led planning for sensitive products.</p><i class="service-row__arrow ri-arrow-right-line" aria-hidden="true"></i>
-              </a>
-            </div>
-            <div class="mobile-carousel__controls" data-mobile-carousel-controls aria-label="Industry carousel controls">
-              <button type="button" data-mobile-carousel-prev aria-label="Previous industry" disabled><i class="ri-arrow-left-line" aria-hidden="true"></i></button>
-              <button type="button" data-mobile-carousel-next aria-label="Next industry"><i class="ri-arrow-right-line" aria-hidden="true"></i></button>
-            </div>
-            <p class="sr-only" data-mobile-carousel-status aria-live="polite">Industry 1 of 8</p>
           </div>
         </div>
       </section>
@@ -118,7 +188,7 @@
           <div class="alternative-comparison__table-wrap">
             <table class="alternative-comparison__table"><caption>Requirements to define and service options to explore</caption><colgroup><col class="alternative-comparison__mode-column"><col class="alternative-comparison__use-column"><col class="alternative-comparison__profile-column"></colgroup><thead><tr><th scope="col">Requirement</th><th scope="col">What to define</th><th scope="col">Where to start</th></tr></thead><tbody>
               <tr><th scope="row"><span>01</span><strong>Movement</strong></th><td data-label="What to define">Origin, destination, volume, shipment frequency and the required delivery window.</td><td data-label="Where to start"><p>Assess road, rail, sea and air against the complete route, including transfers and site access.</p><a class="inline-cta industry-matrix__link" href="/services/#services-comparison" data-event="comparison_engagement">Compare Transport Modes <i class="ri-arrow-right-line" aria-hidden="true"></i></a></td></tr>
-              <tr><th scope="row"><span>02</span><strong>Specialist needs</strong></th><td data-label="What to define">Product classification, packaging, handling, documentation and any controlled conditions.</td><td data-label="Where to start"><p>Confirm the exact service scope before acceptance. Customs and additional handling belong in the initial brief.</p><a class="inline-cta industry-matrix__link" href="/services/#customs-services" data-event="service_link_click">Explore Customs &amp; Handling Support <i class="ri-arrow-right-line" aria-hidden="true"></i></a></td></tr>
+              <tr><th scope="row"><span>02</span><strong>Specialist needs</strong></th><td data-label="What to define">Product classification, packaging, handling, documentation and any controlled conditions.</td><td data-label="Where to start"><p>Confirm the exact service scope before acceptance. Customs and additional handling belong in the initial brief.</p><a class="inline-cta industry-matrix__link" href="/services/#services-coordination" data-event="service_link_click">Explore Customs &amp; Handling Support <i class="ri-arrow-right-line" aria-hidden="true"></i></a></td></tr>
               <tr><th scope="row"><span>03</span><strong>Continuity</strong></th><td data-label="What to define">Recurring routes, demand patterns, operational contacts and performance-review criteria.</td><td data-label="Where to start"><p>Build the discussion around ownership, communication and the requirements of an ongoing operation.</p><a class="inline-cta industry-matrix__link" href="/services/#services-coordination" data-event="service_link_click">Explore Long-term Logistics Support <i class="ri-arrow-right-line" aria-hidden="true"></i></a></td></tr>
             </tbody></table>
           </div>
@@ -162,7 +232,7 @@
 
       <section data-section-spacing="surface" class="final-cta section-shell" id="industries-enquiry" aria-labelledby="enquiry-title" data-wp-section="industries_cta">
         <div class="final-cta__loop holsen-loop" aria-hidden="true" data-holsen-loop data-loop-framing="complete"></div>
-        <div class="site-container section-grid"><div class="final-cta__copy reveal"><h2 class="section-title" id="enquiry-title"><span>Tell us what your</span><span>cargo needs.</span></h2><p class="lede">Share the cargo, route and requirements that make your operation different. Our team will review the requirement and define the next step.</p><div class="hero__actions"><a class="button button--primary" href="/request-a-quote/" data-event="rfq_cta_click">Request a Quote</a><a class="button button--outline" href="/contact/" data-event="contact_cta_click">Contact Our Team</a></div></div></div>
+        <div class="site-container section-grid"><div class="final-cta__copy reveal"><h2 class="section-title" id="enquiry-title"><span>Tell us what your</span><span>cargo needs.</span></h2><p class="lede">Share the cargo, route and requirements that make your operation different. Our team will review the requirement and define the next step.</p><div class="hero__actions"><a class="button button--primary" href="/request-a-quote/?context=industry" data-event="rfq_cta_click">Request a Quote</a><a class="button button--outline" href="/contact/" data-event="contact_cta_click">Contact Our Team</a></div></div></div>
       </section>
     </main>
     <!-- holsen:footer -->

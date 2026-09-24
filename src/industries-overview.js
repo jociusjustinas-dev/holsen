@@ -4,7 +4,7 @@ export const initIndustriesOverview = (scope = document) => {
 const revealIndustry = (hash) => {
   if (!hash) return;
   const sector = scope.querySelector(`#${CSS.escape(hash.slice(1))}`);
-  if (!sector?.matches(".industry-directory > details")) return;
+  if (!sector?.matches(".industry-accordion > details")) return;
   sector.open = true;
 };
 
@@ -18,8 +18,18 @@ const handleClick = (event) => {
 };
 window.addEventListener("hashchange", handleHashChange);
 scope.addEventListener("click", handleClick);
+const items = [...scope.querySelectorAll(".industry-accordion > details")];
+const handleToggle = (event) => {
+  const item = event.currentTarget;
+  if (!item.open) return;
+  items.forEach((other) => {
+    if (other !== item) other.open = false;
+  });
+};
+items.forEach((item) => item.addEventListener("toggle", handleToggle));
 return () => {
   window.removeEventListener("hashchange", handleHashChange);
   scope.removeEventListener("click", handleClick);
+  items.forEach((item) => item.removeEventListener("toggle", handleToggle));
 };
 };

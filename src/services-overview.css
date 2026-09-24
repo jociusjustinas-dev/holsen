@@ -12,7 +12,7 @@
 .services-overview-page #customs-services {
   scroll-margin-top: calc(var(--header-offset) + 2.5rem);
 }
-.overview-table-link { margin-top: 1rem; }
+.overview-table-link { display: flex; width: fit-content; margin-top: 0.75rem; }
 .services-overview-page .partnership-copy .section-title { font-size: clamp(2.5rem, 3.9vw, 4.9rem); line-height: 0.98; }
 .services-overview-page .partnership-copy .eyebrow { margin-bottom: 0; }
 .services-overview-page .partnership-copy .lede { line-height: 1.25; }

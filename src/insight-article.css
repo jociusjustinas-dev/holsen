@@ -12,6 +12,14 @@
 .article-hero__categories a:hover { border-color: var(--color-holsen-orange); background: var(--color-holsen-orange); color: var(--color-core-black); text-decoration: none; } }
 .article-hero__summary { width: min(100%, 34rem); justify-self: end; }
 .article-hero__lead { max-width: 34rem; margin: 0 0 1.5rem; }
+.article-content .article-summary { margin: 0 0 clamp(2.5rem, 4vw, 3.5rem); padding: 1.35rem 1.5rem 1.5rem; background: var(--color-core-black); color: var(--color-functional-white); }
+.article-content .article-summary .eyebrow,
+.article-content .article-summary li { color: var(--color-functional-white); }
+.article-content .article-summary li { font-size: 1.125rem; line-height: 1.7; }
+.article-summary .eyebrow { margin-bottom: 0.75rem; }
+.article-summary ul { margin: 0; padding-left: 1.15rem; list-style: disc; color: var(--color-carbon); }
+.article-summary li::marker { color: var(--color-holsen-orange); }
+.article-summary li + li { margin-top: 0.45rem; }
 .article-hero__meta { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 0; border-top: 1px solid var(--color-light-grey); color: var(--color-carbon); font-size: 0.75rem; line-height: 1.4; }
 .article-hero__meta > div { min-width: 0; padding: 0.75rem 0; border-bottom: 1px solid var(--color-light-grey); }
 .article-hero__meta > div:nth-child(odd) { padding-right: 1rem; }
