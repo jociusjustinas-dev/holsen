@@ -63,6 +63,13 @@ const makeRoute = (origin, destination) => {
   return Array.from({ length: 65 }, (_, index) => interpolate(index / 64));
 };
 
+// Directional arcs only. No pins or labels — coverage still needs client validation.
+const UNLABELED_DESTINATIONS = [
+  [-4.2, 55.8],
+  [-5.8, 39.6],
+  [23.3, 42],
+];
+
 const initialiseMap = (stage, { scrollRoot = null } = {}) => {
   if (stage.dataset.marketsMapReady === "true") return () => {};
   const canvas = stage.querySelector("[data-markets-map-canvas]");
@@ -93,12 +100,15 @@ const initialiseMap = (stage, { scrollRoot = null } = {}) => {
 
   if (locations.some(({ longitude, latitude }) => !Number.isFinite(longitude) || !Number.isFinite(latitude))) return;
 
-  const routes = locations.slice(1).map((location, index) => ({
-    coordinates: makeRoute(
-      [locations[0].longitude, locations[0].latitude],
-      [location.longitude, location.latitude],
-    ),
-    phase: (index + 1) / locations.length,
+  const origin = [locations[0].longitude, locations[0].latitude];
+  const destinations = [
+    ...locations.slice(1).map((location) => [location.longitude, location.latitude]),
+    ...UNLABELED_DESTINATIONS,
+  ];
+  const routes = destinations.map((destination, index) => ({
+    coordinates: makeRoute(origin, destination),
+    phase: (index + 1) / (destinations.length + 1),
+    labeled: index < locations.length - 1,
   }));
 
   const view = {
@@ -316,7 +326,7 @@ const initialiseMap = (stage, { scrollRoot = null } = {}) => {
 
     routes.forEach((route, index) => {
       const pinIndex = index + 1;
-      const isActive = hoveredIndex === pinIndex;
+      const isActive = route.labeled && hoveredIndex === pinIndex;
       drawRoute(route, isActive);
 
       const speed = isActive ? 0.00052 : 0.00019;
